@@ -1,0 +1,150 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+class Socket{
+implementacion catedra
+}
+class AcceptThread {
+  -bool& serverIsOpen;
+  -Socket& soktRef;
+
+ + AcceptThread(Socket& soktRef, bool& serverStatus)
+ + void disconect()
+  +virtual ~AcceptThread() = default
+}
+class ClientHandler {
++  ClientHandler(Socket&& skt, GameHandler& gameHandler)
++  void run()
++  bool isDisconect()
++  void disconect()
++  ~ClientHandler()=default
+}
+class ServerProtocol {
+-  bool was_closed
+
+  +explicit ServerProtocol(Socket ohterskt);
+  +~ServerProtocol()=default;
+  +bool isOpen()
+  +bool waitComand(ComandHandler comandHandler)
+  +void sendResponse(string response)
+}
+class Server {
+ -bool serverStatus
+  -void shutdown()
+  +explicit Server(Socket skt)
+  +void run()
+  +void waitToClose()
+}
+class Game {
+ - int capacity;
+-  int occupation;
++explicit Game(const int capacity)
+  +void addPlayer()
+  +bool isComplete()
+  +string getOccupation()
+}
+class GameHandler {
+-  std::mutex mutexMap
+
+  +GameHandler()
+  +int addGame(string name, int intcapacity)
+  +int listAllWithOcupation(string list)
+  +int addPlayerToGame(const std::string& name)
+  +~GameHandler()=default
+}
+class Games {
+  -map<string, Game> allGames;
+  -bool exists(string name, map<string, Game>::iterator i)
+
+ + Games() : allGames() {}
+ + int addGame(string name, int capacity)
+ + int addPlayerToGame(string name)
+ + int listAllWithOcupation(string list)
+ + ~Games() = default
+}
+class ComandHandler {
+-  Comand* comand;
+
+  +ComandHandler();
+  +void createComand(istream parameters)
+  +void run(GameHandler game)
+  +string getResponse()
+  +~ComandHandler()
+}
+class Parser {
+- vector<char> partialMsg;
+- stringstream completeMsg;
+- vector<char>::iterator found;
+
+  +Parser() : partialMsg(), completeMsg() {}
+  +bool isEndMsg()
+  +void take(vector<char> buff, int size)
+  +stringstream getCompleteMsg()
+  +~Parser() = default
+}
+class ClientThread {
+  +ClientThread(Socket& skt, GameHandler& gameHandler)
+  +virtual ~ClientThread()=default
+}
+
+
+abstract class Comand {
+#  std::string response;
+
+  +Comand() : response() {}
+  +string getResponse()
+  +virtual void run(GameHandler& gameHandler) = 0
+ + virtual ~Comand() {}
+}
+class ComandList{
+  ComandList() : Comand() {}
+  virtual ~ComandList() {}
+}
+
+abstract class ComandWithParameters {
+-string gameName
+
++  ComandWithParameters() : Comand(), gameName() {}
+ + virtual ~ComandWithParameters() {}
+}
+
+class ComandAdd {
++explicit ComandAdd(istream paramenters)
++ virtual ~ComandAdd() {}
+ }
+class ClientsHandler {
+  -std::vector<ClientHandler*> clients;
+
+  -ClientHandler* addClient(Socket&& soktAccepted);
+  -void startConect(ClientHandler* client);
+
+  +ClientsHandler()
+  +void conectNewClient(Socket&& soktAccepted)
+  +void cleanDisconectClients()
+  +void disconectAll()
+  +~ClientsHandler()
+}
+class ComandCreate {
+-  int capacity
++  explicit ComandCreate(istream paramenters)
++  virtual ~ComandCreate() {}
+}
+
+ClientHandler "1"*--"1"Socket
+ServerProtocol "1"*--"1"Parser
+ClientsHandler "1"*--"1"ClientHandler
+ClientHandler "1"*--"1"ClientThread
+ClientThread "1"*--"1" ServerProtocol
+AcceptThread "1"*--"1" GameHandler
+AcceptThread "1"*--"1" ClientsHandler
+ComandHandler "1"--"1" Comand
+Comand <|-- ComandWithParameters
+Comand <|-- ComandList
+ComandWithParameters <|-- ComandAdd
+ComandWithParameters <|-- ComandCreate
+ClientThread "1"*--"1" ComandHandler
+GameHandler "1" *-- "1" Games
+Games "1"*--"0..*"Game
+Server "1"*--"1" AcceptThread
+
+@enduml
