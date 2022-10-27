@@ -1,0 +1,3 @@
+/home/franco/Taller/Rocket-League-sideswipe-Taller-1-FIUBA/build/CMakeFiles/rebuild_cache.dir
+/home/franco/Taller/Rocket-League-sideswipe-Taller-1-FIUBA/build/CMakeFiles/edit_cache.dir
+/home/franco/Taller/Rocket-League-sideswipe-Taller-1-FIUBA/build/CMakeFiles/hello.dir
