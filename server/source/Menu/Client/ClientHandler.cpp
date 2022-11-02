@@ -2,7 +2,7 @@
 
 ClientHandler::ClientHandler(Socket&& skt, GameHandler& gameHandler)
     : sktRefOfClient(std::move(skt)),
-      clientThread(sktRefOfClient, gameHandler) {}
+      clientThread(sktClient, gameHandler) {}
 
 void ClientHandler::run() { clientThread.start(); }
 

@@ -7,8 +7,8 @@
 #include <string>
 
 #include "../common_src/liberror.h"
-#include "../MenuCommand/ComandHandler.h"
-#include "../Game/GameHandler.h"
+#include "../MenuCommand/CommandHandler.h"
+#include "../Games/GameHandler.h"
 #include "ServerMenuProtocol.h"
 #include "../Thread.h"
 class ClientThread : public Thread {

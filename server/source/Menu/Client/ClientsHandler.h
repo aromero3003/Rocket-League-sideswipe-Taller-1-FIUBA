@@ -6,7 +6,7 @@
 
 #include "../common_src/socket.h"
 #include "ClientHandler.h"
-#include "../Game/GameHandler.h"
+#include "../Games/GameHandler.h"
 class ClientsHandler {
  private:
   std::vector<ClientHandler*> clients;

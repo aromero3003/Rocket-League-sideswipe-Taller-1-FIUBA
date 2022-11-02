@@ -8,7 +8,7 @@
 #include <vector>
 
 #include "../common_src/Socket.h"
-#include "../MenuCommand/ComandHandler.h"
+#include "../MenuCommand/CommandHandler.h"
 
 class ServerProtocol {
  private:

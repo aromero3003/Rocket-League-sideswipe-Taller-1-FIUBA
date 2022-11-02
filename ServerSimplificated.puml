@@ -2,12 +2,23 @@
 'https://plantuml.com/class-diagram
 
 Server "1"*--"1" AcceptThread
-AcceptThread "1"*-left-"1" GameHandler
-AcceptThread "1"*-right-"1" MenuClientsHandler
-GameHandler "1" *-- "0..*" GamesNoStartedMonitor
-GamesNoStartedMonitor "1" *-- "1" GamesNoStarted
-GamesNoStarted "1" *-- "0..*" GameNoStarted
-GameHandler "1" *-- "0..*" RunGames
+AcceptThread "1"*--"1" Menu
+
+
+Menu "1"*--"1" GameHandler
+GameHandler *-- "0..*" RunGames
+
+GameHandler "1" *-- "1" GamesNoStartedMonitor
+GamesNoStartedMonitor "1" *-- "0..*" GamesNoStarted
+
+
+Menu"1"*--"1"ClientsMonitor
+ClientsMonitor"1"*--"1"ClientsHandler
+ClientsHandler"1"*--"0..*"ClientHandler
+ClientHandler "1"*--"1"ClientThread
+ClientThread "1"*--"1" ComandHandler
+ClientThread "1"*--"1" ServerMenuProtocol
+ServerMenuProtocol "1"*--"1"  Socket
 
 RunGames "1"*--"0..*" GameThread
 
@@ -28,12 +39,6 @@ GamingComand <|-- GamingComandTurbo
 GamingComand <|-- GamingComandRight
 GamingComand <|-- GamingComandLeft
 
-
-MenuClientsHandler "1"*--"1"MenuClientHandler
-MenuClientHandler "1"*--"1"ClientThread
-ClientThread "1"*--"1" ComandHandler
-ClientThread "1"*--"1" ServerMenuProtocol
-ServerMenuProtocol "1"*--"1"  Socket
 
 ComandHandler "1"--"1" Comand
 Comand <|-- ComandWithParameters

@@ -5,10 +5,10 @@
 
 #include "Socket.h"
 #include "ClientThread.h"
-#include "../Game/GameHandler.h"
+#include "../Games/GameHandler.h"
 class ClientHandler {
  private:
-  Socket sktRefOfClient;
+  Socket sktOfClient;
   ClientThread clientThread;
 
  public:
