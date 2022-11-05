@@ -10,15 +10,7 @@
 #include "../MenuCommand/CommandHandler.h"
 #include "../Games/GameHandler.h"
 #include "ServerMenuProtocol.h"
-#include "../Thread.h"
-class ClientThread : public Thread {
- private:
-  ServerProtocol protocol;
-  GameHandler& gameHandler;
+class GammingClient {
 
- public:
-  ClientThread(Socket& skt, GameHandler& gameHandler);
-  void run() override;
-  virtual ~ClientThread()=default;
 };
 #endif

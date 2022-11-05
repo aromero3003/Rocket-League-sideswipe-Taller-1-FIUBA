@@ -5,15 +5,14 @@
 #include <vector>
 
 #include "../common_src/socket.h"
-#include "ClientHandler.h"
+#include "GammingClient.h"
 #include "../Games/GameHandler.h"
 class ClientsHandler {
  private:
-  std::vector<ClientHandler*> clients;
-  GameHandler gameHandler;
+  std::vector<GammingClient*> clients;
 
-  ClientHandler* addClient(Socket&& soktAccepted);
-  void startConect(ClientHandler* client);
+  GammingClient* addClient(Socket&& soktAccepted);
+  void startConect(GammingClient* client);
 
  public:
   ClientsHandler();
