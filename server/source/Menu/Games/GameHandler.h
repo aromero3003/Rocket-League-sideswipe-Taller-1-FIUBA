@@ -10,7 +10,7 @@
 
 class GameHandler {
  private:
-  std::mutex mutexMap;
+  std::mutex mutexgames;
   Games games;
 
  public:

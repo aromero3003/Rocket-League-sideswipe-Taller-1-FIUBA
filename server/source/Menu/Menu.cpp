@@ -4,7 +4,7 @@ Menu::Menu():
     runGame(gameHandler.addRunGame()){}
 
 void Menu::conectNewClient(Socket&& sktAccepted){
-    runGame.addPlayer(clientsHandler.conectNewClient(sktAccepted));
+    runGame.addPlayer(clientsHandler.conectNewClient(std::move(sktAccepted)));
 }
 
 void Menu::cleanDisconectClients(){

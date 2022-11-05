@@ -9,12 +9,12 @@
 
 class RunGame : public Thread {
  private:
-    QueueP
+   
 
  public:
-  AcceptThread(Socket& soktRef, bool& serverStatus);
+  RunGame();
   virtual void run() override;
   void disconect();
-  virtual ~AcceptThread() = default;
+  virtual ~RunGame() = default;
 };
 #endif

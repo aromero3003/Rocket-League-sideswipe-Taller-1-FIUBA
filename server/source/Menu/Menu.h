@@ -1,7 +1,7 @@
 #ifndef __MENU_H__
 #define __MENU_H__
 
-#include "../common/source/Socket.h"
+#include "../common/source/socket.h"
 #include "Client/ClientsHandler.h"
 #include "Games/GameHandler.h"
 #include "Games/RunGame.h"/// reafactorizar !!!!!!!
@@ -13,7 +13,7 @@ class Menu  {
 
  public:
   Menu();
-  void conectNewClient(std::move(sktAccepted));
+  void conectNewClient(Socket&& sktAccepted);
   void cleanDisconectClients();
   void disconectAll();
   void starGame();

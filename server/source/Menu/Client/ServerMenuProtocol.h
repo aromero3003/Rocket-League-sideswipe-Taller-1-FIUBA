@@ -7,12 +7,11 @@
 #include <utility>
 #include <vector>
 
-#include "../common_src/Socket.h"
+#include "../common/source/socket.h"
 #include "../MenuCommand/CommandHandler.h"
 
 class ServerProtocol {
  private:
-  Parser receiver;
   Socket& skt;
   bool was_closed;
 

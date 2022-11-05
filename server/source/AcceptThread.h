@@ -8,8 +8,8 @@
 #include <iostream>
 #include <utility>
 
-#include "../common_src/Liberror.h"
-#include "../common_src/Socket.h"
+#include "../common/source/liberror.h"
+#include "../common/source/socket.h"
 #include "Menu/Menu.h"
 #include "../common/source/Thread.h"
 class AcceptThread : public Thread {

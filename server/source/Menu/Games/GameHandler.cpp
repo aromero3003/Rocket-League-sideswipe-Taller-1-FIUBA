@@ -1,23 +1,23 @@
 #include "GameHandler.h"
 
-GameHandler::GameHandler() : mutexMap(), games() {}
+GameHandler::GameHandler() : mutexgames(), games() {}
 
 int GameHandler::addGame(const std::string& name, const int capacity) {
-  mutexMap.lock();
+  mutexgames.lock();
   int res = games.addGame(name, capacity);
-  mutexMap.unlock();
+  mutexgames.unlock();
   return res;
 }
 
 int GameHandler::listAllWithOcupation(std::string& list) {
-  mutexMap.lock();
+  mutexgames.lock();
   int res = games.listAllWithOcupation(list);
-  mutexMap.unlock();
+  mutexgames.unlock();
   return res;
 }
 
 int GameHandler::addPlayerToGame(const std::string& name) {
-  mutexMap.lock();
+  mutexgames.lock();
   int res = games.addPlayerToGame(name);
   //addPlayerToGame game devolvera
   //if complete 
@@ -25,6 +25,6 @@ int GameHandler::addPlayerToGame(const std::string& name) {
   //borrar game? (notrungames)   game monitor<-es donde estoy
   //rungame . inicar (game)
   //return game
-  mutexMap.unlock();
+  mutexgames.unlock();
   return res;
 }

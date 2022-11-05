@@ -6,7 +6,7 @@
 #include <ostream>
 #include <string>
 
-#include "../common_src/liberror.h"
+#include "../common/source/liberror.h"
 #include "../MenuCommand/CommandHandler.h"
 #include "../Games/GameHandler.h"
 #include "ServerMenuProtocol.h"

@@ -4,7 +4,7 @@
 #include <utility>
 #include <vector>
 
-#include "../common_src/socket.h"
+#include "../common/source/socket.h"
 #include "GammingClient.h"
 #include "../Games/GameHandler.h"
 class ClientsHandler {
