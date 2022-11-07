@@ -9,10 +9,12 @@
 
 class RunGame : public Thread {
  private:
-   
-
+   ProtectedQueue<CommandGame> gammindEventQueue;
  public:
   RunGame();
+  ProtectedQueue<CommandGame> & getRefGammingQueue();
+  void  addPlayer(GammingClient& gamingClient);
+  void setupStart();
   virtual void run() override;
   void disconect();
   virtual ~RunGame() = default;

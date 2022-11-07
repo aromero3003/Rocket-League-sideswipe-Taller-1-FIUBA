@@ -3,21 +3,21 @@
 #include <algorithm>
 #include <utility>
 #include <vector>
+#include <memory>
 
 #include "../common/source/socket.h"
 #include "GammingClient.h"
 #include "../Games/GameHandler.h"
 class ClientsHandler {
  private:
-  std::vector<GammingClient*> clients;
+  std::vector<GammingClient&> clients;
 
-  GammingClient* addClient(Socket&& soktAccepted);
-  void startConect(GammingClient* client);
+  GammingClient& addGammingClient(Socket&& soktAccepted,ProtectedQueue<CommandGame> &eventQueue);
 
  public:
   ClientsHandler();
 
-  void conectNewClient(Socket&& soktAccepted);
+  GammingClient& conectNewGamingClient(Socket&& soktAccepted,ProtectedQueue<CommandGame> &eventQueue);
 
   void cleanDisconectClients();
 
