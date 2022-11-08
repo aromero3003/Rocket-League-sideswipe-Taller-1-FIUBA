@@ -2,6 +2,7 @@
 #define __BALL_H__
 
 #include <box2d/b2_body.h>
+#include <box2d/b2_math.h>
 
 class Ball {
  private:
@@ -9,6 +10,7 @@ class Ball {
 
  public:
     Ball(b2World &world, float x, float y);
+    b2Vec2 getPosition();
     // getSnapshotData
 };
 

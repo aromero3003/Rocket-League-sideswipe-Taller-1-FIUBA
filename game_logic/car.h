@@ -2,6 +2,8 @@
 #define __CAR_H__
 
 #include <box2d/b2_body.h>
+#include <box2d/b2_math.h>
+#include <box2d/b2_wheel_joint.h>
 #include <box2d/b2_world.h>
 
 class Car {
@@ -9,11 +11,11 @@ class Car {
     b2Body *chassis;
     b2Body *wheel1;
     b2Body *wheel2;
-    b2Body *damper1;
-    b2Body *damper2;
+    b2WheelJoint *damper1;
+    b2WheelJoint *damper2;
  public:
-    Car(b2World &world);
-
+    Car(b2World &world, const b2Vec2 &position);
+    b2Vec2 getPosition();
 
 };
 
