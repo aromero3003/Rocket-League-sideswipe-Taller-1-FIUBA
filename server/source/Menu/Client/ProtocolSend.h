@@ -7,6 +7,7 @@
 #include <string>
 
 #include "../../common/source/liberror.h"
+#include "../../common/source/blocking_queue.h"
 #include "../../common/source/socket.h"
 #include "../MenuCommand/CommandHandler.h"
 #include "../Games/GameHandler.h"
@@ -16,11 +17,12 @@ class ProtocolSend: public Thread
 {
 private:
     Socket& skt;
-    BlockingQueue<Snap>& snapEventQueue;
+    BlockingQueue<Snap>* snapEventQueue;
+    bool was_closed;
+    void sendResponse(std::string& response);
 public:
-
-    explicit ProtocolSend(Socket&skt, BlockingQueue<Snap>& snapEventQueue);
+  explicit ProtocolSend(Socket&skt);
+  BlockingQueue<Snap>*  getSnapQueue();
   virtual void run() override;
-    void disconcet();
 };
 #endif

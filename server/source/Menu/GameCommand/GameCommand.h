@@ -12,6 +12,6 @@ class GameCommand
 private:
    
 public:
-
+  void run(GameLogic& gameLogic);
 };
 #endif

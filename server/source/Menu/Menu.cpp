@@ -1,11 +1,15 @@
 #include "Menu.h"
 
 Menu::Menu():
+clientsHandler(ClientsHandler()),
+   gameHandler(GameHandler()),
     runGame(gameHandler.addRunGame()){}
 
-void Menu::conectNewClient(Socket&& sktAccepted){
-    runGame.addPlayer(clientsHandler.conectNewGamingClient(std::move(sktAccepted),
-                    runGame.getRefGammingQueue()));
+void Menu::conectNewClient(Socket&& sktAccepted,int id){
+    runGame.addPlayer(
+        clientsHandler.conectNewGamingClient(std::move(sktAccepted),
+                    runGame.getRefGammingQueue(),id)
+                    );
 }
 
 void Menu::cleanDisconectClients(){
@@ -14,7 +18,7 @@ void Menu::cleanDisconectClients(){
 void Menu::disconectAll(){
   clientsHandler.disconectAll();
 }
-void Menu::starGame(){
+void Menu::startGame(){
     runGame.setupStart();
     runGame.start();
 }

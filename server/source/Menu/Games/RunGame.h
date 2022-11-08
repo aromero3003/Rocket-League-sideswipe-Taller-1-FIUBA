@@ -5,18 +5,19 @@
 #include <mutex>
 #include <string>
 #include <utility>
+#include "../GameCommand/GameCommand.h"
 
+#include "../../common/source/protected_queue.h"
 
 class RunGame : public Thread {
  private:
-   ProtectedQueue<CommandGame> gammindEventQueue;
+   ProtectedQueue<GameCommand>* gammingEventQueue;
  public:
   RunGame();
-  ProtectedQueue<CommandGame> & getRefGammingQueue();
-  void  addPlayer(GammingClient& gamingClient);
+  ProtectedQueue<GameCommand> * getRefGammingQueue();
+  void  addPlayer(GammingClient* gamingClient);
   void setupStart();
   virtual void run() override;
-  void disconect();
   virtual ~RunGame() = default;
 };
 #endif

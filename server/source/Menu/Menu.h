@@ -13,10 +13,10 @@ class Menu  {
 
  public:
   Menu();
-  void conectNewClient(Socket&& sktAccepted);
+  void conectNewClient(Socket&& sktAccepted,int id);
   void cleanDisconectClients();
   void disconectAll();
-  void starGame();
+  void startGame();
   virtual ~Menu() = default;
 };
 #endif

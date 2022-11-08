@@ -7,17 +7,16 @@
 
 #include "../common/source/socket.h"
 #include "GammingClient.h"
-#include "../Games/GameHandler.h"
+#include "../GameCommand/GameCommand.h"
 class ClientsHandler {
  private:
-  std::vector<GammingClient&> clients;
+  std::vector<GammingClient*> clients;
 
-  GammingClient& addGammingClient(Socket&& soktAccepted,ProtectedQueue<CommandGame> &eventQueue);
 
  public:
   ClientsHandler();
 
-  GammingClient& conectNewGamingClient(Socket&& soktAccepted,ProtectedQueue<CommandGame> &eventQueue);
+  GammingClient* conectNewGamingClient(Socket&& soktAccepted,ProtectedQueue<GameCommand> *eventQueue, int id);
 
   void cleanDisconectClients();
 

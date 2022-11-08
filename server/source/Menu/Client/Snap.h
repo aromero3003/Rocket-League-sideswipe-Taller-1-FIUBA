@@ -6,14 +6,11 @@
 #include <ostream>
 #include <string>
 
-#include "../MenuCommand/CommandHandler.h"
-#include "../Games/GameHandler.h"
-
 class Snap
 {
 private:
    
 public:
-
+ std::string& getMsg();
 };
 #endif
