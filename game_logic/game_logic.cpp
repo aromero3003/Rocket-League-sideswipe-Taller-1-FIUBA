@@ -11,6 +11,7 @@
 #include "constants.h"
 #include "car.h"
 #include "ball.h"
+#include "snap.h"
 
 GameLogic::GameLogic(size_t cant_players) :
     world(b2Vec2(0.0f, -GRAVITY)),
@@ -32,19 +33,35 @@ GameLogic::GameLogic(size_t cant_players) :
 
 
     //  PLAYERS
-    for (size_t i = 0; i < cant_players / 2; i++) {
-        this->players.emplace_back()
-    }
-    for (float x = -SCENARIO_HALF_WIDTH + 2.5f; x < SCENARIO_HALF_WIDTH - 2.5f; x += (SCENARIO_HALF_WIDTH - 5.0f) / (cant_players + 1)) {
-        this->players.push_back() 
-    }
+    /*size_t mid = cant_players / 2;
+    float delta_x = (SCENARIO_WIDTH - 5.0f) / (cant_players + 1);
+    for (ssize_t i = -1; i > -mid; i--)
+        this->players.emplace_back(this->world, b2Vec2((float)i * delta_x, 1.0f));
+
+    for (size_t i = 0; i > -mid; i--)
+        this->players.emplace_back(this->world, b2Vec2((float)i * delta_x, 1.0f));
+        */
+    // creo solo dos jugadores
+    this->players.emplace_back(this->world, b2Vec2(-SCENARIO_HALF_WIDTH / 2.0f, 1.0f));
+    this->players.emplace_back(this->world, b2Vec2(SCENARIO_HALF_WIDTH / 2.0f, 1.0f));
 }
 
-bool GameLogic::jump_player(size_t id) {
-    this->players[id];
+void GameLogic::jump_player(size_t id) {
+    this->players[id].jump();
 }
 
+void GameLogic::move_player_left(size_t id) {
+    this->players[id].moveLeft();
+}
+
+void GameLogic::move_player_right(size_t id) {
+    this->players[id].moveRight();
+}
 
 void GameLogic::step() {
     this->world.Step(TIME_STEP, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
+}
+
+SnapShot GameLogic::get_snap() {
+    return SnapShot(this->players[0], this->players[1], this->ball, this->ball.getPosition().x > SCENARIO_HALF_WIDTH + BALL_RADIUS);
 }
