@@ -15,6 +15,10 @@ class Car {
     b2WheelJoint *damper2;
  public:
     Car(b2World &world, const b2Vec2 &position);
+    void moveLeft();
+    void moveRight();
+    void brake();
+    void jump();
     b2Vec2 getPosition();
 
 };

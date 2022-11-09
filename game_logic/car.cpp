@@ -17,13 +17,21 @@ Car::Car(b2World &world, const b2Vec2 &position) {
         chassis_def.type = b2_dynamicBody;
         chassis_def.position.Set(x, y + 1.0f);
 
-        b2PolygonShape chassis_box;
-        chassis_box.SetAsBox(x + 1.5f, y + 1.0f);
+
+        b2PolygonShape chassis_shape;
+        b2Vec2 vertices[6];
+        vertices[0].Set(1.5f, -0.5f);
+        vertices[1].Set(1.5f, 0.2f);
+        vertices[2].Set(0.5f, 0.9f);
+        vertices[3].Set(-0.5f, 0.9f);
+        vertices[4].Set(-1.5f, 0.2f);
+        vertices[5].Set(-1.5f, -0.5f);
+        chassis_shape.Set(vertices, 6);
 
         b2FixtureDef chassis_fd;
         chassis_fd.density = 10.0f;
         chassis_fd.friction = 0.3f;
-        chassis_fd.shape = &chassis_box;
+        chassis_fd.shape = &chassis_shape;
 
         this->chassis = world.CreateBody(&chassis_def);
         this->chassis->CreateFixture(&chassis_fd);
@@ -73,9 +81,39 @@ Car::Car(b2World &world, const b2Vec2 &position) {
         joint_def.upperTranslation = TRANSLATION;
         joint_def.enableLimit = true;
         this->damper1 = (b2WheelJoint *)world.CreateJoint(&joint_def);
+
+        joint_def.Initialize(this->chassis, this->wheel2, this->wheel2->GetPosition(), axis);
+        joint_def.motorSpeed = 0.0f;
+        joint_def.maxMotorTorque = 20.0f;
+        joint_def.enableMotor = true;
+        joint_def.stiffness = mass1 * omega * omega;
+        joint_def.damping = 2.0f * mass1 * damping_ratio * omega;
+        joint_def.lowerTranslation = -TRANSLATION;
+        joint_def.upperTranslation = TRANSLATION;
+        joint_def.enableLimit = true;
+        this->damper2 = (b2WheelJoint *)world.CreateJoint(&joint_def);
     }
 }
 
 b2Vec2 Car::getPosition() {
     return chassis->GetPosition();
 }
+
+void Car::jump() {
+    this->wheel1->ApplyLinearImpulseToCenter(b2Vec2(0.0f,100.0f), true);
+    this->wheel2->ApplyLinearImpulseToCenter(b2Vec2(0.0f,100.0f), true);
+}
+
+void Car::moveLeft() {
+    this->damper1->SetMotorSpeed(50.0f);
+    this->damper2->SetMotorSpeed(50.0f);
+}
+
+void Car::moveRight() {
+    this->damper1->SetMotorSpeed(-50.0f);
+    this->damper2->SetMotorSpeed(-50.0f);
+}
+
+void Car::brake() {
+    this->damper1->SetMotorSpeed(0.0f);
+    this->damper2->SetMotorSpeed(0.0f);
