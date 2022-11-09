@@ -7,6 +7,7 @@
 #include <box2d/box2d.h>
 #include <box2d/b2_world.h>
 #include <box2d/b2_fixture.h>
+#include <cstdint>
 
 #include "car.h"
 
@@ -95,8 +96,12 @@ Car::Car(b2World &world, const b2Vec2 &position) {
     }
 }
 
-b2Vec2 Car::getPosition() {
+const b2Vec2 Car::getPosition() {
     return chassis->GetPosition();
+}
+
+const float Car::getAngle() {
+    return chassis->GetAngle();
 }
 
 void Car::jump() {
@@ -107,13 +112,20 @@ void Car::jump() {
 void Car::moveLeft() {
     this->damper1->SetMotorSpeed(50.0f);
     this->damper2->SetMotorSpeed(50.0f);
+    this->orientation = LEFT;
 }
 
 void Car::moveRight() {
     this->damper1->SetMotorSpeed(-50.0f);
     this->damper2->SetMotorSpeed(-50.0f);
+    this->orientation = RIGHT;
 }
 
 void Car::brake() {
     this->damper1->SetMotorSpeed(0.0f);
     this->damper2->SetMotorSpeed(0.0f);
+}
+
+const uint8_t Car::getOrientation() {
+    return this->orientation;
+}
