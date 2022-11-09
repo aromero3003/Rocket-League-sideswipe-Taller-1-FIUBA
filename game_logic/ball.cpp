@@ -19,12 +19,16 @@ Ball::Ball(b2World &world, float x, float y) {
     ball_fd.friction = 0.3f;
     ball_fd.restitution = 0.9f;
     ball_fd.restitutionThreshold = 1.0f;
-    ball_fd.filter.categoryBits = CAR_CATEGORY_BITS;
+    ball_fd.filter.categoryBits = BALL_CATEGORY_BITS;
 
     this->ball = world. CreateBody(&ball_def);
     this->ball->CreateFixture(&ball_fd);
 }
 
-b2Vec2 Ball::getPosition() {
+const b2Vec2 Ball::getPosition() {
     return this->ball->GetPosition();
+}
+
+const float Ball::getAngle() {
+    return this->ball->getAngle();
 }

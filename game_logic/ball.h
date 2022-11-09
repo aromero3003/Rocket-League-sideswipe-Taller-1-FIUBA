@@ -10,7 +10,8 @@ class Ball {
 
  public:
     Ball(b2World &world, float x, float y);
-    b2Vec2 getPosition();
+    const b2Vec2 getPosition();
+    const float getAngle();
     // getSnapshotData
 };
 
