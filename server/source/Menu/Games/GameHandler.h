@@ -7,11 +7,13 @@
 #include <utility>
 
 #include "Games.h"
+#include "RunGame.h"
 
 class GameHandler {
  private:
   std::mutex mutexgames;
   Games games;
+  RunGame runGame;
 
  public:
   GameHandler();
@@ -23,4 +25,5 @@ class GameHandler {
   int addPlayerToGame(const std::string& name);
   ~GameHandler()=default;
 };
+
 #endif

@@ -5,17 +5,24 @@
 #include <list>
 #include <string>
 #include <utility>
+#include <memory>
 
-#include "GameCommand.h"
+#include "UpCommand.h"
+#include "LeftCommand.h"
+#include "RightCommand.h"
+#include "DownCommand.h"
 #include "../Games/GameLogic.h"
 class GameCommandHandler {
  private:
-  GameCommand* command;
+  bool isEndGame;
+  std::unique_ptr<GameCommand> command;
 
  public:
-  GameCommandHandler();
+
+  GameCommandHandler():isEndGame(false) {}
   void createCommand(std::istream& parameters);
-  GameCommand getCommand();
+  std::unique_ptr<GameCommand> getCommand();
+  bool isEnd();
   ~GameCommandHandler();
 };
 

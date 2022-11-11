@@ -16,7 +16,7 @@ class ClientsHandler {
  public:
   ClientsHandler();
 
-  GammingClient* conectNewGamingClient(Socket&& soktAccepted,ProtectedQueue<GameCommand> *eventQueue, int id);
+  GammingClient* conectNewGamingClient(Socket&& soktAccepted, int id);
 
   void cleanDisconectClients();
 

@@ -1,6 +1,6 @@
 #include "GameHandler.h"
 
-GameHandler::GameHandler() : mutexgames(), games() {}
+GameHandler::GameHandler() : mutexgames(), games(), runGame() {}
 
 int GameHandler::addGame(const std::string& name, const int capacity) {
   mutexgames.lock();
@@ -8,7 +8,9 @@ int GameHandler::addGame(const std::string& name, const int capacity) {
   mutexgames.unlock();
   return res;
 }
-
+  RunGame& GameHandler::addRunGame(){
+      return runGame;
+  }
 int GameHandler::listAllWithOcupation(std::string& list) {
   mutexgames.lock();
   int res = games.listAllWithOcupation(list);

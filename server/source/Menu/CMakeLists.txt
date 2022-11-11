@@ -1,4 +1,4 @@
-add_library(Menu Menu.cpp Menu.h)
-add_subdirectory(MenuCommand)
-target_link_libraries(Menu PUBLIC Command)
+add_library(Menu Menu.cpp )
+add_subdirectory(Client GameCommand Games MenuCommand)
+target_link_libraries(Menu PUBLIC Client GameCommand Games MenuCommand)
 

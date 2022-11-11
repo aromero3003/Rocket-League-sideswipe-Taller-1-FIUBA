@@ -1,5 +1,5 @@
-#ifndef __CLIENTTHREAD_H__
-#define __CLIENTTHREAD_H__
+#ifndef __GAMMINGCLIENT_H__
+#define __GAMMINGCLIENT_H__
 
 #include <istream>
 #include <list>
@@ -14,18 +14,18 @@
 #include "../../common/source/protected_queue.h"
 #include "../../common/source/blocking_queue.h"
 #include "ProtocolRecv.h"
-#include "../GameCommand/GameCommand.h"
 class GammingClient
 {
 private:
     int id;
     Socket skt;
-    BlockingQueue<Snap>* snapEventQueue;
+    BlockingQueue<SnapShot> snapEventQueue;
     ProtocolSend protocolSend;
     ProtocolRecv protocolRecv;
 
 public:
-    explicit GammingClient(Socket &&skt,ProtectedQueue<GameCommand> *eventQueue,int id);
+    explicit GammingClient(Socket &&skt,int id);
+    void setup(ProtectedQueue<GameCommandHandler> &eventQueue);
     void addSnap(Snap &snap);
     void start();
     ~GammingClient();

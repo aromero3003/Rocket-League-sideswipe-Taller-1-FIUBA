@@ -6,12 +6,14 @@
 #include <ostream>
 #include <string>
 
-
+#include "../Games/GameLogic.h"
 class GameCommand
 {
 private:
    
 public:
-  void run(GameLogic& gameLogic);
+  GameCommand()=default;
+  virtual void run(GameLogic& gameLogic) =0;
+  virtual ~GameCommand()=default;
 };
 #endif

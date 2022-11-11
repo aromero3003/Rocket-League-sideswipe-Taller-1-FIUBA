@@ -1,16 +1,21 @@
 #include "ProtocolRecv.h"
 
-explicit ProtocolRecv::ProtocolRecv(Socket &otherSkt,ProtectedQueue<GameCommand> *eventQueue):
-skt(otherSkt),eventQueueRef(eventQueue),was_closed(false){}
-
-
-
+explicit ProtocolRecv::ProtocolRecv(Socket &otherSkt):
+skt(otherSkt),was_closed(false){}
+void ProtocolRecv::setup(ProtectedQueue<GameCommandHandler> &eventQueue){
+  eventQueueRef=eventQueue;
+}
 void ProtocolRecv::run() {
   try {
-    GameCommandHandler gameCommandHandler;
-    while(was_closed){
+   
+    while(!was_closed){
+      GameCommandHandler gameCommandHandler;
       gameCommandHandler.createCommand(reciveCommand());
-      eventQueueRef->push(gameCommandHandler.getCommand());
+      if (!gameCommandHandler.isEnd()){
+      eventQueueRef.push(gameCommandHandler);
+      } else {
+        was_closed= true;
+      }
     }
   } catch (const LibError& err) {
 

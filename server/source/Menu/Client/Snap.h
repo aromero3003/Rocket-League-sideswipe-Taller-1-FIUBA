@@ -1,16 +1,19 @@
-#ifndef __SNAP_H__
-#define __SNAP_H__
 
-#include <istream>
-#include <list>
-#include <ostream>
-#include <string>
+#ifndef __SNAPSHOT_H__
+#define __SNAPSHOT_H__
 
-class Snap
-{
-private:
-   
-public:
- std::string& getMsg();
+#include <cstdint>
+
+#include <vector>
+
+class SnapShot {
+ private:
+    std::vector<uint8_t> data;
+ public:
+    SnapShot();
+    void add(const uint8_t &x);
+    void add(const float &x);
+    const uint8_t *getMsg();
 };
-#endif
+
+#endif  //  __SNAPSHOT_H__

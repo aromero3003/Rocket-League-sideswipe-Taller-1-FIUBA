@@ -2,9 +2,9 @@
 
 ClientsHandler::ClientsHandler() {}
 
-GammingClient* ClientsHandler::conectNewGamingClient(Socket&& soktAccepted,ProtectedQueue<GameCommand> *eventQueue, int id){
+GammingClient* ClientsHandler::conectNewGamingClient(Socket&& soktAccepted, int id){
  GammingClient* client=
-      new GammingClient(std::move(soktAccepted),eventQueue,id);
+      new GammingClient(std::move(soktAccepted),id);
   clients.push_back(client);
   return client;
 }
@@ -15,7 +15,7 @@ GammingClient* ClientsHandler::conectNewGamingClient(Socket&& soktAccepted,Prote
 void ClientsHandler::cleanDisconectClients() {
   clients.erase(
       std::remove_if(clients.begin(), clients.end(),
-                     [](GammingClient* x) { return x->~GammingClient(); }),
+                     [](GammingClient* client) { delete client; }),
       clients.end());
 }
 /// si tengo referencia a algun cliente tengo q joineralo
