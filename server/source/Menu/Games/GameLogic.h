@@ -17,7 +17,7 @@ class GameLogic {
     void setPlayer(SnapShot& snap,Car& player);
     void setBall(SnapShot& snap);
     void setGoal(SnapShot& snap);
-    
+   void setSnap(Snap& snap);
  public:
     GameLogic(size_t cant_players);
 
@@ -30,7 +30,7 @@ class GameLogic {
     void move_player_right (size_t id);
 
     void step();
-    void setSnap(Snap& snap);
+   SnapShot getSnap();
 
 };
 

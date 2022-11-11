@@ -17,9 +17,11 @@ void  RunGame::setupStart(){
 
 void RunGame::run() {
   try {
-    //sendResponse(numberPlayer);
     while(!was_closed){
-    sendResponse(snapEventQueue.pop().getMsg());
+
+
+    }
+
     }
   } catch (const LibError& err) {
 

@@ -60,6 +60,9 @@ void GameLogic::step() {
     this->world.Step(TIME_STEP, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
 }
 
+SnapShot GameLogic::getSnap(){
+    return snap;
+}
 void GameLogic::setSnap(SnapShot& snap){
     for (Car& player : players){
         setPlayer(snap,player);

@@ -13,7 +13,7 @@ class SnapShot {
     SnapShot();
     void add(const uint8_t &x);
     void add(const float &x);
-    const uint8_t *getMsg();
+    std::vector<uint8_t> getMsg();
 };
 
 #endif  //  __SNAPSHOT_H__
