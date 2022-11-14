@@ -1,3 +1,6 @@
+<<<<<<< HEAD
+#include "ClientsHandler.h"
+=======
 #include "GammingClient.h"
 
 explicit GammingClient::GammingClient(Socket &&otherSkt,size_t id):
@@ -17,5 +20,6 @@ GammingClient::~GammingClient(){
     protocolSend.join();
     protocolRecv.join();
 }
+>>>>>>> refs/remotes/origin/TempEma
 
     

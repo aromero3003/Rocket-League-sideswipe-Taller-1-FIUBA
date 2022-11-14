@@ -6,6 +6,12 @@
 #include <ostream>
 #include <string>
 
+#include "../../../../common/source/Socket/Socket.h"
+#include "../../../../common/source/Socket/Liberror.h"
+#include "../MenuCommand/CommandHandler.h"
+#include "../Games/GameHandler.h"
+#include "ServerMenuProtocol.h"
+
 #include "../common/source/liberror.h"
 #include "../common/source/socket.h"
 #include "../MenuCommand/CommandHandler.h"

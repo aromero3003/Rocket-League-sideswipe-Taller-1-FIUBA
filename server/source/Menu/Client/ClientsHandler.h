@@ -5,12 +5,15 @@
 #include <vector>
 #include <memory>
 
-#include "../common/source/socket.h"
+#include "../../../../common/source/Socket/Socket.h"
 #include "GammingClient.h"
-#include "../GameCommand/GameCommand.h"
+#include "../Games/GameHandler.h"
+
+
 class ClientsHandler {
  private:
   std::vector<GammingClient*> clients;
+  GameHandler gameHandler;
 
 
  public:
@@ -21,6 +24,8 @@ class ClientsHandler {
   void cleanDisconectClients();
 
   void disconectAll();
+
+  ClientsHandler(ClientsHandler &&other);
 
   ~ClientsHandler();
 };
