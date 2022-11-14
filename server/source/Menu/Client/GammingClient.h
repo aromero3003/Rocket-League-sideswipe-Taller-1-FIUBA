@@ -6,10 +6,12 @@
 #include <ostream>
 #include <string>
 
-#include "../common_src/liberror.h"
+#include "../../../../common/source/Socket/Socket.h"
+#include "../../../../common/source/Socket/Liberror.h"
 #include "../MenuCommand/CommandHandler.h"
 #include "../Games/GameHandler.h"
 #include "ServerMenuProtocol.h"
+
 class GammingClient {
 
 };

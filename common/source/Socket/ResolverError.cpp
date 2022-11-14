@@ -1,4 +1,4 @@
-#include "resolvererror.h"
+#include "ResolverError.h"
 
 #include <sys/types.h>
 #include <arpa/inet.h>

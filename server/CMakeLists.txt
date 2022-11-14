@@ -13,7 +13,7 @@ set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -ggdb -DDEBUG -fno-inline ")
 # threads
 set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pthread")
 
-include_directories(${PROJECT_SOURCE_DIR})
+include_directories(${PROJECT_SOURCE_DIR}/common/source)
 add_subdirectory(source)
 add_executable(hello main.cpp)
-target_link_libraries(hello PUBLIC Source)
+target_link_libraries(hello PUBLIC Source Socket)

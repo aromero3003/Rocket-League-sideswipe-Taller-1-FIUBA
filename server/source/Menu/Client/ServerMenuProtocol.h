@@ -7,8 +7,17 @@
 #include <utility>
 #include <vector>
 
-#include "../common_src/Socket.h"
+#include "../../../../common/source/Socket/Socket.h"
 #include "../MenuCommand/CommandHandler.h"
+
+// PARTIAL FIX
+class Parser {
+ public:
+    bool isEndMsg();
+    void take(std::vector<char> &buf, int &rcv);
+    std::istream& getCompleteMsg();  // valor de retorno raro
+};
+
 
 class ServerProtocol {
  private:
@@ -21,7 +30,7 @@ class ServerProtocol {
   ~ServerProtocol()=default;
   bool isOpen();
 
-  bool waitComand(ComandHandler& comandHandler);
+  bool waitComand(CommandHandler& comandHandler);
 
   void sendResponse(std::string& response);
 
@@ -38,7 +47,7 @@ class ServerProtocol {
    * por default de C++ nos alcanza.
    * */
   ServerProtocol(ServerProtocol&&) = default;
-  ServerProtocol& operator=(ServerProtocol&&) = default;
+  ServerProtocol& operator=(ServerProtocol&&); // std::move está por default deleteado
 };
 
 #endif

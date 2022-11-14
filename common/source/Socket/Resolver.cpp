@@ -2,9 +2,9 @@
 #include <netdb.h>
 #include <iostream>
 
-#include "resolvererror.h"
-#include "resolver.h"
-#include "liberror.h"
+#include "ResolverError.h"
+#include "Resolver.h"
+#include "Liberror.h"
 
 Resolver::Resolver(const char *hostname,
                    const char *servicename,

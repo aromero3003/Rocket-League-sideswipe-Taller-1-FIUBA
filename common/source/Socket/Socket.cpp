@@ -9,9 +9,9 @@
 #include <netdb.h>
 #include <unistd.h>
 
-#include "socket.h"
-#include "resolver.h"
-#include "liberror.h"
+#include "Socket.h"
+#include "Resolver.h"
+#include "Liberror.h"
 
 Socket::Socket(
         const char *hostname,

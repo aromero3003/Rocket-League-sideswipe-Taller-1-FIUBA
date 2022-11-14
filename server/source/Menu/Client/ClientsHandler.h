@@ -4,12 +4,15 @@
 #include <utility>
 #include <vector>
 
-#include "../common_src/socket.h"
+#include "../../../../common/source/Socket/Socket.h"
 #include "GammingClient.h"
 #include "../Games/GameHandler.h"
+
+
 class ClientsHandler {
  private:
   std::vector<GammingClient*> clients;
+  GameHandler gameHandler;
 
   GammingClient* addClient(Socket&& soktAccepted);
   void startConect(GammingClient* client);
@@ -22,6 +25,8 @@ class ClientsHandler {
   void cleanDisconectClients();
 
   void disconectAll();
+
+  ClientsHandler(ClientsHandler &&other);
 
   ~ClientsHandler();
 };
