@@ -6,10 +6,12 @@
 #define PRESS_RIGHT 65
 #define PRESS_LEFT 66
 #define PRESS_SPACE 67
+#define PRESS_UP 71
 
 #define RELEASE_RIGHT 68
 #define RELEASE_LEFT 69
 #define RELEASE_SPACE 70
+#define RELEASE_UP 72
 
 #define FRAME_RATE 1000/40
 
@@ -47,7 +49,7 @@ void Client_interface::run_client(){
     uint32_t t1 = SDL_GetTicks();
 
 	while (running) {
-        running = handle_events(pq, going_right, going_left, nitroing);
+        running = handle_events(pq, going_right, going_left, nitroing, jumping);
         void render_screen();
 
         //Constant Rate Loop
@@ -109,6 +111,8 @@ bool Client_interface::handle_events(BlockingQueue<int>* pq, bool& going_right, 
 						pq->push(RELEASE_SPACE);
                         nitroing = false;
 						break;
+					case SDLK_UP:
+						jumping = false;
 				}
 			}
 		}

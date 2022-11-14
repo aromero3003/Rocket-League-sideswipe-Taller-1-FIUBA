@@ -41,4 +41,3 @@ add_executable (gameLoop
 
 target_link_libraries(gameLoop PRIVATE Threads::Threads)
 target_link_libraries(gameLoop ${SDL2PP_LIBRARIES})
-file(COPY assets DESTINATION ${CMAKE_BINARY_DIR})

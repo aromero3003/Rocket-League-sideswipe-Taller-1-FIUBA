@@ -22,7 +22,7 @@ class Client_interface{
 
         void run_client();
 
-        bool handle_events(BlockingQueue<int>* pq, bool& going_right, bool& going_left, bool& nitroing);
+        bool handle_events(BlockingQueue<int>* pq, bool& going_right, bool& going_left, bool& nitroing, bool& jumping);
 
         void render_screen(Texture& car, Texture& road, Texture& nitro);
 
