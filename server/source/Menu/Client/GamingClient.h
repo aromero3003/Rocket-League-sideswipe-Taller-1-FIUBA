@@ -28,6 +28,7 @@ private:
 
 public:
     explicit GammingClient(Socket &&skt,size_t id);
+    bool isDisconect();
     void setup(ProtectedQueue<GameCommandHandler> &eventQueue);
     void addSnap(SnapShot &snap);
     void start();

@@ -16,7 +16,7 @@ GammingClient* ClientsHandler::conectNewGamingClient(Socket&& soktAccepted, int 
 void ClientsHandler::cleanDisconectClients() {
   clients.erase(
       std::remove_if(clients.begin(), clients.end(),
-                     [](GammingClient* client) { delete client; }),
+                     [](GammingClient* client) { client.isDiconect(); }),
       clients.end());
 }
 /// si tengo referencia a algun cliente tengo q joineralo
