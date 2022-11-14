@@ -20,7 +20,6 @@ class GameHandler {
   RunGame& addRunGame();
   int addGame(const std::string& name, const int intcapacity);
   
-  int addGame(const std::string& name, const int intcapacity);
   int listAllWithOcupation(std::string& list);
   int addPlayerToGame(const std::string& name);
   ~GameHandler()=default;

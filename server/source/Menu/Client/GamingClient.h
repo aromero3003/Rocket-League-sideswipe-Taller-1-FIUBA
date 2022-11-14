@@ -13,11 +13,10 @@
 #include "../../../../common/source/Queue/blocking_queue.h"
 
 #include "../GameCommand/GameCommandHandler.h"
-#include "../Games/GameHandler.h"
-#include "../MenuCommand/CommandHandler.h"
 
 #include "ProtocolRecv.h"
 #include "ProtocolSend.h"
+#include "Snap.h"
 class GammingClient
 {
 private:
@@ -30,7 +29,7 @@ private:
 public:
     explicit GammingClient(Socket &&skt,size_t id);
     void setup(ProtectedQueue<GameCommandHandler> &eventQueue);
-    void addSnap(Snap &snap);
+    void addSnap(SnapShot &snap);
     void start();
     ~GammingClient();
 };
