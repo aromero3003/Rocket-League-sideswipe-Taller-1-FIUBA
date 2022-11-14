@@ -1,1 +1,0 @@
-/usr/bin/c++   -Wall -Werror -ggdb -DDEBUG -fno-inline  -pthread  -rdynamic CMakeFiles/hello.dir/server/main.o  -o hello 
