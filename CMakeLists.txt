@@ -23,23 +23,14 @@ include_directories(${PROJECT_SOURCE_DIR}/libs)
 include_directories(${PROJECT_SOURCE_DIR}/src/common)
 include_directories(${SDL2PP_INCLUDE_DIRS})
 
-
-add_executable (gameLoop
-    src/client/main.cpp
-    src/client/ball.cpp
-    src/client/car.cpp
-    src/client/client_interface.cpp
-    src/client/receiverThread.cpp
-    src/client/senderThread.cpp
-    src/client/world.cpp
-
-    src/common/thread.cpp
-    src/common/liberror.cpp
-    src/common/resolver.cpp
-    src/common/resolvererror.cpp
-    src/common/socket.cpp
-
+file(GLOB gameLoop_SRC
+     "src/client/*.cpp"
+     "src/common/*.cpp"
 )
+
+add_executable(gameLoop ${gameLoop_SRC})
+
+
 
 
 target_link_libraries(gameLoop PRIVATE Threads::Threads)
