@@ -5,16 +5,23 @@
 #include <mutex>
 #include <string>
 #include <utility>
-
+#include "../GameCommand/GameCommandHandler.h"
+#include "GameLogic.h"
+#include "../Client/GammingClient.h"
+#include "../../common/source/Thread.h"
+#include "../../common/source/protected_queue.h"
 
 class RunGame : public Thread {
  private:
-    QueueP
-
+   ProtectedQueue<GameCommandHandler> gammingEventQueue;
+   GameLogic gameLogic;
+   std::vector<GammingClient*> players;
  public:
-  AcceptThread(Socket& soktRef, bool& serverStatus);
+  RunGame();
+  ProtectedQueue<GameCommandHandler> & getRefGammingQueue();
+  void  addPlayer(GammingClient* gamingClient);
+  void setupStart();
   virtual void run() override;
-  void disconect();
-  virtual ~AcceptThread() = default;
+  virtual ~RunGame() = default;
 };
 #endif

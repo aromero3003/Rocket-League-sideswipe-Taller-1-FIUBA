@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <utility>
 #include <vector>
+#include <memory>
 
 #include "../../../../common/source/Socket/Socket.h"
 #include "GammingClient.h"
@@ -14,13 +15,11 @@ class ClientsHandler {
   std::vector<GammingClient*> clients;
   GameHandler gameHandler;
 
-  GammingClient* addClient(Socket&& soktAccepted);
-  void startConect(GammingClient* client);
 
  public:
   ClientsHandler();
 
-  void conectNewClient(Socket&& soktAccepted);
+  GammingClient* conectNewGamingClient(Socket&& soktAccepted, int id);
 
   void cleanDisconectClients();
 

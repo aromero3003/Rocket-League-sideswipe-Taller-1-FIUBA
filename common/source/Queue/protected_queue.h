@@ -10,9 +10,9 @@ template <class T> class ProtectedQueue {
     std::queue<T> queue;
 
  public:
-    void push(T item) {
+    void push(T& item) {
         std::lock_guard<std::mutex> lock(this->mutex);
-        this->queue.push(item);
+        this->queue.push(std::move(item));
     }
 
     size_t size() {
