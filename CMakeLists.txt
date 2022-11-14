@@ -18,3 +18,6 @@ add_subdirectory("server")
 include_directories(${PROJECT_SOURCE_DIR}/server/source)
 
 add_executable(hello server/main.cpp)
+#add_executable(alan test.cpp)
+#target_link_libraries(alan PUBLIC SDL2pp)
+

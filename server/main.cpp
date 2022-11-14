@@ -5,9 +5,9 @@
 #include <string>
 #include <utility>
 
-#include "../common_src/socket.h"
-#include "AcceptThread.h"
-#include "Server.h"
+#include "../common/source/Socket/Socket.h"
+#include "source/AcceptThread.h"
+#include "source/Server.h"
 #define ERROR 1
 #define SUCCESS 0
 #define SERVPORT argv[1]
