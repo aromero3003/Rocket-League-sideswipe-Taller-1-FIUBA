@@ -17,7 +17,7 @@ private:
     Socket& skt;
     BlockingQueue<SnapShot>& snapEventQueue;
     bool was_closed;
-    void sendResponse(std::string& response);
+    void sendResponse(std::vector<uint8_t>& response);
 public:
   explicit ProtocolSend(Socket& skt,BlockingQueue<SnapShot>& snapEventQueue);
 

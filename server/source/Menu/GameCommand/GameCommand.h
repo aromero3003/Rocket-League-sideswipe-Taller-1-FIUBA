@@ -10,9 +10,9 @@
 class GameCommand
 {
 private:
-   
+   size_t id;
 public:
-  GameCommand()=default;
+  GameCommand(id)=default;
   virtual void run(GameLogic& gameLogic) =0;
   virtual ~GameCommand()=default;
 };

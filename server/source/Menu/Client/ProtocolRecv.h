@@ -20,6 +20,7 @@ private:
     bool was_closed;
     std::istream& reciveCommand();
     ProtectedQueue<GameCommandHandler> &eventQueueRef;
+    size_t id;
 public:
     explicit ProtocolRecv(Socket &skt);
     void setup(ProtectedQueue<GameCommandHandler> &eventQueue);

@@ -1,6 +1,6 @@
 #include "GammingClient.h"
 
-explicit GammingClient::GammingClient(Socket &&otherSkt,int id):
+explicit GammingClient::GammingClient(Socket &&otherSkt,size_t id):
     id(id),skt(std::move(otherSkt)),snapEventQueue(),protocolSend(skt,snapEventQueue),protocolRecv(skt){}
 
     void GammingClient::addSnap(SnapShot &snap){
@@ -11,7 +11,7 @@ explicit GammingClient::GammingClient(Socket &&otherSkt,int id):
         protocolRecv.start();
     }
 void GammingClient::setup(ProtectedQueue<GameCommandHandler> &eventQueue){
-  eventQueueRef=eventQueue;
+  protocolRecv.setup(eventQueue,id);
 }
 GammingClient::~GammingClient(){
     protocolSend.join();

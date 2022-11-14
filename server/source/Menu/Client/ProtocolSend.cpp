@@ -5,7 +5,7 @@ skt(skt),was_closed(false),snapEventQueue(snapEventQueueRef){}
 
   ProtocolSend::~ProtocolSend(){}
 
-void ProtocolSend::sendResponse(std::string& response) {
+void ProtocolSend::sendResponse(std::vector<uint8_t>& response) {
   if (response.size() != 0) {
     skt.sendall(response.data(), response.size(), &was_closed);
   }
@@ -20,3 +20,4 @@ void ProtocolSend::run() {
 
   }
   }
+  

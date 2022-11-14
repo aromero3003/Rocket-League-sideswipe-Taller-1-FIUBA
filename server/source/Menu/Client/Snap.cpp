@@ -16,7 +16,7 @@ void SnapShot::add(const uint8_t &x) {
         this->data.push_back(x);
 }
 
-std::vector<uint8_t> SnapShot::getMsg() {
-    return this->data.data();
+std::vector<uint8_t> &SnapShot::getMsg() {
+    return data;
 }
 

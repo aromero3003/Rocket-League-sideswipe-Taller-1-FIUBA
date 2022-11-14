@@ -12,7 +12,7 @@ class RightCommand: public GameCommand
 private:
    
 public:
-  RightCommand():GameCommand(){}
+  RightCommand():GameCommand(id){}
   void run(GameLogic& gameLogic) override;
   virtual ~RightCommand(){}
 };

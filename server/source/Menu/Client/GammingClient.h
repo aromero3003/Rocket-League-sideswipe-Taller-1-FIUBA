@@ -17,14 +17,14 @@
 class GammingClient
 {
 private:
-    int id;
+    size_t id;
     Socket skt;
     BlockingQueue<SnapShot> snapEventQueue;
     ProtocolSend protocolSend;
     ProtocolRecv protocolRecv;
 
 public:
-    explicit GammingClient(Socket &&skt,int id);
+    explicit GammingClient(Socket &&skt,size_t id);
     void setup(ProtectedQueue<GameCommandHandler> &eventQueue);
     void addSnap(Snap &snap);
     void start();

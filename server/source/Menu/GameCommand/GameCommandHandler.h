@@ -15,11 +15,12 @@
 class GameCommandHandler {
  private:
   bool isEndGame;
+  size_t id;
   std::unique_ptr<GameCommand> command;
 
  public:
 
-  GameCommandHandler():isEndGame(false) {}
+  GameCommandHandler():isEndGame(false),id(id){}
   void createCommand(std::istream& parameters);
   std::unique_ptr<GameCommand> getCommand();
   bool isEnd();

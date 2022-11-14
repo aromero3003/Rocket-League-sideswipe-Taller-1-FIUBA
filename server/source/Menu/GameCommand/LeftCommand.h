@@ -12,7 +12,7 @@ class LeftCommand: public GameCommand
 private:
    
 public:
-  LeftCommand():GameCommand(){}
+  LeftCommand():GameCommand(id){}
   void run(GameLogic& gameLogic) override;
   virtual ~LeftCommand(){}
 };

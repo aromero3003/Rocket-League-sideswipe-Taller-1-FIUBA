@@ -12,7 +12,7 @@ class DownCommand: public GameCommand
 private:
    
 public:
-  DownCommand():GameCommand(){}
+  DownCommand():GameCommand(id){}
   void run(GameLogic& gameLogic) override;
   virtual ~DownCommand(){}
 };

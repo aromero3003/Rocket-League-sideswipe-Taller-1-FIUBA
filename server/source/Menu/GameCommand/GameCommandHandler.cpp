@@ -2,7 +2,7 @@
 
 
 
-GameCommandHandler::~GameCommandHandler() {}
+GameCommandHandler::~GameCommandHandler(size_t id) {}
 
 void GameCommandHandler::createCommand(std::istream &parameters) {
     std::string type;
