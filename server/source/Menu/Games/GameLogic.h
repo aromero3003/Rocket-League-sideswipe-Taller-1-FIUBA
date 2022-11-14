@@ -17,7 +17,7 @@ class GameLogic {
     void setPlayer(SnapShot& snap,Car& player);
     void setBall(SnapShot& snap);
     void setGoal(SnapShot& snap);
-   void setSnap(Snap& snap);
+    void setSnap(SnapShot& snap);
  public:
     GameLogic(size_t cant_players);
 

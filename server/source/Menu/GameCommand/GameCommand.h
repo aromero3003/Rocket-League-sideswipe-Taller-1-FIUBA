@@ -12,7 +12,7 @@ class GameCommand
 private:
    size_t id;
 public:
-  GameCommand(id)=default;
+  GameCommand(size_t id) : id(id) {}
   virtual void run(GameLogic& gameLogic) =0;
   virtual ~GameCommand()=default;
 };
