@@ -1,0 +1,10 @@
+add_library(Socket
+    Liberror.cpp
+    Liberror.h
+    Resolver.cpp
+    Resolvererror.cpp
+    Resolvererror.h
+    Resolver.h
+    Socket.cpp
+    Socket.h
+)
