@@ -1,1 +1,0 @@
-/usr/bin/c++  -Wall -Werror -ggdb -DDEBUG -fno-inline  -pthread -rdynamic CMakeFiles/alan.dir/test.o -o alan  -lSDL2pp 
