@@ -1,5 +1,5 @@
-#ifndef __RIGHTCOMMAND_H__
-#define __RIGHTCOMMAND_H__
+#ifndef __UPRELEASECOMMAND_H__
+#define __UPRELEASECOMMAND_H__
 
 #include <istream>
 #include <list>
@@ -7,13 +7,13 @@
 #include <string>
 
 #include "GameCommand.h"
-class RightCommand: public GameCommand
+class UpReleaseCommand: public GameCommand
 {
 private:
    
 public:
-  RightCommand(size_t id);
+    UpReleaseCommand(size_t id);
   void run(GameLogic& gameLogic) override;
-  virtual ~RightCommand(){}
+  virtual ~UpReleaseCommand(){}
 };
 #endif

@@ -12,8 +12,8 @@ class GameCommand
 protected:
    size_t id;
 public:
-  GameCommand(size_t id) : id(id) {}
+  GameCommand(size_t id);
   virtual void run(GameLogic& gameLogic) =0;
-  virtual ~GameCommand()=default;
+  virtual ~GameCommand()  =default;
 };
 #endif

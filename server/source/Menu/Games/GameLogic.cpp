@@ -56,20 +56,21 @@ void GameLogic::move_player_right(size_t id) {
 
 void GameLogic::step() {
     this->world.Step(TIME_STEP, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
+
 }
 
 SnapShot GameLogic::getSnap(){
     return snap;
 }
 void GameLogic::setSnap(SnapShot& snap){
+    setBall(snap);
     for (Car& player : players){
         setPlayer(snap,player);
     }
-    setBall(snap);
+    
 }
 
 void GameLogic::setPlayer(SnapShot& snap,Car& player){
-    snap.add(player.getPosition().x);
        snap.add(player.getPosition().y);
        snap.add(player.getPosition().x);
        snap.add(player.getAngle().y);

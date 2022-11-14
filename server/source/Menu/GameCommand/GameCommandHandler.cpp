@@ -3,25 +3,30 @@
 
 GameCommandHandler::GameCommandHandler(size_t id):isEndGame(false),id(id) {}
 
-void GameCommandHandler::createCommand(std::istream &parameters) {
-    std::string type;
-    parameters >> type >> std::ws;
+void GameCommandHandler::createCommand(int parameter) {
 
-    if (type == "LISTAR") {
-        
-    } else if (type == "CREAR") {
-        
-    } else if (type == "UNIR") {
-        
-    } else {
-        throw std::invalid_argument("tipo de comando no encontrado :" + type);
-    }
+    if (parameter == PRESS_LEFT) {
+        std::unique_ptr<GameCommand>  command(new LeftCommand(id));
+    } else     if (parameter == PRESS_RIGHT) {
+        std::unique_ptr<GameCommand>  command(new RightCommand(id));
+    } else     if (parameter == PRESS_SPACE) {
+        std::unique_ptr<GameCommand>  command(new SpaceCommand(id));
+    } else     if (parameter == PRESS_UP) {
+        std::unique_ptr<GameCommand>  command(new UpCommand(id));
+    } else     if (parameter == RELEASE_LEFT) {
+        std::unique_ptr<GameCommand>  command(new LeftReleaseCommand(id));
+    } else     if (parameter == RELEASE_RIGHT) {
+        std::unique_ptr<GameCommand>  command(new RightReleaseCommand(id));
+    } else     if (parameter == RELEASE_SPACE) {
+        std::unique_ptr<GameCommand>  command(new SpaceReleaseCommand(id));
+    } else     if (parameter == RELEASE_UP) {
+        std::unique_ptr<GameCommand>  command(new UpReleaseCommand(id));
+    }  
 }
 
 bool GameCommandHandler::isEnd() { return isEndGame;}
 
 std::unique_ptr<GameCommand> GameCommandHandler::getCommand() {
-    std::unique_ptr<GameCommand>  command(new UpCommand());
-    return command;
+        return command;
 }
 

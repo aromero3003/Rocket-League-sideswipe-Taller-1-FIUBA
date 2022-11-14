@@ -1,5 +1,5 @@
-#ifndef __RIGHTCOMMAND_H__
-#define __RIGHTCOMMAND_H__
+#ifndef __DOWNCOMMAND_H__
+#define __DOWNCOMMAND_H__
 
 #include <istream>
 #include <list>
@@ -7,13 +7,13 @@
 #include <string>
 
 #include "GameCommand.h"
-class RightCommand: public GameCommand
+class SpaceCommand: public GameCommand
 {
 private:
    
 public:
-  RightCommand(size_t id);
+  SpaceCommand(size_t id);
   void run(GameLogic& gameLogic) override;
-  virtual ~RightCommand(){}
+  virtual ~SpaceCommand(){}
 };
 #endif
