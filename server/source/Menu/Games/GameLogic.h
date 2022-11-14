@@ -5,8 +5,8 @@
 #include <box2d/b2_world.h>
 #include <vector>
 #include <cstdint>
-#include "GameObject/ball.h"
-#include "GameObject/car.h"
+#include "GameObjects/ball.h"
+#include "GameObjects/car.h"
 #include "../Client/Snap.h"
 
 class GameLogic {

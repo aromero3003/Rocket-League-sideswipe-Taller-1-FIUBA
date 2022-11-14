@@ -7,7 +7,7 @@
 #include <utility>
 #include "../GameCommand/GameCommandHandler.h"
 #include "GameLogic.h"
-#include "../Client/GammingClient.h"
+#include "../Client/GamingClient.h"
 #include "../../../../common/source/Thread/Thread.h"
 #include "../../../../common/source/Queue/protected_queue.h"
 

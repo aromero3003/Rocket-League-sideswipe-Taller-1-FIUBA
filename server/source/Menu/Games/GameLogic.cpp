@@ -8,8 +8,6 @@
 #include <box2d/b2_chain_shape.h>
 #include <box2d/b2_world.h>
 #include <cstddef>
-#include "car.h"
-#include "ball.h"
 #include "../Client/Snap.h"
 
 GameLogic::GameLogic(size_t cant_players) :

@@ -6,7 +6,7 @@
 #include <memory>
 
 #include "../../../../common/source/Socket/Socket.h"
-#include "GammingClient.h"
+#include "GamingClient.h"
 #include "../Games/GameHandler.h"
 
 

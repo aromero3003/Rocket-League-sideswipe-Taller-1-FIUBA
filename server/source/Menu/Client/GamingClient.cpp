@@ -1,4 +1,4 @@
-#include "GammingClient.h"
+#include "GamingClient.h"
 
 explicit GammingClient::GammingClient(Socket &&otherSkt,size_t id):
     id(id),skt(std::move(otherSkt)),snapEventQueue(),protocolSend(skt,snapEventQueue),protocolRecv(skt){}
