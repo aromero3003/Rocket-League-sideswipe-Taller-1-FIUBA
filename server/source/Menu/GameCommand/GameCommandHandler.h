@@ -1,6 +1,7 @@
 #ifndef __GAMECOMMANDHANDLER_H__
 #define __GAMECOMMANDHANDLER_H__
 
+#include <cstddef>
 #include <exception>
 #include <list>
 #include <string>
@@ -19,12 +20,10 @@ class GameCommandHandler {
   std::unique_ptr<GameCommand> command;
 
  public:
-
-  GameCommandHandler():isEndGame(false),id(id){}
+  GameCommandHandler(size_t id);
   void createCommand(std::istream& parameters);
   std::unique_ptr<GameCommand> getCommand();
   bool isEnd();
-  ~GameCommandHandler();
 };
 
 #endif

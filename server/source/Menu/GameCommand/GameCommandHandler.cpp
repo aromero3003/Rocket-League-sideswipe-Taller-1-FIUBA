@@ -1,8 +1,7 @@
 #include "GameCommandHandler.h"
 
 
-
-GameCommandHandler::~GameCommandHandler(size_t id) {}
+GameCommandHandler::GameCommandHandler(size_t id):isEndGame(false),id(id) {}
 
 void GameCommandHandler::createCommand(std::istream &parameters) {
     std::string type;

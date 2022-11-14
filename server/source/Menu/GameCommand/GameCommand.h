@@ -9,7 +9,7 @@
 #include "../Games/GameLogic.h"
 class GameCommand
 {
-private:
+protected:
    size_t id;
 public:
   GameCommand(size_t id) : id(id) {}
