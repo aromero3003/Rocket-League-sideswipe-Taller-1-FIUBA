@@ -4,7 +4,7 @@
 #include <SDL2pp/SDL2pp.hh>
 #include "senderThread.h"
 #include "receiverThread.h"
-#include "socket.h"
+#include "../common/socket.h"
 #include "blockingQueue.h"
 #include "world.h"
 

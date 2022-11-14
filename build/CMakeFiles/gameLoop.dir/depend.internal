@@ -40,9 +40,9 @@ CMakeFiles/gameLoop.dir/src/client/client_interface.cpp.o
  /home/franco/Taller/Rocket-League-sideswipe-Taller-1-FIUBA/src/client/client_interface.h
  /home/franco/Taller/Rocket-League-sideswipe-Taller-1-FIUBA/src/client/receiverThread.h
  /home/franco/Taller/Rocket-League-sideswipe-Taller-1-FIUBA/src/client/senderThread.h
- /home/franco/Taller/Rocket-League-sideswipe-Taller-1-FIUBA/src/client/socket.h
- /home/franco/Taller/Rocket-League-sideswipe-Taller-1-FIUBA/src/client/thread.h
  /home/franco/Taller/Rocket-League-sideswipe-Taller-1-FIUBA/src/client/world.h
+ /home/franco/Taller/Rocket-League-sideswipe-Taller-1-FIUBA/src/common/socket.h
+ /home/franco/Taller/Rocket-League-sideswipe-Taller-1-FIUBA/src/common/thread.h
  /usr/include/SDL2/SDL.h
  /usr/include/SDL2/SDL_assert.h
  /usr/include/SDL2/SDL_clipboard.h
@@ -92,9 +92,6 @@ CMakeFiles/gameLoop.dir/src/client/client_interface.cpp.o
  /usr/local/include/SDL2/close_code.h
  libs/libSDL2pp/SDL2pp/Config.hh
  libs/libSDL2pp/SDL2pp/Export.hh
-CMakeFiles/gameLoop.dir/src/client/liberror.cpp.o
- /home/franco/Taller/Rocket-League-sideswipe-Taller-1-FIUBA/src/client/liberror.cpp
- /home/franco/Taller/Rocket-League-sideswipe-Taller-1-FIUBA/src/client/liberror.h
 CMakeFiles/gameLoop.dir/src/client/main.cpp.o
  ../libs/libSDL2pp/SDL2pp/AudioDevice.hh
  ../libs/libSDL2pp/SDL2pp/AudioSpec.hh
@@ -128,9 +125,9 @@ CMakeFiles/gameLoop.dir/src/client/main.cpp.o
  /home/franco/Taller/Rocket-League-sideswipe-Taller-1-FIUBA/src/client/main.cpp
  /home/franco/Taller/Rocket-League-sideswipe-Taller-1-FIUBA/src/client/receiverThread.h
  /home/franco/Taller/Rocket-League-sideswipe-Taller-1-FIUBA/src/client/senderThread.h
- /home/franco/Taller/Rocket-League-sideswipe-Taller-1-FIUBA/src/client/socket.h
- /home/franco/Taller/Rocket-League-sideswipe-Taller-1-FIUBA/src/client/thread.h
  /home/franco/Taller/Rocket-League-sideswipe-Taller-1-FIUBA/src/client/world.h
+ /home/franco/Taller/Rocket-League-sideswipe-Taller-1-FIUBA/src/common/socket.h
+ /home/franco/Taller/Rocket-League-sideswipe-Taller-1-FIUBA/src/common/thread.h
  /usr/include/SDL2/SDL.h
  /usr/include/SDL2/SDL_assert.h
  /usr/include/SDL2/SDL_clipboard.h
@@ -185,33 +182,36 @@ CMakeFiles/gameLoop.dir/src/client/receiverThread.cpp.o
  /home/franco/Taller/Rocket-League-sideswipe-Taller-1-FIUBA/src/client/car.h
  /home/franco/Taller/Rocket-League-sideswipe-Taller-1-FIUBA/src/client/receiverThread.cpp
  /home/franco/Taller/Rocket-League-sideswipe-Taller-1-FIUBA/src/client/receiverThread.h
- /home/franco/Taller/Rocket-League-sideswipe-Taller-1-FIUBA/src/client/socket.h
- /home/franco/Taller/Rocket-League-sideswipe-Taller-1-FIUBA/src/client/thread.h
  /home/franco/Taller/Rocket-League-sideswipe-Taller-1-FIUBA/src/client/world.h
-CMakeFiles/gameLoop.dir/src/client/resolver.cpp.o
- /home/franco/Taller/Rocket-League-sideswipe-Taller-1-FIUBA/src/client/liberror.h
- /home/franco/Taller/Rocket-League-sideswipe-Taller-1-FIUBA/src/client/resolver.cpp
- /home/franco/Taller/Rocket-League-sideswipe-Taller-1-FIUBA/src/client/resolver.h
- /home/franco/Taller/Rocket-League-sideswipe-Taller-1-FIUBA/src/client/resolvererror.h
-CMakeFiles/gameLoop.dir/src/client/resolvererror.cpp.o
- /home/franco/Taller/Rocket-League-sideswipe-Taller-1-FIUBA/src/client/resolvererror.cpp
- /home/franco/Taller/Rocket-League-sideswipe-Taller-1-FIUBA/src/client/resolvererror.h
+ /home/franco/Taller/Rocket-League-sideswipe-Taller-1-FIUBA/src/common/socket.h
+ /home/franco/Taller/Rocket-League-sideswipe-Taller-1-FIUBA/src/common/thread.h
 CMakeFiles/gameLoop.dir/src/client/senderThread.cpp.o
  /home/franco/Taller/Rocket-League-sideswipe-Taller-1-FIUBA/src/client/blockingQueue.h
  /home/franco/Taller/Rocket-League-sideswipe-Taller-1-FIUBA/src/client/senderThread.cpp
  /home/franco/Taller/Rocket-League-sideswipe-Taller-1-FIUBA/src/client/senderThread.h
- /home/franco/Taller/Rocket-League-sideswipe-Taller-1-FIUBA/src/client/socket.h
- /home/franco/Taller/Rocket-League-sideswipe-Taller-1-FIUBA/src/client/thread.h
-CMakeFiles/gameLoop.dir/src/client/socket.cpp.o
- /home/franco/Taller/Rocket-League-sideswipe-Taller-1-FIUBA/src/client/liberror.h
- /home/franco/Taller/Rocket-League-sideswipe-Taller-1-FIUBA/src/client/resolver.h
- /home/franco/Taller/Rocket-League-sideswipe-Taller-1-FIUBA/src/client/socket.cpp
- /home/franco/Taller/Rocket-League-sideswipe-Taller-1-FIUBA/src/client/socket.h
-CMakeFiles/gameLoop.dir/src/client/thread.cpp.o
- /home/franco/Taller/Rocket-League-sideswipe-Taller-1-FIUBA/src/client/thread.cpp
- /home/franco/Taller/Rocket-League-sideswipe-Taller-1-FIUBA/src/client/thread.h
+ /home/franco/Taller/Rocket-League-sideswipe-Taller-1-FIUBA/src/common/socket.h
+ /home/franco/Taller/Rocket-League-sideswipe-Taller-1-FIUBA/src/common/thread.h
 CMakeFiles/gameLoop.dir/src/client/world.cpp.o
  /home/franco/Taller/Rocket-League-sideswipe-Taller-1-FIUBA/src/client/ball.h
  /home/franco/Taller/Rocket-League-sideswipe-Taller-1-FIUBA/src/client/car.h
  /home/franco/Taller/Rocket-League-sideswipe-Taller-1-FIUBA/src/client/world.cpp
  /home/franco/Taller/Rocket-League-sideswipe-Taller-1-FIUBA/src/client/world.h
+CMakeFiles/gameLoop.dir/src/common/liberror.cpp.o
+ /home/franco/Taller/Rocket-League-sideswipe-Taller-1-FIUBA/src/common/liberror.cpp
+ /home/franco/Taller/Rocket-League-sideswipe-Taller-1-FIUBA/src/common/liberror.h
+CMakeFiles/gameLoop.dir/src/common/resolver.cpp.o
+ /home/franco/Taller/Rocket-League-sideswipe-Taller-1-FIUBA/src/common/liberror.h
+ /home/franco/Taller/Rocket-League-sideswipe-Taller-1-FIUBA/src/common/resolver.cpp
+ /home/franco/Taller/Rocket-League-sideswipe-Taller-1-FIUBA/src/common/resolver.h
+ /home/franco/Taller/Rocket-League-sideswipe-Taller-1-FIUBA/src/common/resolvererror.h
+CMakeFiles/gameLoop.dir/src/common/resolvererror.cpp.o
+ /home/franco/Taller/Rocket-League-sideswipe-Taller-1-FIUBA/src/common/resolvererror.cpp
+ /home/franco/Taller/Rocket-League-sideswipe-Taller-1-FIUBA/src/common/resolvererror.h
+CMakeFiles/gameLoop.dir/src/common/socket.cpp.o
+ /home/franco/Taller/Rocket-League-sideswipe-Taller-1-FIUBA/src/common/liberror.h
+ /home/franco/Taller/Rocket-League-sideswipe-Taller-1-FIUBA/src/common/resolver.h
+ /home/franco/Taller/Rocket-League-sideswipe-Taller-1-FIUBA/src/common/socket.cpp
+ /home/franco/Taller/Rocket-League-sideswipe-Taller-1-FIUBA/src/common/socket.h
+CMakeFiles/gameLoop.dir/src/common/thread.cpp.o
+ /home/franco/Taller/Rocket-League-sideswipe-Taller-1-FIUBA/src/common/thread.cpp
+ /home/franco/Taller/Rocket-League-sideswipe-Taller-1-FIUBA/src/common/thread.h

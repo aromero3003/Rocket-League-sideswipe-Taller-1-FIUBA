@@ -217,33 +217,6 @@ src/client/client_interface.cpp.s:
 	$(MAKE) -f CMakeFiles/gameLoop.dir/build.make CMakeFiles/gameLoop.dir/src/client/client_interface.cpp.s
 .PHONY : src/client/client_interface.cpp.s
 
-src/client/liberror.o: src/client/liberror.cpp.o
-
-.PHONY : src/client/liberror.o
-
-# target to build an object file
-src/client/liberror.cpp.o:
-	$(MAKE) -f CMakeFiles/gameLoop.dir/build.make CMakeFiles/gameLoop.dir/src/client/liberror.cpp.o
-.PHONY : src/client/liberror.cpp.o
-
-src/client/liberror.i: src/client/liberror.cpp.i
-
-.PHONY : src/client/liberror.i
-
-# target to preprocess a source file
-src/client/liberror.cpp.i:
-	$(MAKE) -f CMakeFiles/gameLoop.dir/build.make CMakeFiles/gameLoop.dir/src/client/liberror.cpp.i
-.PHONY : src/client/liberror.cpp.i
-
-src/client/liberror.s: src/client/liberror.cpp.s
-
-.PHONY : src/client/liberror.s
-
-# target to generate assembly for a file
-src/client/liberror.cpp.s:
-	$(MAKE) -f CMakeFiles/gameLoop.dir/build.make CMakeFiles/gameLoop.dir/src/client/liberror.cpp.s
-.PHONY : src/client/liberror.cpp.s
-
 src/client/main.o: src/client/main.cpp.o
 
 .PHONY : src/client/main.o
@@ -298,60 +271,6 @@ src/client/receiverThread.cpp.s:
 	$(MAKE) -f CMakeFiles/gameLoop.dir/build.make CMakeFiles/gameLoop.dir/src/client/receiverThread.cpp.s
 .PHONY : src/client/receiverThread.cpp.s
 
-src/client/resolver.o: src/client/resolver.cpp.o
-
-.PHONY : src/client/resolver.o
-
-# target to build an object file
-src/client/resolver.cpp.o:
-	$(MAKE) -f CMakeFiles/gameLoop.dir/build.make CMakeFiles/gameLoop.dir/src/client/resolver.cpp.o
-.PHONY : src/client/resolver.cpp.o
-
-src/client/resolver.i: src/client/resolver.cpp.i
-
-.PHONY : src/client/resolver.i
-
-# target to preprocess a source file
-src/client/resolver.cpp.i:
-	$(MAKE) -f CMakeFiles/gameLoop.dir/build.make CMakeFiles/gameLoop.dir/src/client/resolver.cpp.i
-.PHONY : src/client/resolver.cpp.i
-
-src/client/resolver.s: src/client/resolver.cpp.s
-
-.PHONY : src/client/resolver.s
-
-# target to generate assembly for a file
-src/client/resolver.cpp.s:
-	$(MAKE) -f CMakeFiles/gameLoop.dir/build.make CMakeFiles/gameLoop.dir/src/client/resolver.cpp.s
-.PHONY : src/client/resolver.cpp.s
-
-src/client/resolvererror.o: src/client/resolvererror.cpp.o
-
-.PHONY : src/client/resolvererror.o
-
-# target to build an object file
-src/client/resolvererror.cpp.o:
-	$(MAKE) -f CMakeFiles/gameLoop.dir/build.make CMakeFiles/gameLoop.dir/src/client/resolvererror.cpp.o
-.PHONY : src/client/resolvererror.cpp.o
-
-src/client/resolvererror.i: src/client/resolvererror.cpp.i
-
-.PHONY : src/client/resolvererror.i
-
-# target to preprocess a source file
-src/client/resolvererror.cpp.i:
-	$(MAKE) -f CMakeFiles/gameLoop.dir/build.make CMakeFiles/gameLoop.dir/src/client/resolvererror.cpp.i
-.PHONY : src/client/resolvererror.cpp.i
-
-src/client/resolvererror.s: src/client/resolvererror.cpp.s
-
-.PHONY : src/client/resolvererror.s
-
-# target to generate assembly for a file
-src/client/resolvererror.cpp.s:
-	$(MAKE) -f CMakeFiles/gameLoop.dir/build.make CMakeFiles/gameLoop.dir/src/client/resolvererror.cpp.s
-.PHONY : src/client/resolvererror.cpp.s
-
 src/client/senderThread.o: src/client/senderThread.cpp.o
 
 .PHONY : src/client/senderThread.o
@@ -378,60 +297,6 @@ src/client/senderThread.s: src/client/senderThread.cpp.s
 src/client/senderThread.cpp.s:
 	$(MAKE) -f CMakeFiles/gameLoop.dir/build.make CMakeFiles/gameLoop.dir/src/client/senderThread.cpp.s
 .PHONY : src/client/senderThread.cpp.s
-
-src/client/socket.o: src/client/socket.cpp.o
-
-.PHONY : src/client/socket.o
-
-# target to build an object file
-src/client/socket.cpp.o:
-	$(MAKE) -f CMakeFiles/gameLoop.dir/build.make CMakeFiles/gameLoop.dir/src/client/socket.cpp.o
-.PHONY : src/client/socket.cpp.o
-
-src/client/socket.i: src/client/socket.cpp.i
-
-.PHONY : src/client/socket.i
-
-# target to preprocess a source file
-src/client/socket.cpp.i:
-	$(MAKE) -f CMakeFiles/gameLoop.dir/build.make CMakeFiles/gameLoop.dir/src/client/socket.cpp.i
-.PHONY : src/client/socket.cpp.i
-
-src/client/socket.s: src/client/socket.cpp.s
-
-.PHONY : src/client/socket.s
-
-# target to generate assembly for a file
-src/client/socket.cpp.s:
-	$(MAKE) -f CMakeFiles/gameLoop.dir/build.make CMakeFiles/gameLoop.dir/src/client/socket.cpp.s
-.PHONY : src/client/socket.cpp.s
-
-src/client/thread.o: src/client/thread.cpp.o
-
-.PHONY : src/client/thread.o
-
-# target to build an object file
-src/client/thread.cpp.o:
-	$(MAKE) -f CMakeFiles/gameLoop.dir/build.make CMakeFiles/gameLoop.dir/src/client/thread.cpp.o
-.PHONY : src/client/thread.cpp.o
-
-src/client/thread.i: src/client/thread.cpp.i
-
-.PHONY : src/client/thread.i
-
-# target to preprocess a source file
-src/client/thread.cpp.i:
-	$(MAKE) -f CMakeFiles/gameLoop.dir/build.make CMakeFiles/gameLoop.dir/src/client/thread.cpp.i
-.PHONY : src/client/thread.cpp.i
-
-src/client/thread.s: src/client/thread.cpp.s
-
-.PHONY : src/client/thread.s
-
-# target to generate assembly for a file
-src/client/thread.cpp.s:
-	$(MAKE) -f CMakeFiles/gameLoop.dir/build.make CMakeFiles/gameLoop.dir/src/client/thread.cpp.s
-.PHONY : src/client/thread.cpp.s
 
 src/client/world.o: src/client/world.cpp.o
 
@@ -460,6 +325,141 @@ src/client/world.cpp.s:
 	$(MAKE) -f CMakeFiles/gameLoop.dir/build.make CMakeFiles/gameLoop.dir/src/client/world.cpp.s
 .PHONY : src/client/world.cpp.s
 
+src/common/liberror.o: src/common/liberror.cpp.o
+
+.PHONY : src/common/liberror.o
+
+# target to build an object file
+src/common/liberror.cpp.o:
+	$(MAKE) -f CMakeFiles/gameLoop.dir/build.make CMakeFiles/gameLoop.dir/src/common/liberror.cpp.o
+.PHONY : src/common/liberror.cpp.o
+
+src/common/liberror.i: src/common/liberror.cpp.i
+
+.PHONY : src/common/liberror.i
+
+# target to preprocess a source file
+src/common/liberror.cpp.i:
+	$(MAKE) -f CMakeFiles/gameLoop.dir/build.make CMakeFiles/gameLoop.dir/src/common/liberror.cpp.i
+.PHONY : src/common/liberror.cpp.i
+
+src/common/liberror.s: src/common/liberror.cpp.s
+
+.PHONY : src/common/liberror.s
+
+# target to generate assembly for a file
+src/common/liberror.cpp.s:
+	$(MAKE) -f CMakeFiles/gameLoop.dir/build.make CMakeFiles/gameLoop.dir/src/common/liberror.cpp.s
+.PHONY : src/common/liberror.cpp.s
+
+src/common/resolver.o: src/common/resolver.cpp.o
+
+.PHONY : src/common/resolver.o
+
+# target to build an object file
+src/common/resolver.cpp.o:
+	$(MAKE) -f CMakeFiles/gameLoop.dir/build.make CMakeFiles/gameLoop.dir/src/common/resolver.cpp.o
+.PHONY : src/common/resolver.cpp.o
+
+src/common/resolver.i: src/common/resolver.cpp.i
+
+.PHONY : src/common/resolver.i
+
+# target to preprocess a source file
+src/common/resolver.cpp.i:
+	$(MAKE) -f CMakeFiles/gameLoop.dir/build.make CMakeFiles/gameLoop.dir/src/common/resolver.cpp.i
+.PHONY : src/common/resolver.cpp.i
+
+src/common/resolver.s: src/common/resolver.cpp.s
+
+.PHONY : src/common/resolver.s
+
+# target to generate assembly for a file
+src/common/resolver.cpp.s:
+	$(MAKE) -f CMakeFiles/gameLoop.dir/build.make CMakeFiles/gameLoop.dir/src/common/resolver.cpp.s
+.PHONY : src/common/resolver.cpp.s
+
+src/common/resolvererror.o: src/common/resolvererror.cpp.o
+
+.PHONY : src/common/resolvererror.o
+
+# target to build an object file
+src/common/resolvererror.cpp.o:
+	$(MAKE) -f CMakeFiles/gameLoop.dir/build.make CMakeFiles/gameLoop.dir/src/common/resolvererror.cpp.o
+.PHONY : src/common/resolvererror.cpp.o
+
+src/common/resolvererror.i: src/common/resolvererror.cpp.i
+
+.PHONY : src/common/resolvererror.i
+
+# target to preprocess a source file
+src/common/resolvererror.cpp.i:
+	$(MAKE) -f CMakeFiles/gameLoop.dir/build.make CMakeFiles/gameLoop.dir/src/common/resolvererror.cpp.i
+.PHONY : src/common/resolvererror.cpp.i
+
+src/common/resolvererror.s: src/common/resolvererror.cpp.s
+
+.PHONY : src/common/resolvererror.s
+
+# target to generate assembly for a file
+src/common/resolvererror.cpp.s:
+	$(MAKE) -f CMakeFiles/gameLoop.dir/build.make CMakeFiles/gameLoop.dir/src/common/resolvererror.cpp.s
+.PHONY : src/common/resolvererror.cpp.s
+
+src/common/socket.o: src/common/socket.cpp.o
+
+.PHONY : src/common/socket.o
+
+# target to build an object file
+src/common/socket.cpp.o:
+	$(MAKE) -f CMakeFiles/gameLoop.dir/build.make CMakeFiles/gameLoop.dir/src/common/socket.cpp.o
+.PHONY : src/common/socket.cpp.o
+
+src/common/socket.i: src/common/socket.cpp.i
+
+.PHONY : src/common/socket.i
+
+# target to preprocess a source file
+src/common/socket.cpp.i:
+	$(MAKE) -f CMakeFiles/gameLoop.dir/build.make CMakeFiles/gameLoop.dir/src/common/socket.cpp.i
+.PHONY : src/common/socket.cpp.i
+
+src/common/socket.s: src/common/socket.cpp.s
+
+.PHONY : src/common/socket.s
+
+# target to generate assembly for a file
+src/common/socket.cpp.s:
+	$(MAKE) -f CMakeFiles/gameLoop.dir/build.make CMakeFiles/gameLoop.dir/src/common/socket.cpp.s
+.PHONY : src/common/socket.cpp.s
+
+src/common/thread.o: src/common/thread.cpp.o
+
+.PHONY : src/common/thread.o
+
+# target to build an object file
+src/common/thread.cpp.o:
+	$(MAKE) -f CMakeFiles/gameLoop.dir/build.make CMakeFiles/gameLoop.dir/src/common/thread.cpp.o
+.PHONY : src/common/thread.cpp.o
+
+src/common/thread.i: src/common/thread.cpp.i
+
+.PHONY : src/common/thread.i
+
+# target to preprocess a source file
+src/common/thread.cpp.i:
+	$(MAKE) -f CMakeFiles/gameLoop.dir/build.make CMakeFiles/gameLoop.dir/src/common/thread.cpp.i
+.PHONY : src/common/thread.cpp.i
+
+src/common/thread.s: src/common/thread.cpp.s
+
+.PHONY : src/common/thread.s
+
+# target to generate assembly for a file
+src/common/thread.cpp.s:
+	$(MAKE) -f CMakeFiles/gameLoop.dir/build.make CMakeFiles/gameLoop.dir/src/common/thread.cpp.s
+.PHONY : src/common/thread.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -479,33 +479,33 @@ help:
 	@echo "... src/client/client_interface.o"
 	@echo "... src/client/client_interface.i"
 	@echo "... src/client/client_interface.s"
-	@echo "... src/client/liberror.o"
-	@echo "... src/client/liberror.i"
-	@echo "... src/client/liberror.s"
 	@echo "... src/client/main.o"
 	@echo "... src/client/main.i"
 	@echo "... src/client/main.s"
 	@echo "... src/client/receiverThread.o"
 	@echo "... src/client/receiverThread.i"
 	@echo "... src/client/receiverThread.s"
-	@echo "... src/client/resolver.o"
-	@echo "... src/client/resolver.i"
-	@echo "... src/client/resolver.s"
-	@echo "... src/client/resolvererror.o"
-	@echo "... src/client/resolvererror.i"
-	@echo "... src/client/resolvererror.s"
 	@echo "... src/client/senderThread.o"
 	@echo "... src/client/senderThread.i"
 	@echo "... src/client/senderThread.s"
-	@echo "... src/client/socket.o"
-	@echo "... src/client/socket.i"
-	@echo "... src/client/socket.s"
-	@echo "... src/client/thread.o"
-	@echo "... src/client/thread.i"
-	@echo "... src/client/thread.s"
 	@echo "... src/client/world.o"
 	@echo "... src/client/world.i"
 	@echo "... src/client/world.s"
+	@echo "... src/common/liberror.o"
+	@echo "... src/common/liberror.i"
+	@echo "... src/common/liberror.s"
+	@echo "... src/common/resolver.o"
+	@echo "... src/common/resolver.i"
+	@echo "... src/common/resolver.s"
+	@echo "... src/common/resolvererror.o"
+	@echo "... src/common/resolvererror.i"
+	@echo "... src/common/resolvererror.s"
+	@echo "... src/common/socket.o"
+	@echo "... src/common/socket.i"
+	@echo "... src/common/socket.s"
+	@echo "... src/common/thread.o"
+	@echo "... src/common/thread.i"
+	@echo "... src/common/thread.s"
 .PHONY : help
 
 

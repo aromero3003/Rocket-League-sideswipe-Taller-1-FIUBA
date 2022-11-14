@@ -29,13 +29,15 @@ add_executable (gameLoop
     src/client/car.cpp
     src/client/client_interface.cpp
     src/client/receiverThread.cpp
-    src/client/thread.cpp
-    src/client/liberror.cpp
-    src/client/resolver.cpp
-    src/client/resolvererror.cpp
     src/client/senderThread.cpp
-    src/client/socket.cpp
     src/client/world.cpp
+
+    src/common/thread.cpp
+    src/common/liberror.cpp
+    src/common/resolver.cpp
+    src/common/resolvererror.cpp
+    src/common/socket.cpp
+
 )
 
 
