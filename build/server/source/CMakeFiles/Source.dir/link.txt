@@ -1,0 +1,2 @@
+/usr/bin/ar qc libSource.a CMakeFiles/Source.dir/AcceptThread.o CMakeFiles/Source.dir/Server.o
+/usr/bin/ranlib libSource.a

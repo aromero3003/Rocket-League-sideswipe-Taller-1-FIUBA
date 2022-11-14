@@ -1,15 +1,14 @@
+
+# Consider dependencies only in project.
+set(CMAKE_DEPENDS_IN_PROJECT_ONLY OFF)
+
 # The set of languages for which implicit dependencies are needed:
 set(CMAKE_DEPENDS_LANGUAGES
-  "CXX"
   )
-# The set of files for implicit dependencies of each language:
-set(CMAKE_DEPENDS_CHECK_CXX
-  "/home/franco/Taller/Rocket-League-sideswipe-Taller-1-FIUBA/server/main.cpp" "/home/franco/Taller/Rocket-League-sideswipe-Taller-1-FIUBA/build/CMakeFiles/hello.dir/server/main.o"
-  )
-set(CMAKE_CXX_COMPILER_ID "GNU")
 
-# The include file search paths:
-set(CMAKE_CXX_TARGET_INCLUDE_PATH
+# The set of dependency files which are needed:
+set(CMAKE_DEPENDS_DEPENDENCY_FILES
+  "/home/alan/Rocket-League-sideswipe-Taller-1-FIUBA/server/main.cpp" "CMakeFiles/hello.dir/server/main.o" "gcc" "CMakeFiles/hello.dir/server/main.o.d"
   )
 
 # Targets to which this target links.
