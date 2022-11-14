@@ -1,8 +1,8 @@
 #ifndef RECEIVER_THREAD_H
 #define RECEIVER_THREAD_H
 
-#include "../common/socket.h"
-#include "../common/thread.h"
+#include "socket.h"
+#include "thread.h"
 #include "world.h"
 
 class ReceiverThread : public Thread {

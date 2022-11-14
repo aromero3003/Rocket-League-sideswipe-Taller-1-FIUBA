@@ -33,6 +33,8 @@ CMakeFiles/gameLoop.dir/src/client/client_interface.cpp.o
  ../libs/libSDL2pp/SDL2pp/Wav.hh
  ../libs/libSDL2pp/SDL2pp/Window.hh
  ../libs/libSDL2pp/SDL2pp/external/libcpp_optional.hh
+ ../src/common/socket.h
+ ../src/common/thread.h
  /home/franco/Taller/Rocket-League-sideswipe-Taller-1-FIUBA/src/client/ball.h
  /home/franco/Taller/Rocket-League-sideswipe-Taller-1-FIUBA/src/client/blockingQueue.h
  /home/franco/Taller/Rocket-League-sideswipe-Taller-1-FIUBA/src/client/car.h
@@ -41,8 +43,6 @@ CMakeFiles/gameLoop.dir/src/client/client_interface.cpp.o
  /home/franco/Taller/Rocket-League-sideswipe-Taller-1-FIUBA/src/client/receiverThread.h
  /home/franco/Taller/Rocket-League-sideswipe-Taller-1-FIUBA/src/client/senderThread.h
  /home/franco/Taller/Rocket-League-sideswipe-Taller-1-FIUBA/src/client/world.h
- /home/franco/Taller/Rocket-League-sideswipe-Taller-1-FIUBA/src/common/socket.h
- /home/franco/Taller/Rocket-League-sideswipe-Taller-1-FIUBA/src/common/thread.h
  /usr/include/SDL2/SDL.h
  /usr/include/SDL2/SDL_assert.h
  /usr/include/SDL2/SDL_clipboard.h
@@ -118,6 +118,8 @@ CMakeFiles/gameLoop.dir/src/client/main.cpp.o
  ../libs/libSDL2pp/SDL2pp/Wav.hh
  ../libs/libSDL2pp/SDL2pp/Window.hh
  ../libs/libSDL2pp/SDL2pp/external/libcpp_optional.hh
+ ../src/common/socket.h
+ ../src/common/thread.h
  /home/franco/Taller/Rocket-League-sideswipe-Taller-1-FIUBA/src/client/ball.h
  /home/franco/Taller/Rocket-League-sideswipe-Taller-1-FIUBA/src/client/blockingQueue.h
  /home/franco/Taller/Rocket-League-sideswipe-Taller-1-FIUBA/src/client/car.h
@@ -126,8 +128,6 @@ CMakeFiles/gameLoop.dir/src/client/main.cpp.o
  /home/franco/Taller/Rocket-League-sideswipe-Taller-1-FIUBA/src/client/receiverThread.h
  /home/franco/Taller/Rocket-League-sideswipe-Taller-1-FIUBA/src/client/senderThread.h
  /home/franco/Taller/Rocket-League-sideswipe-Taller-1-FIUBA/src/client/world.h
- /home/franco/Taller/Rocket-League-sideswipe-Taller-1-FIUBA/src/common/socket.h
- /home/franco/Taller/Rocket-League-sideswipe-Taller-1-FIUBA/src/common/thread.h
  /usr/include/SDL2/SDL.h
  /usr/include/SDL2/SDL_assert.h
  /usr/include/SDL2/SDL_clipboard.h
@@ -178,19 +178,19 @@ CMakeFiles/gameLoop.dir/src/client/main.cpp.o
  libs/libSDL2pp/SDL2pp/Config.hh
  libs/libSDL2pp/SDL2pp/Export.hh
 CMakeFiles/gameLoop.dir/src/client/receiverThread.cpp.o
+ ../src/common/socket.h
+ ../src/common/thread.h
  /home/franco/Taller/Rocket-League-sideswipe-Taller-1-FIUBA/src/client/ball.h
  /home/franco/Taller/Rocket-League-sideswipe-Taller-1-FIUBA/src/client/car.h
  /home/franco/Taller/Rocket-League-sideswipe-Taller-1-FIUBA/src/client/receiverThread.cpp
  /home/franco/Taller/Rocket-League-sideswipe-Taller-1-FIUBA/src/client/receiverThread.h
  /home/franco/Taller/Rocket-League-sideswipe-Taller-1-FIUBA/src/client/world.h
- /home/franco/Taller/Rocket-League-sideswipe-Taller-1-FIUBA/src/common/socket.h
- /home/franco/Taller/Rocket-League-sideswipe-Taller-1-FIUBA/src/common/thread.h
 CMakeFiles/gameLoop.dir/src/client/senderThread.cpp.o
+ ../src/common/socket.h
+ ../src/common/thread.h
  /home/franco/Taller/Rocket-League-sideswipe-Taller-1-FIUBA/src/client/blockingQueue.h
  /home/franco/Taller/Rocket-League-sideswipe-Taller-1-FIUBA/src/client/senderThread.cpp
  /home/franco/Taller/Rocket-League-sideswipe-Taller-1-FIUBA/src/client/senderThread.h
- /home/franco/Taller/Rocket-League-sideswipe-Taller-1-FIUBA/src/common/socket.h
- /home/franco/Taller/Rocket-League-sideswipe-Taller-1-FIUBA/src/common/thread.h
 CMakeFiles/gameLoop.dir/src/client/world.cpp.o
  /home/franco/Taller/Rocket-League-sideswipe-Taller-1-FIUBA/src/client/ball.h
  /home/franco/Taller/Rocket-League-sideswipe-Taller-1-FIUBA/src/client/car.h

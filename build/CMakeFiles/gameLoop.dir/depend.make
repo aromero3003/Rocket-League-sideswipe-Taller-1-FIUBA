@@ -32,6 +32,8 @@ CMakeFiles/gameLoop.dir/src/client/client_interface.cpp.o: ../libs/libSDL2pp/SDL
 CMakeFiles/gameLoop.dir/src/client/client_interface.cpp.o: ../libs/libSDL2pp/SDL2pp/Wav.hh
 CMakeFiles/gameLoop.dir/src/client/client_interface.cpp.o: ../libs/libSDL2pp/SDL2pp/Window.hh
 CMakeFiles/gameLoop.dir/src/client/client_interface.cpp.o: ../libs/libSDL2pp/SDL2pp/external/libcpp_optional.hh
+CMakeFiles/gameLoop.dir/src/client/client_interface.cpp.o: ../src/common/socket.h
+CMakeFiles/gameLoop.dir/src/client/client_interface.cpp.o: ../src/common/thread.h
 CMakeFiles/gameLoop.dir/src/client/client_interface.cpp.o: ../src/client/ball.h
 CMakeFiles/gameLoop.dir/src/client/client_interface.cpp.o: ../src/client/blockingQueue.h
 CMakeFiles/gameLoop.dir/src/client/client_interface.cpp.o: ../src/client/car.h
@@ -40,8 +42,6 @@ CMakeFiles/gameLoop.dir/src/client/client_interface.cpp.o: ../src/client/client_
 CMakeFiles/gameLoop.dir/src/client/client_interface.cpp.o: ../src/client/receiverThread.h
 CMakeFiles/gameLoop.dir/src/client/client_interface.cpp.o: ../src/client/senderThread.h
 CMakeFiles/gameLoop.dir/src/client/client_interface.cpp.o: ../src/client/world.h
-CMakeFiles/gameLoop.dir/src/client/client_interface.cpp.o: ../src/common/socket.h
-CMakeFiles/gameLoop.dir/src/client/client_interface.cpp.o: ../src/common/thread.h
 CMakeFiles/gameLoop.dir/src/client/client_interface.cpp.o: /usr/include/SDL2/SDL.h
 CMakeFiles/gameLoop.dir/src/client/client_interface.cpp.o: /usr/include/SDL2/SDL_assert.h
 CMakeFiles/gameLoop.dir/src/client/client_interface.cpp.o: /usr/include/SDL2/SDL_clipboard.h
@@ -117,6 +117,8 @@ CMakeFiles/gameLoop.dir/src/client/main.cpp.o: ../libs/libSDL2pp/SDL2pp/Texture.
 CMakeFiles/gameLoop.dir/src/client/main.cpp.o: ../libs/libSDL2pp/SDL2pp/Wav.hh
 CMakeFiles/gameLoop.dir/src/client/main.cpp.o: ../libs/libSDL2pp/SDL2pp/Window.hh
 CMakeFiles/gameLoop.dir/src/client/main.cpp.o: ../libs/libSDL2pp/SDL2pp/external/libcpp_optional.hh
+CMakeFiles/gameLoop.dir/src/client/main.cpp.o: ../src/common/socket.h
+CMakeFiles/gameLoop.dir/src/client/main.cpp.o: ../src/common/thread.h
 CMakeFiles/gameLoop.dir/src/client/main.cpp.o: ../src/client/ball.h
 CMakeFiles/gameLoop.dir/src/client/main.cpp.o: ../src/client/blockingQueue.h
 CMakeFiles/gameLoop.dir/src/client/main.cpp.o: ../src/client/car.h
@@ -125,8 +127,6 @@ CMakeFiles/gameLoop.dir/src/client/main.cpp.o: ../src/client/main.cpp
 CMakeFiles/gameLoop.dir/src/client/main.cpp.o: ../src/client/receiverThread.h
 CMakeFiles/gameLoop.dir/src/client/main.cpp.o: ../src/client/senderThread.h
 CMakeFiles/gameLoop.dir/src/client/main.cpp.o: ../src/client/world.h
-CMakeFiles/gameLoop.dir/src/client/main.cpp.o: ../src/common/socket.h
-CMakeFiles/gameLoop.dir/src/client/main.cpp.o: ../src/common/thread.h
 CMakeFiles/gameLoop.dir/src/client/main.cpp.o: /usr/include/SDL2/SDL.h
 CMakeFiles/gameLoop.dir/src/client/main.cpp.o: /usr/include/SDL2/SDL_assert.h
 CMakeFiles/gameLoop.dir/src/client/main.cpp.o: /usr/include/SDL2/SDL_clipboard.h
@@ -177,19 +177,19 @@ CMakeFiles/gameLoop.dir/src/client/main.cpp.o: /usr/local/include/SDL2/close_cod
 CMakeFiles/gameLoop.dir/src/client/main.cpp.o: libs/libSDL2pp/SDL2pp/Config.hh
 CMakeFiles/gameLoop.dir/src/client/main.cpp.o: libs/libSDL2pp/SDL2pp/Export.hh
 
+CMakeFiles/gameLoop.dir/src/client/receiverThread.cpp.o: ../src/common/socket.h
+CMakeFiles/gameLoop.dir/src/client/receiverThread.cpp.o: ../src/common/thread.h
 CMakeFiles/gameLoop.dir/src/client/receiverThread.cpp.o: ../src/client/ball.h
 CMakeFiles/gameLoop.dir/src/client/receiverThread.cpp.o: ../src/client/car.h
 CMakeFiles/gameLoop.dir/src/client/receiverThread.cpp.o: ../src/client/receiverThread.cpp
 CMakeFiles/gameLoop.dir/src/client/receiverThread.cpp.o: ../src/client/receiverThread.h
 CMakeFiles/gameLoop.dir/src/client/receiverThread.cpp.o: ../src/client/world.h
-CMakeFiles/gameLoop.dir/src/client/receiverThread.cpp.o: ../src/common/socket.h
-CMakeFiles/gameLoop.dir/src/client/receiverThread.cpp.o: ../src/common/thread.h
 
+CMakeFiles/gameLoop.dir/src/client/senderThread.cpp.o: ../src/common/socket.h
+CMakeFiles/gameLoop.dir/src/client/senderThread.cpp.o: ../src/common/thread.h
 CMakeFiles/gameLoop.dir/src/client/senderThread.cpp.o: ../src/client/blockingQueue.h
 CMakeFiles/gameLoop.dir/src/client/senderThread.cpp.o: ../src/client/senderThread.cpp
 CMakeFiles/gameLoop.dir/src/client/senderThread.cpp.o: ../src/client/senderThread.h
-CMakeFiles/gameLoop.dir/src/client/senderThread.cpp.o: ../src/common/socket.h
-CMakeFiles/gameLoop.dir/src/client/senderThread.cpp.o: ../src/common/thread.h
 
 CMakeFiles/gameLoop.dir/src/client/world.cpp.o: ../src/client/ball.h
 CMakeFiles/gameLoop.dir/src/client/world.cpp.o: ../src/client/car.h

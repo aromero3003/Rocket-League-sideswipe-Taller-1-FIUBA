@@ -1,8 +1,8 @@
 #ifndef SENDER_THREAD_H
 #define SENDER_THREAD_H
 
-#include "../common/socket.h"
-#include "../common/thread.h"
+#include "socket.h"
+#include "thread.h"
 #include "blockingQueue.h"
 
 class SenderThread : public Thread {

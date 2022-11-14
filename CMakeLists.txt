@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 2.8)
 
 project(sdl)
 
-set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wall -Werror")
 
 set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package(Threads REQUIRED)
@@ -20,6 +20,7 @@ add_subdirectory(libs/libSDL2pp)
 # Agrego la carpeta con los headers autogenerados a los includes
 message("Agregando '${PROJECT_SOURCE_DIR}/libs' como directorio de includes")
 include_directories(${PROJECT_SOURCE_DIR}/libs)
+include_directories(${PROJECT_SOURCE_DIR}/src/common)
 include_directories(${SDL2PP_INCLUDE_DIRS})
 
 
