@@ -1,5 +1,5 @@
-#ifndef __CLIENT_PROTOCOL_H__
-#define __CLIENT_PROTOCOL_H__
+#ifndef __SERVER_MENU_PROTOCOL_H__
+#define __SERVER_MENU_PROTOCOL_H__
 
 #include <list>
 #include <sstream>
@@ -10,18 +10,10 @@
 #include "../../../../common/source/Socket/Socket.h"
 #include "../MenuCommand/CommandHandler.h"
 
-// PARTIAL FIX
-class Parser {
- public:
-    bool isEndMsg();
-    void take(std::vector<char> &buf, int &rcv);
-    std::istream& getCompleteMsg();  // valor de retorno raro
-};
 
 
 class ServerProtocol {
  private:
-  Parser receiver;
   Socket& skt;
   bool was_closed;
 

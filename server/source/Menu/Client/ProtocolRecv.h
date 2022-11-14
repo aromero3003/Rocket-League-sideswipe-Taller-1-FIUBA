@@ -6,12 +6,15 @@
 #include <ostream>
 #include <string>
 #include <utility>
+#include "../../../../common/source/Socket/Socket.h"
+#include "../../../../common/source/Socket/Liberror.h"
 
+#include "../../../../common/source/Queue/protected_queue.h"
+#include "../../../../common/source/Queue/blocking_queue.h"
 #include "../GameCommand/GameCommandHandler.h"
-#include "../../common/source/liberror.h"
-#include "../../common/source/socket.h"
-#include "../common/source/Thread.h"
-#include "../../common/source/protected_queue.h"
+
+#include "../../../../common/source/Thread/Thread.h"
+
 
 class ProtocolRecv: public Thread 
 {

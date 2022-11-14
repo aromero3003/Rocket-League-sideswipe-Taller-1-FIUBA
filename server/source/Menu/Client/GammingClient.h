@@ -8,18 +8,16 @@
 
 #include "../../../../common/source/Socket/Socket.h"
 #include "../../../../common/source/Socket/Liberror.h"
-#include "../MenuCommand/CommandHandler.h"
-#include "../Games/GameHandler.h"
-#include "ServerMenuProtocol.h"
 
-#include "../common/source/liberror.h"
-#include "../common/source/socket.h"
-#include "../MenuCommand/CommandHandler.h"
+#include "../../../../common/source/Queue/protected_queue.h"
+#include "../../../../common/source/Queue/blocking_queue.h"
+
+#include "../GameCommand/GameCommandHandler.h"
 #include "../Games/GameHandler.h"
-#include "ProtocolSend.h"
-#include "../../common/source/protected_queue.h"
-#include "../../common/source/blocking_queue.h"
+#include "../MenuCommand/CommandHandler.h"
+
 #include "ProtocolRecv.h"
+#include "ProtocolSend.h"
 class GammingClient
 {
 private:

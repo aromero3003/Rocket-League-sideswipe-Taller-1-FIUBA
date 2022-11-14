@@ -6,11 +6,16 @@
 #include <ostream>
 #include <string>
 
-#include "../../common/source/liberror.h"
-#include "../../common/source/blocking_queue.h"
-#include "../../common/source/socket.h"
+#include "../../../../common/source/Socket/Socket.h"
+#include "../../../../common/source/Socket/Liberror.h"
+
+#include "../../../../common/source/Queue/protected_queue.h"
+#include "../../../../common/source/Queue/blocking_queue.h"
+#include "../GameCommand/GameCommandHandler.h"
+
+#include "../../../../common/source/Thread/Thread.h"
+
 #include "Snap.h"
-#include "../common/source/Thread.h"
 class ProtocolSend: public Thread
 {
 private:

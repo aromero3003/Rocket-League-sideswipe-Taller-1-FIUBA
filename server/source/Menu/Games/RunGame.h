@@ -8,8 +8,8 @@
 #include "../GameCommand/GameCommandHandler.h"
 #include "GameLogic.h"
 #include "../Client/GammingClient.h"
-#include "../../common/source/Thread.h"
-#include "../../common/source/protected_queue.h"
+#include "../../../../common/source/Thread/Thread.h"
+#include "../../../../common/source/Queue/protected_queue.h"
 
 class RunGame : public Thread {
  private:
