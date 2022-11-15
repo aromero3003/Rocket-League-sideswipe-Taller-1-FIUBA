@@ -20,6 +20,11 @@ template <class T> class ProtectedQueue {
         return this->queue.size();
     }
 
+    bool is_empty() {
+        std::lock_guard<std::mutex> lock(this->mutex);
+        return this->queue.size() == 0;
+    }
+
     T pop() {
         std::lock_guard<std::mutex> lock(this->mutex);
         T item = this->queue.front();

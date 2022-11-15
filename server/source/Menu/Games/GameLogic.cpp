@@ -60,13 +60,20 @@ void GameLogic::move_player_up(size_t id) {
 
 void GameLogic::step() {
     this->world.Step(TIME_STEP, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
-    setSnap();
+    //setSnap();
 }
 
 SnapShot* GameLogic::getSnap(){
+    SnapShot *snap = new SnapShot;
+    for (Car &player : this->players) {
+        snap->add(player.getPosition().y);
+        snap->add(player.getPosition().x);
+        snap->add(player.getAngle());
+        snap->add(player.getOrientation());
+    }
     return snap;
 }
-
+/*
 void GameLogic::setSnap(){
     std::shared_ptr<SnapShot> snap(new SnapShot);
     //setBall();
@@ -92,3 +99,4 @@ void GameLogic::setBall(){
        snap->add(20.0f);
        snap->add(0.0f);
 }
+*/
