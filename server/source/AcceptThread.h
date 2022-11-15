@@ -15,7 +15,7 @@
 class AcceptThread : public Thread {
  private:
   bool& serverIsOpen;
-  Socket& soktRef;
+  Socket soktRef;
   Menu menu;
 
  public:

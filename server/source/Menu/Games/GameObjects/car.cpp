@@ -87,7 +87,7 @@ Car::Car(b2World &world, const b2Vec2 &position) {
         joint_def.motorSpeed = 0.0f;
         joint_def.maxMotorTorque = 20.0f;
         joint_def.enableMotor = true;
-        joint_def.stiffness = mass1 * omega * omega;
+        joint_def.stiffness = mass2 * omega * omega;
         joint_def.damping = 2.0f * mass1 * damping_ratio * omega;
         joint_def.lowerTranslation = -TRANSLATION;
         joint_def.upperTranslation = TRANSLATION;

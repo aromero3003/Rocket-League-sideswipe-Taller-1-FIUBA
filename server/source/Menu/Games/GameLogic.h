@@ -30,14 +30,14 @@ class GameLogic {
     void move_player_down (size_t id);
     void move_player_left (size_t id);
     void move_player_right (size_t id);
-    void jump_release_player (size_t id);
-    void move_release_player_up (size_t id);
-    void move_release_player_down (size_t id);
-    void move_release_player_left (size_t id);
-    void move_release_player_right (size_t id);
+    //void jump_release_player (size_t id);
+    //void move_release_player_up (size_t id);
+    //void move_release_player_down (size_t id);
+    //void move_release_player_left (size_t id);
+    //void move_release_player_right (size_t id);
 
     void step();
-   SnapShot* getSnap();
+    SnapShot* getSnap();
 
 };
 

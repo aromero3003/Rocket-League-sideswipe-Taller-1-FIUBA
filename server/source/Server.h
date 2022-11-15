@@ -12,7 +12,6 @@
 #include "AcceptThread.h"
 class Server {
  private:
-  Socket& skt;
   AcceptThread acceptThread;
   bool serverStatus;
   void shutdown();

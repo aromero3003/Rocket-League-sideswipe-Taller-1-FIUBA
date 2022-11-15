@@ -47,5 +47,5 @@ file(GLOB gameLoop_SRC
 )
 add_executable(gameLoop ${gameLoop_SRC})
 
-
-##target_link_libraries(gameLoop PRIVATE Threads::Threads)
+target_link_libraries(gameLoop PUBLIC box2d)
+#target_link_libraries(gameLoop PRIVATE Threads::Threads)

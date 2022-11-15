@@ -54,6 +54,10 @@ void GameLogic::move_player_right(size_t id) {
     this->players[id].moveRight();
 }
 
+void GameLogic::move_player_up(size_t id) {
+//    this->players[id].moveRight();
+}
+
 void GameLogic::step() {
     this->world.Step(TIME_STEP, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
     setSnap();

@@ -1,6 +1,6 @@
 #include "AcceptThread.h"
 AcceptThread::AcceptThread(Socket& soktRef, bool& serverStatus)
-    : serverIsOpen(serverStatus), soktRef(soktRef) {}
+    : serverIsOpen(serverStatus), soktRef(std::move(soktRef)) {}
 
 void AcceptThread::disconect() { menu.disconectAll(); }
 
