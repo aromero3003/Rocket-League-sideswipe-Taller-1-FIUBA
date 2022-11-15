@@ -1,15 +1,5 @@
 #include "GameLogic.h"
-#include "GameObjects/Constants.h"
-#include <box2d/b2_body.h>
-#include <box2d/b2_collision.h>
-#include <box2d/b2_fixture.h>
-#include <box2d/b2_math.h>
-#include <box2d/b2_polygon_shape.h>
-#include <box2d/b2_chain_shape.h>
-#include <box2d/b2_world.h>
-#include <cstddef>
-#include <cstdint>
-#include "../Client/Snap.h"
+
 
 GameLogic::GameLogic(size_t cant_players) :
     world(b2Vec2(0.0f, -GRAVITY)) {

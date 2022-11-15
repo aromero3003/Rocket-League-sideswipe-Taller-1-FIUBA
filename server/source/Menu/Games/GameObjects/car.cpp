@@ -1,13 +1,4 @@
-#include <box2d/b2_body.h>
-#include <box2d/b2_circle_shape.h>
-#include <box2d/b2_common.h>
-#include <box2d/b2_math.h>
-#include <box2d/b2_polygon_shape.h>
-#include <box2d/b2_wheel_joint.h>
-#include <box2d/box2d.h>
-#include <box2d/b2_world.h>
-#include <box2d/b2_fixture.h>
-#include <cstdint>
+
 
 #include "car.h"
 
