@@ -15,6 +15,7 @@ class GameLogic {
     b2World world;
     //Ball ball;
     std::vector<Car> players;
+    uint8_t goal;
     /*
     SnapShot* snap;
     void setPlayer(Car& player);

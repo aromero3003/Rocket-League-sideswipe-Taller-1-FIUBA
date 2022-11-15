@@ -12,7 +12,7 @@ template <class T> class ProtectedQueue {
  public:
     void push(T& item) {
         std::lock_guard<std::mutex> lock(this->mutex);
-        this->queue.push(std::move(item));
+        this->queue.push(item);
     }
 
     size_t size() {

@@ -8,6 +8,7 @@
 #include <box2d/b2_chain_shape.h>
 #include <box2d/b2_world.h>
 #include <cstddef>
+#include <cstdint>
 #include "../Client/Snap.h"
 
 GameLogic::GameLogic(size_t cant_players) :
@@ -65,6 +66,12 @@ void GameLogic::step() {
 
 SnapShot* GameLogic::getSnap(){
     SnapShot *snap = new SnapShot;
+    snap->add(goal);
+
+    snap->add(10.0f);
+    snap->add(20.0f);
+    snap->add(0.0f);
+
     for (Car &player : this->players) {
         snap->add(player.getPosition().y);
         snap->add(player.getPosition().x);
@@ -80,7 +87,6 @@ void GameLogic::setSnap(){
     for (Car& player : players){
         setPlayer(player);
     }
-    
 }
 
 void GameLogic::setPlayer(Car& player){
@@ -88,7 +94,6 @@ void GameLogic::setPlayer(Car& player){
        snap->add(player.getPosition().x);
        snap->add(player.getAngle());
        snap->add(player.getOrientation());
-    
 }
 
 void GameLogic::setBall(){

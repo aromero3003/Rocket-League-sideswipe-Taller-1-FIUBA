@@ -22,7 +22,7 @@ class BlockingQueue {
     void push(T& item) {
         std::unique_lock<std::mutex> lock(this->mutex);
 
-        this->queue.push(std::move(item));
+        this->queue.push(item);
         this->cond_variable.notify_all();
     }
 

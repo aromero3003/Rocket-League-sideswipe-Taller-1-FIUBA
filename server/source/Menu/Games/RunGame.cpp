@@ -12,9 +12,11 @@ void  RunGame::addPlayer(GamingClient* gamingClient){
 
 void RunGame::run() {
   try {
+      for(auto player : players)
+          player->start();
     while(1){
 
-        while (not gammingEventQueue.is_empty()) {
+        while (! gammingEventQueue.is_empty()) {
             gammingEventQueue.pop().getCommand()->run(gameLogic);
         }
         this->gameLogic.step();
@@ -23,7 +25,7 @@ void RunGame::run() {
         for (auto player: players) {
             player->addSnap(*snap); // usar smart pointers (no hay free)
         }
-        sleep(10);
+        sleep(1);
 
 
         //std::shared_ptr<SnapShot> this->gameLogic.getSnap();
