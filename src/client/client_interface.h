@@ -20,7 +20,7 @@ class Client_interface{
     public:
         Client_interface();
 
-        void run_client();
+        void run_client(const char *serv, const char *port);
 
         bool handle_events(BlockingQueue<int>* pq, bool& going_right, bool& going_left, bool& nitroing, bool& jumping);
 

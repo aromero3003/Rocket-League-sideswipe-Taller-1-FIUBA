@@ -2,6 +2,7 @@
 #include <iostream>
 #include <exception>
 #include <chrono>
+#include <string>
 
 #define PRESS_RIGHT 65
 #define PRESS_LEFT 66
@@ -22,19 +23,20 @@ Client_interface::Client_interface():
                     SDL_WINDOWPOS_UNDEFINED,
                     SDL_WINDOWPOS_UNDEFINED,
                     640, 480,
-                    SDL_WINDOW_RESIZABLE),
+                    0),
+                    //SDL_WINDOW_RESIZABLE),
             renderer(window, -1, SDL_RENDERER_ACCELERATED){}
 
-void Client_interface::run_client(){
+void Client_interface::run_client(const char *serv, const char *port){
 
-	Texture car(renderer, "/home/franco/Taller/tpPrueba/data/cars.png");
-	Texture car2(renderer, "/home/franco/Taller/tpPrueba/data/cars.png");
-	Texture nitro(renderer, "/home/franco/Taller/tpPrueba/data/nitro.png");
-	Texture road(renderer, "/home/franco/Taller/tpPrueba/data/road.png");
+	Texture car(renderer, "/home/alan/Rocket-League-sideswipe-Taller-1-FIUBA/data/cars.png");
+	Texture car2(renderer, "/home/alan/Rocket-League-sideswipe-Taller-1-FIUBA/data/cars.png");
+	Texture nitro(renderer, "/home/alan/Rocket-League-sideswipe-Taller-1-FIUBA/data/nitro.png");
+	Texture road(renderer, "/home/alan/Rocket-League-sideswipe-Taller-1-FIUBA/data/road.png");
 
 	BlockingQueue<int>* pq = new BlockingQueue<int>();
     World* world = new World();
-	Socket* s = new Socket("localhost", "8080");
+	Socket* s = new Socket(serv, port);
 
 	ReceiverThread receiver(s,world);
 	SenderThread sender(s, pq);
@@ -52,12 +54,12 @@ void Client_interface::run_client(){
         void render_screen();
 
         //Constant Rate Loop
-        uint32_t t2 = SDL_GetTicks();
-        uint32_t rest = FRAME_RATE - (t2-t1);
+        int32_t t2 = SDL_GetTicks();
+        int32_t rest = FRAME_RATE - (t2-t1);
         if(rest < 0) {
-            uint32_t behind = (-1)*rest;
+            int32_t behind = (-1)*rest;
             rest = FRAME_RATE - (behind % FRAME_RATE);
-            uint32_t lost = behind + rest;
+            int32_t lost = behind + rest;
             t1 += lost;
         } else {
 		    SDL_Delay(rest);
@@ -121,6 +123,7 @@ bool Client_interface::handle_events(BlockingQueue<int>* pq, bool& going_right, 
 void Client_interface::render_screen(Texture& car, Texture& road, Texture& nitro){
 
     	renderer.Clear();
+        renderer.SetDrawColor(0xFF, 0xFF, 0xFF, 0xF);
 		//renderer.Copy(road,NullOpt,Rect(0,renderer.GetOutputHeight()/2 - 75,renderer.GetOutputWidth(), 300));
 		//renderer.Copy(car, Rect(src_x,src_y,120,50),Rect((int)position,renderer.GetOutputHeight()/2,120,50));	
 		//if(nitroing){
