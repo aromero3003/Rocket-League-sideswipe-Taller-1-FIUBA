@@ -6,6 +6,8 @@ find_package(Threads REQUIRED)
 #standard c++
 set(CMAKE_CXX_STANDARD 17)
 
+add_subdirectory(libs/box2d)
+
 # compilation flags
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Werror")
 
@@ -14,6 +16,8 @@ set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -ggdb -DDEBUG -fno-inline ")
 
 # threads
 set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pthread")
+
+
 
 include_directories(${PROJECT_SOURCE_DIR}/libs)
 include_directories(${PROJECT_SOURCE_DIR}/libs/box2d/include)
@@ -52,5 +56,5 @@ add_executable(client_debug test_client.cpp
     common/source/Socket/Liberror.cpp
     common/source/Socket/ResolverError.cpp)
 
-target_link_libraries(gameLoop PUBLIC box2d)
-#target_link_libraries(gameLoop PRIVATE Threads::Threads)
+target_link_libraries(gameLoop box2d)
+
