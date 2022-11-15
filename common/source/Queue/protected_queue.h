@@ -24,6 +24,7 @@ template <class T> class ProtectedQueue {
         std::lock_guard<std::mutex> lock(this->mutex);
         T item = this->queue.front();
         this->queue.pop();
+        return item;
     }
 };
 

@@ -18,6 +18,5 @@ void Menu::disconectAll(){
   clientsHandler.disconectAll();
 }
 void Menu::startGame(){
-    runGame.setupStart();
     runGame.start();
 }
