@@ -27,6 +27,6 @@ void GameCommandHandler::createCommand(int parameter) {
 bool GameCommandHandler::isEnd() { return isEndGame;}
 
 std::unique_ptr<GameCommand> GameCommandHandler::getCommand() {
-        return command;
+        return std::move(command);
 }
 

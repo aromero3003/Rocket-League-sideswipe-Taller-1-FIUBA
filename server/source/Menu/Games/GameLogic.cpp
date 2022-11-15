@@ -1,5 +1,5 @@
 #include "GameLogic.h"
-#include "Constants.h"
+#include "GameObjects/Constants.h"
 #include <box2d/b2_body.h>
 #include <box2d/b2_collision.h>
 #include <box2d/b2_fixture.h>
@@ -56,13 +56,14 @@ void GameLogic::move_player_right(size_t id) {
 
 void GameLogic::step() {
     this->world.Step(TIME_STEP, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
-
+    setSnap();
 }
 
-SnapShot GameLogic::getSnap(){
+SnapShot* GameLogic::getSnap(){
     return snap;
 }
-void GameLogic::setSnap(SnapShot& snap){
+
+void GameLogic::setSnap(){
     setBall(snap);
     for (Car& player : players){
         setPlayer(snap,player);
@@ -70,19 +71,16 @@ void GameLogic::setSnap(SnapShot& snap){
     
 }
 
-void GameLogic::setPlayer(SnapShot& snap,Car& player){
+void GameLogic::setPlayer(Car& player){
        snap.add(player.getPosition().y);
        snap.add(player.getPosition().x);
-       snap.add(player.getAngle().y);
-       snap.add(player.getAngle().x);
+       snap.add(player.getAngle());
        snap.add(player.getOrientation());
     
 }
 
-void GameLogic::setBall(SnapShot& snap){
-    snap.add(ball.getPosition().x);
+void GameLogic::setBall(){
        snap.add(ball.getPosition().y);
        snap.add(ball.getPosition().x);
-       snap.add(ball.getAngle().y);
-       snap.add(ball.getAngle().x);
+       snap.add(ball.getAngle());
 }

@@ -2,5 +2,5 @@
 
 SpaceCommand::SpaceCommand(size_t id):GameCommand(id){}
 void SpaceCommand::run(GameLogic& gameLogic) {
-    gameLogic.move_player_down(id)
+    gameLogic.move_player_down(id);
 }

@@ -1,11 +1,8 @@
 #include "ProtocolRecv.h"
 
-explicit ProtocolRecv::ProtocolRecv(Socket &otherSkt):
-skt(otherSkt),was_closed(false){}
-void ProtocolRecv::setup(ProtectedQueue<GameCommandHandler> &eventQueue, size_t id_o){
-  eventQueueRef=eventQueue;
-  id=id_o;
-}
+ProtocolRecv::ProtocolRecv(Socket &o_skt,ProtectedQueue<GameCommandHandler> & o_eventQueue,size_t o_id):
+skt(o_skt),was_closed(false),eventQueueRef(o_eventQueue),id(o_id){}
+
 
 int ProtocolRecv::reciveCommand(){
   int oneRequest = 1;

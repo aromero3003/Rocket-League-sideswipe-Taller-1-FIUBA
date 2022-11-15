@@ -1,5 +1,5 @@
 #include "ball.h"
-#include "constants.h"
+#include "Constants.h"
 #include <box2d/b2_body.h>
 #include <box2d/b2_circle_shape.h>
 #include <box2d/b2_fixture.h>
@@ -30,5 +30,5 @@ const b2Vec2 Ball::getPosition() {
 }
 
 const float Ball::getAngle() {
-    return this->ball->getAngle();
+    return this->ball->GetAngle();
 }

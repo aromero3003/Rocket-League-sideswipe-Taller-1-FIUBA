@@ -17,7 +17,7 @@
 #include "ProtocolRecv.h"
 #include "ProtocolSend.h"
 #include "Snap.h"
-class GammingClient
+class GamingClient
 {
 private:
     size_t id;
@@ -27,11 +27,10 @@ private:
     ProtocolRecv protocolRecv;
 
 public:
-    explicit GammingClient(Socket &&skt,size_t id);
+    GamingClient(Socket &&skt,size_t id,ProtectedQueue<GameCommandHandler> &eventQueue);
     bool isDisconect();
-    void setup(ProtectedQueue<GameCommandHandler> &eventQueue);
     void addSnap(SnapShot &snap);
     void start();
-    ~GammingClient();
+    ~GamingClient();
 };
 #endif

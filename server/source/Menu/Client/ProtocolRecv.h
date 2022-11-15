@@ -21,12 +21,11 @@ class ProtocolRecv: public Thread
 private:
     Socket& skt;
     bool was_closed;
-    std::istream& reciveCommand();
     ProtectedQueue<GameCommandHandler> &eventQueueRef;
     size_t id;
+    int reciveCommand();
 public:
-    explicit ProtocolRecv(Socket &skt);
-    void setup(ProtectedQueue<GameCommandHandler> &eventQueue);
+    ProtocolRecv(Socket &skt,ProtectedQueue<GameCommandHandler> &eventQueue,size_t id);
     virtual void run() override;
 };
 #endif

@@ -1,22 +1,20 @@
 #include "GamingClient.h"
 
-explicit GammingClient::GammingClient(Socket &&otherSkt,size_t id):
-    id(id),skt(std::move(otherSkt)),snapEventQueue(),protocolSend(skt,snapEventQueue),protocolRecv(skt){}
+GamingClient::GamingClient(Socket &&otherSkt,size_t o_id,ProtectedQueue<GameCommandHandler> &eventQueue):
+    id(o_id),skt(std::move(otherSkt)),snapEventQueue(),protocolSend(skt,snapEventQueue),protocolRecv(skt,eventQueue,id){}
 
-    void GammingClient::addSnap(SnapShot &snap){
+    void GamingClient::addSnap(SnapShot &snap){
         snapEventQueue.push(snap);
     }
-    void GammingClient::start(){
+    void GamingClient::start(){
         protocolSend.start();
         protocolRecv.start();
     }
-    bool GammingClient::isDisconect(){
+    bool GamingClient::isDisconect(){
         return false;// refactor
     }
-void GammingClient::setup(ProtectedQueue<GameCommandHandler> &eventQueue){
-  protocolRecv.setup(eventQueue,id);
-}
-GammingClient::~GammingClient(){
+
+GamingClient::~GamingClient(){
     protocolSend.join();
     protocolRecv.join();
 }

@@ -14,10 +14,10 @@ class GameLogic {
     b2World world;
     Ball ball;
     std::vector<Car> players;
-    void setPlayer(SnapShot& snap,Car& player);
-    void setBall(SnapShot& snap);
-    void setGoal(SnapShot& snap);
-    void setSnap(SnapShot& snap);
+    void setPlayer(Car& player);
+    void setBall();
+    void setGoal();
+    void setSnap();
  public:
     GameLogic(size_t cant_players);
 
@@ -35,7 +35,7 @@ class GameLogic {
     void move_release_player_right (size_t id);
 
     void step();
-   SnapShot getSnap();
+   SnapShot* getSnap();
 
 };
 

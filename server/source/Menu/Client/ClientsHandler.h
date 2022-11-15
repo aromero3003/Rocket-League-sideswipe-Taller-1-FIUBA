@@ -12,14 +12,14 @@
 
 class ClientsHandler {
  private:
-  std::vector<GammingClient*> clients;
+  std::vector<GamingClient*> clients;
   GameHandler gameHandler;
 
 
  public:
   ClientsHandler();
 
-  GammingClient* conectNewGamingClient(Socket&& soktAccepted, size_t id);
+  GamingClient* conectNewGamingClient(Socket&& soktAccepted, size_t id,ProtectedQueue<GameCommandHandler> &eventQueue);
 
   void cleanDisconectClients();
 

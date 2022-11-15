@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 2.8)
+cmake_minimum_required(VERSION 2.4)
 project(Rocket-league)
 
 set(THREADS_PREFER_PTHREAD_FLAG ON)
@@ -16,9 +16,21 @@ set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -ggdb -DDEBUG -fno-inline ")
 set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pthread")
 
 
-file(GLOB gameLoop_SRC
+file(GLOB gameLoop_SRC    
+ "common/source/Queue/*.h"
+"common/source/Socket/*.h"
+"common/source/Thread/*.h"
+"server/*.h"
+"server/source/*.h"
+"server/source/Menu/*.h"
+"server/source/Menu/Client/*.h"
+"server/source/Menu/Games/*.h"
+"server/source/Menu/MenuCommand/*.h"
+"server/source/Menu/GameCommand/*.h"
+
      "common/source/Queue/*.cpp"
      "common/source/Socket/*.cpp"
+     "common/source/Thread/*.cpp"
      "server/*.cpp"
      "server/source/*.cpp"
      "server/source/Menu/*.cpp"
@@ -31,4 +43,4 @@ file(GLOB gameLoop_SRC
 add_executable(gameLoop ${gameLoop_SRC})
 
 
-target_link_libraries(gameLoop PRIVATE Threads::Threads)
+##target_link_libraries(gameLoop PRIVATE Threads::Threads)

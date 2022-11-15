@@ -5,10 +5,9 @@ clientsHandler(ClientsHandler()),
    gameHandler(GameHandler()),
     runGame(gameHandler.addRunGame()){}
 
-void Menu::conectNewClient(Socket&& sktAccepted,int id){
+void Menu::conectNewClient(Socket&& sktAccepted,size_t id){
     runGame.addPlayer(
-        clientsHandler.conectNewGamingClient(std::move(sktAccepted),
-                    runGame.getRefGammingQueue(),id)
+        clientsHandler.conectNewGamingClient(std::move(sktAccepted),id,runGame.getRefGamingQueue())
                     );
 }
 

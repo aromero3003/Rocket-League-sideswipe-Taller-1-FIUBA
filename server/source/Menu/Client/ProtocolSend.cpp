@@ -1,9 +1,8 @@
 #include "ProtocolSend.h"
 
-explicit ProtocolSend::ProtocolSend(Socket&skt,BlockingQueue<SnapShot>& snapEventQueueRef):
-skt(skt),was_closed(false),snapEventQueue(snapEventQueueRef){}
+ProtocolSend::ProtocolSend(Socket&skt,BlockingQueue<SnapShot>& snapEventQueueRef):
+skt(skt),snapEventQueue(snapEventQueueRef),was_closed(false){}
 
-  ProtocolSend::~ProtocolSend(){}
 
 void ProtocolSend::sendResponse(std::vector<uint8_t>& response) {
   if (response.size() != 0) {

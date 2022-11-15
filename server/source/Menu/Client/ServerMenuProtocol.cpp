@@ -29,4 +29,3 @@ void ServerProtocol::sendResponse(std::string& response) {
   if (response.size() != 0) {
     skt.sendall(response.data(), response.size(), &was_closed);
   }*/
-}

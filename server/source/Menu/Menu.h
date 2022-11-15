@@ -13,7 +13,7 @@ class Menu  {
 
  public:
   Menu();
-  void conectNewClient(Socket&& sktAccepted,int id);
+  void conectNewClient(Socket&& sktAccepted,size_t id);
   void cleanDisconectClients();
   void disconectAll();
   void startGame();

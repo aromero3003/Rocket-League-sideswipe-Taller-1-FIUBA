@@ -9,18 +9,18 @@
 #include "GameLogic.h"
 #include "../Client/GamingClient.h"
 #include "../../../../common/source/Thread/Thread.h"
+#include "../../../../common/source/Socket/Liberror.h"
 #include "../../../../common/source/Queue/protected_queue.h"
 
 class RunGame : public Thread {
  private:
-   ProtectedQueue<GameCommandHandler> gammingEventQueue;
-   GameLogic gameLogic;
-   std::vector<GammingClient*> players;
+  GameLogic gameLogic;
+  ProtectedQueue<GameCommandHandler> gammingEventQueue;
+  std::vector<GamingClient*> players;
  public:
   RunGame();
-  ProtectedQueue<GameCommandHandler> & getRefGammingQueue();
-  void  addPlayer(GammingClient* gamingClient);
-  void setupStart();
+  ProtectedQueue<GameCommandHandler> & getRefGamingQueue();
+  void  addPlayer(GamingClient* gamingClient);
   virtual void run() override;
   virtual ~RunGame() = default;
 };
