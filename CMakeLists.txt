@@ -15,6 +15,8 @@ set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -ggdb -DDEBUG -fno-inline ")
 # threads
 set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pthread")
 
+include_directories(${PROJECT_SOURCE_DIR}/libs)
+include_directories(${PROJECT_SOURCE_DIR}/libs/box2d/include)
 
 file(GLOB gameLoop_SRC    
  "common/source/Queue/*.h"
@@ -25,6 +27,7 @@ file(GLOB gameLoop_SRC
 "server/source/Menu/*.h"
 "server/source/Menu/Client/*.h"
 "server/source/Menu/Games/*.h"
+"server/source/Menu/Games/GameObjects/*.h"
 "server/source/Menu/MenuCommand/*.h"
 "server/source/Menu/GameCommand/*.h"
 
@@ -36,6 +39,8 @@ file(GLOB gameLoop_SRC
      "server/source/Menu/*.cpp"
      "server/source/Menu/Client/*.cpp"
      "server/source/Menu/Games/*.cpp"
+
+     "server/source/Menu/Games/GameObjects/*.cpp"
      "server/source/Menu/MenuCommand/*.cpp"
      "server/source/Menu/GameCommand/*.cpp"
 
