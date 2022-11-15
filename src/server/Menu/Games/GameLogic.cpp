@@ -1,4 +1,5 @@
 #include "GameLogic.h"
+#include <box2d/b2_body.h>
 
 
 GameLogic::GameLogic(size_t cant_players) :
@@ -6,18 +7,28 @@ GameLogic::GameLogic(size_t cant_players) :
     //ball(this->world, 0.0f, SCENARIO_HEIGHT / 2.0f) {
 
     // WORLD
-    b2FixtureDef scn_fd;
+
     b2Vec2 scenario_borders[SCENARIO_BORDERS];
-    scenario_borders[0] = scenario_borders[6]  = b2Vec2(SCENARIO_HALF_WIDTH, 0.0f);
-    scenario_borders[1] = scenario_borders[7]  = b2Vec2(SCENARIO_HALF_WIDTH, 11.0f);
-    scenario_borders[2] = scenario_borders[8]  = b2Vec2(SCENARIO_HALF_WIDTH + 6, 11.0f);
-    scenario_borders[3] = scenario_borders[9]  = b2Vec2(SCENARIO_HALF_WIDTH + 6, 19.0f);
-    scenario_borders[4] = scenario_borders[10] = b2Vec2(SCENARIO_HALF_WIDTH, 19.0f);
-    scenario_borders[5] = scenario_borders[11] = b2Vec2(SCENARIO_HALF_WIDTH, SCENARIO_HEIGHT);
-    for(int i = 6; i < 12; i++)
+    scenario_borders[0] = scenario_borders[11]  = b2Vec2(SCENARIO_HALF_WIDTH, 0.0f);
+    scenario_borders[1] = scenario_borders[10]  = b2Vec2(SCENARIO_HALF_WIDTH, 11.0f);
+    scenario_borders[2] = scenario_borders[9]  = b2Vec2(SCENARIO_HALF_WIDTH + 6, 11.0f);
+    scenario_borders[3] = scenario_borders[8]  = b2Vec2(SCENARIO_HALF_WIDTH + 6, 19.0f);
+    scenario_borders[4] = scenario_borders[7] = b2Vec2(SCENARIO_HALF_WIDTH, 19.0f);
+    scenario_borders[5] = scenario_borders[6] = b2Vec2(SCENARIO_HALF_WIDTH, SCENARIO_HEIGHT);
+    for(int i = 0; i < 6; i++)
         scenario_borders[i].x *= -1;
     b2ChainShape borders;
     borders.CreateLoop(scenario_borders, SCENARIO_BORDERS);
+
+    b2FixtureDef scn_fd;
+    scn_fd.restitutionThreshold = 1.0f;
+    scn_fd.shape = &borders;
+
+    b2BodyDef scn_bd;
+    b2Body *scenario = world.CreateBody(&scn_bd);
+    scenario->CreateFixture(&scn_fd);
+
+
 
 
     //  PLAYERS
