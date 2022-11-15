@@ -46,6 +46,11 @@ file(GLOB gameLoop_SRC
 
 )
 add_executable(gameLoop ${gameLoop_SRC})
+add_executable(client_debug test_client.cpp
+    common/source/Socket/Socket.cpp
+    common/source/Socket/Resolver.cpp
+    common/source/Socket/Liberror.cpp
+    common/source/Socket/ResolverError.cpp)
 
 target_link_libraries(gameLoop PUBLIC box2d)
 #target_link_libraries(gameLoop PRIVATE Threads::Threads)
