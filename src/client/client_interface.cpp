@@ -29,10 +29,10 @@ Client_interface::Client_interface():
 
 void Client_interface::run_client(const char *serv, const char *port){
 
-	Texture car(renderer, "/home/alan/Rocket-League-sideswipe-Taller-1-FIUBA/data/cars.png");
-	Texture car2(renderer, "/home/alan/Rocket-League-sideswipe-Taller-1-FIUBA/data/cars.png");
-	Texture nitro(renderer, "/home/alan/Rocket-League-sideswipe-Taller-1-FIUBA/data/nitro.png");
-	Texture road(renderer, "/home/alan/Rocket-League-sideswipe-Taller-1-FIUBA/data/road.png");
+	Texture car(renderer, "../data/cars.png");
+	Texture car2(renderer, "../data/cars.png");
+	Texture nitro(renderer, "../data/nitro.png");
+	Texture road(renderer, "../data/road.png");
 
 	BlockingQueue<int>* pq = new BlockingQueue<int>();
     World* world = new World();

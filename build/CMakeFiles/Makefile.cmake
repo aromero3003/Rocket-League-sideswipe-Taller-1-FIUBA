@@ -23,6 +23,8 @@ set(CMAKE_MAKEFILE_DEPENDS
   "../libs/libSDL2pp/SDL2pp/Config.hh.in"
   "../libs/libSDL2pp/cmake/CheckCompile.cmake"
   "../libs/libSDL2pp/cmake/FindSDL2.cmake"
+  "../libs/libSDL2pp/cmake/FindSDL2_image.cmake"
+  "../libs/libSDL2pp/cmake/FindSDL2_ttf.cmake"
   "/usr/share/cmake-3.16/Modules/BasicConfigVersion-SameMajorVersion.cmake.in"
   "/usr/share/cmake-3.16/Modules/CMakeCInformation.cmake"
   "/usr/share/cmake-3.16/Modules/CMakeCXXInformation.cmake"
@@ -83,8 +85,9 @@ set(CMAKE_MAKEFILE_PRODUCTS
 
 # Dependency information for all targets:
 set(CMAKE_DEPEND_INFO_FILES
-  "CMakeFiles/server.dir/DependInfo.cmake"
+  "CMakeFiles/client_debug.dir/DependInfo.cmake"
   "CMakeFiles/client.dir/DependInfo.cmake"
+  "CMakeFiles/server.dir/DependInfo.cmake"
   "libs/box2d/src/CMakeFiles/box2d.dir/DependInfo.cmake"
   "libs/box2d/unit-test/CMakeFiles/unit_test.dir/DependInfo.cmake"
   "libs/box2d/extern/glad/CMakeFiles/glad.dir/DependInfo.cmake"
