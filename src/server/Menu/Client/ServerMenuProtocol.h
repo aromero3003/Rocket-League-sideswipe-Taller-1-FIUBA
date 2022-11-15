@@ -7,7 +7,7 @@
 #include <utility>
 #include <vector>
 
-#include "../../../../common/source/Socket/Socket.h"
+#include "socket.h"
 #include "../MenuCommand/CommandHandler.h"
 
 

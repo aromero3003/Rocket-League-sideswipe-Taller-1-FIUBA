@@ -8,7 +8,7 @@
 #include <string>
 #include <utility>
 
-#include "Socket.h"
+#include "socket.h"
 #include "AcceptThread.h"
 class Server {
  private:

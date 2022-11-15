@@ -8,9 +8,9 @@
 #include "../GameCommand/GameCommandHandler.h"
 #include "GameLogic.h"
 #include "../Client/GamingClient.h"
-#include "../../../../common/source/Thread/Thread.h"
-#include "../../../../common/source/Socket/Liberror.h"
-#include "../../../../common/source/Queue/protected_queue.h"
+#include "ProtectedQueue.h"
+#include "thread.h"
+#include "liberror.h"
 
 class RunGame : public Thread {
  private:

@@ -5,16 +5,12 @@
 #include <list>
 #include <ostream>
 #include <string>
-
-#include "../../../../common/source/Socket/Socket.h"
-#include "../../../../common/source/Socket/Liberror.h"
-
-#include "../../../../common/source/Queue/protected_queue.h"
-#include "../../../../common/source/Queue/blocking_queue.h"
+#include "ProtectedQueue.h"
+#include "BlockingQueue.h"
+#include "thread.h"
+#include "socket.h"
+#include "liberror.h"
 #include "../GameCommand/GameCommandHandler.h"
-
-#include "../../../../common/source/Thread/Thread.h"
-
 #include "Snap.h"
 class ProtocolSend: public Thread
 {

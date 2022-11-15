@@ -9,8 +9,8 @@
 #include "socket.h"
 #include "liberror.h"
 
-#include "protected_queue.h"
-#include "blocking_queue.h"
+#include "ProtectedQueue.h"
+#include "BlockingQueue.h"
 
 #include "../GameCommand/GameCommandHandler.h"
 
