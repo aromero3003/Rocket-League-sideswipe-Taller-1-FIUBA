@@ -7,7 +7,6 @@
 #define PRESS_LEFT 66
 #define PRESS_SPACE 67
 #define PRESS_UP 71
-
 #define RELEASE_RIGHT 68
 #define RELEASE_LEFT 69
 #define RELEASE_SPACE 70
