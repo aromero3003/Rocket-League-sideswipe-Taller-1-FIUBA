@@ -8,12 +8,14 @@
 #include "GameObjects/ball.h"
 #include "GameObjects/car.h"
 #include "../Client/Snap.h"
+#include <memory>
 
 class GameLogic {
  private:
     b2World world;
     Ball ball;
     std::vector<Car> players;
+    SnapShot* snap;
     void setPlayer(Car& player);
     void setBall();
     void setGoal();

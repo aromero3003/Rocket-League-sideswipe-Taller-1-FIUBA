@@ -64,23 +64,24 @@ SnapShot* GameLogic::getSnap(){
 }
 
 void GameLogic::setSnap(){
-    setBall(snap);
+    std::shared_ptr<SnapShot> snap(new SnapShot);
+    setBall();
     for (Car& player : players){
-        setPlayer(snap,player);
+        setPlayer(player);
     }
     
 }
 
 void GameLogic::setPlayer(Car& player){
-       snap.add(player.getPosition().y);
-       snap.add(player.getPosition().x);
-       snap.add(player.getAngle());
-       snap.add(player.getOrientation());
+       snap->add(player.getPosition().y);
+       snap->add(player.getPosition().x);
+       snap->add(player.getAngle());
+       snap->add(player.getOrientation());
     
 }
 
 void GameLogic::setBall(){
-       snap.add(ball.getPosition().y);
-       snap.add(ball.getPosition().x);
-       snap.add(ball.getAngle());
+       snap->add(ball.getPosition().y);
+       snap->add(ball.getPosition().x);
+       snap->add(ball.getAngle());
 }

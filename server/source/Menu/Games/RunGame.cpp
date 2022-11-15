@@ -12,7 +12,8 @@ void  RunGame::addPlayer(GamingClient* gamingClient){
 void RunGame::run() {
   try {
     while(1){
-      gammingEventQueue.pop();
+        gammingEventQueue.pop().getCommand()->run(gameLogic);
+        
     }
     } catch (const std::exception& err) {
         std::cerr << "Something went wrong and an exception was caught: "
