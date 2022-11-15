@@ -66,6 +66,13 @@ file(GLOB client_SRC
 
 add_executable(client ${client_SRC})
 
+add_executable(client_debug test_client.cpp
+    src/common/liberror.cpp
+    src/common/resolver.cpp
+    src/common/resolvererror.cpp
+    src/common/socket.cpp
+    src/common/thread.cpp
+    )
 
 
 
