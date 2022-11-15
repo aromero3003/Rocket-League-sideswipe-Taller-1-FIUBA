@@ -1,3 +1,4 @@
+#include <asm-generic/socket.h>
 #include <stdio.h>
 #include <assert.h>
 #include <string.h>
@@ -106,6 +107,12 @@ Socket::Socket(const char *servname) {
 
         skt = socket(addr->ai_family, addr->ai_socktype, addr->ai_protocol);
         if (skt == -1) {
+            continue;
+        }
+
+        int val = 1;
+        s = setsockopt(skt, SOL_SOCKET, SO_REUSEADDR, &val, sizeof(val));
+        if (s == -1) {
             continue;
         }
 
