@@ -48,6 +48,13 @@
         "utility": "cpp",
         "cstddef": "cpp",
         "cstring": "cpp",
-        "memory": "cpp"
+        "memory": "cpp",
+        "chrono": "cpp",
+        "cstdarg": "cpp",
+        "algorithm": "cpp",
+        "iterator": "cpp",
+        "memory_resource": "cpp",
+        "numeric": "cpp",
+        "random": "cpp"
     }
 }
