@@ -21,7 +21,7 @@ Ball::Ball(b2World &world, float x, float y) {
     ball_fd.restitutionThreshold = 1.0f;
     ball_fd.filter.categoryBits = BALL_CATEGORY_BITS;
 
-    this->ball = world. CreateBody(&ball_def);
+    this->ball = world.CreateBody(&ball_def);
     this->ball->CreateFixture(&ball_fd);
 }
 

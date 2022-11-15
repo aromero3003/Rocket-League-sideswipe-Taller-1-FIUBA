@@ -13,7 +13,7 @@
 class GameLogic {
  private:
     b2World world;
-    Ball ball;
+    //Ball ball;
     std::vector<Car> players;
     SnapShot* snap;
     void setPlayer(Car& player);

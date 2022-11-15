@@ -11,8 +11,8 @@
 #include "../Client/Snap.h"
 
 GameLogic::GameLogic(size_t cant_players) :
-    world(b2Vec2(0.0f, -GRAVITY)),
-    ball(this->world, 0.0f, SCENARIO_HEIGHT / 2.0f) {
+    world(b2Vec2(0.0f, -GRAVITY)) {
+    //ball(this->world, 0.0f, SCENARIO_HEIGHT / 2.0f) {
 
     // WORLD
     b2FixtureDef scn_fd;
@@ -69,7 +69,7 @@ SnapShot* GameLogic::getSnap(){
 
 void GameLogic::setSnap(){
     std::shared_ptr<SnapShot> snap(new SnapShot);
-    setBall();
+    //setBall();
     for (Car& player : players){
         setPlayer(player);
     }
@@ -85,7 +85,10 @@ void GameLogic::setPlayer(Car& player){
 }
 
 void GameLogic::setBall(){
-       snap->add(ball.getPosition().y);
-       snap->add(ball.getPosition().x);
-       snap->add(ball.getAngle());
+       //snap->add(ball.getPosition().y);
+       //snap->add(ball.getPosition().x);
+       //snap->add(ball.getAngle());
+       snap->add(10.0f);
+       snap->add(20.0f);
+       snap->add(0.0f);
 }
