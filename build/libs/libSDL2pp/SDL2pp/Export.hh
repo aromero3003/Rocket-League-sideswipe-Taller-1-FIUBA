@@ -22,7 +22,7 @@
 #endif
 
 #ifndef SDL2PP_DEPRECATED
-#  define SDL2PP_DEPRECATED __attribute__ ((__deprecated__))
+#  define SDL2PP_DEPRECATED 
 #endif
 
 #ifndef SDL2PP_DEPRECATED_EXPORT

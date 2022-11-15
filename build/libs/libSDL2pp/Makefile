@@ -56,6 +56,52 @@ CMAKE_BINARY_DIR = /home/franco/Taller/Rocket-League-sideswipe-Taller-1-FIUBA/bu
 #=============================================================================
 # Targets provided globally by CMake.
 
+# Special rule for the target install/strip
+install/strip: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing the project stripped..."
+	/usr/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
+.PHONY : install/strip
+
+# Special rule for the target install/strip
+install/strip/fast: preinstall/fast
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing the project stripped..."
+	/usr/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
+.PHONY : install/strip/fast
+
+# Special rule for the target install/local
+install/local: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
+	/usr/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
+.PHONY : install/local
+
+# Special rule for the target install/local
+install/local/fast: preinstall/fast
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
+	/usr/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
+.PHONY : install/local/fast
+
+# Special rule for the target install
+install: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
+	/usr/bin/cmake -P cmake_install.cmake
+.PHONY : install
+
+# Special rule for the target install
+install/fast: preinstall/fast
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
+	/usr/bin/cmake -P cmake_install.cmake
+.PHONY : install/fast
+
+# Special rule for the target list_install_components
+list_install_components:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Available install components are: \"Unspecified\""
+.PHONY : list_install_components
+
+# Special rule for the target list_install_components
+list_install_components/fast: list_install_components
+
+.PHONY : list_install_components/fast
+
 # Special rule for the target rebuild_cache
 rebuild_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
@@ -260,33 +306,6 @@ SDL2pp/Exception.cc.s:
 	cd /home/franco/Taller/Rocket-League-sideswipe-Taller-1-FIUBA/build && $(MAKE) -f libs/libSDL2pp/CMakeFiles/SDL2pp.dir/build.make libs/libSDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/Exception.cc.s
 .PHONY : SDL2pp/Exception.cc.s
 
-SDL2pp/Font.o: SDL2pp/Font.cc.o
-
-.PHONY : SDL2pp/Font.o
-
-# target to build an object file
-SDL2pp/Font.cc.o:
-	cd /home/franco/Taller/Rocket-League-sideswipe-Taller-1-FIUBA/build && $(MAKE) -f libs/libSDL2pp/CMakeFiles/SDL2pp.dir/build.make libs/libSDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/Font.cc.o
-.PHONY : SDL2pp/Font.cc.o
-
-SDL2pp/Font.i: SDL2pp/Font.cc.i
-
-.PHONY : SDL2pp/Font.i
-
-# target to preprocess a source file
-SDL2pp/Font.cc.i:
-	cd /home/franco/Taller/Rocket-League-sideswipe-Taller-1-FIUBA/build && $(MAKE) -f libs/libSDL2pp/CMakeFiles/SDL2pp.dir/build.make libs/libSDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/Font.cc.i
-.PHONY : SDL2pp/Font.cc.i
-
-SDL2pp/Font.s: SDL2pp/Font.cc.s
-
-.PHONY : SDL2pp/Font.s
-
-# target to generate assembly for a file
-SDL2pp/Font.cc.s:
-	cd /home/franco/Taller/Rocket-League-sideswipe-Taller-1-FIUBA/build && $(MAKE) -f libs/libSDL2pp/CMakeFiles/SDL2pp.dir/build.make libs/libSDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/Font.cc.s
-.PHONY : SDL2pp/Font.cc.s
-
 SDL2pp/Point.o: SDL2pp/Point.cc.o
 
 .PHONY : SDL2pp/Point.o
@@ -421,60 +440,6 @@ SDL2pp/SDL.s: SDL2pp/SDL.cc.s
 SDL2pp/SDL.cc.s:
 	cd /home/franco/Taller/Rocket-League-sideswipe-Taller-1-FIUBA/build && $(MAKE) -f libs/libSDL2pp/CMakeFiles/SDL2pp.dir/build.make libs/libSDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/SDL.cc.s
 .PHONY : SDL2pp/SDL.cc.s
-
-SDL2pp/SDLImage.o: SDL2pp/SDLImage.cc.o
-
-.PHONY : SDL2pp/SDLImage.o
-
-# target to build an object file
-SDL2pp/SDLImage.cc.o:
-	cd /home/franco/Taller/Rocket-League-sideswipe-Taller-1-FIUBA/build && $(MAKE) -f libs/libSDL2pp/CMakeFiles/SDL2pp.dir/build.make libs/libSDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/SDLImage.cc.o
-.PHONY : SDL2pp/SDLImage.cc.o
-
-SDL2pp/SDLImage.i: SDL2pp/SDLImage.cc.i
-
-.PHONY : SDL2pp/SDLImage.i
-
-# target to preprocess a source file
-SDL2pp/SDLImage.cc.i:
-	cd /home/franco/Taller/Rocket-League-sideswipe-Taller-1-FIUBA/build && $(MAKE) -f libs/libSDL2pp/CMakeFiles/SDL2pp.dir/build.make libs/libSDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/SDLImage.cc.i
-.PHONY : SDL2pp/SDLImage.cc.i
-
-SDL2pp/SDLImage.s: SDL2pp/SDLImage.cc.s
-
-.PHONY : SDL2pp/SDLImage.s
-
-# target to generate assembly for a file
-SDL2pp/SDLImage.cc.s:
-	cd /home/franco/Taller/Rocket-League-sideswipe-Taller-1-FIUBA/build && $(MAKE) -f libs/libSDL2pp/CMakeFiles/SDL2pp.dir/build.make libs/libSDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/SDLImage.cc.s
-.PHONY : SDL2pp/SDLImage.cc.s
-
-SDL2pp/SDLTTF.o: SDL2pp/SDLTTF.cc.o
-
-.PHONY : SDL2pp/SDLTTF.o
-
-# target to build an object file
-SDL2pp/SDLTTF.cc.o:
-	cd /home/franco/Taller/Rocket-League-sideswipe-Taller-1-FIUBA/build && $(MAKE) -f libs/libSDL2pp/CMakeFiles/SDL2pp.dir/build.make libs/libSDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/SDLTTF.cc.o
-.PHONY : SDL2pp/SDLTTF.cc.o
-
-SDL2pp/SDLTTF.i: SDL2pp/SDLTTF.cc.i
-
-.PHONY : SDL2pp/SDLTTF.i
-
-# target to preprocess a source file
-SDL2pp/SDLTTF.cc.i:
-	cd /home/franco/Taller/Rocket-League-sideswipe-Taller-1-FIUBA/build && $(MAKE) -f libs/libSDL2pp/CMakeFiles/SDL2pp.dir/build.make libs/libSDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/SDLTTF.cc.i
-.PHONY : SDL2pp/SDLTTF.cc.i
-
-SDL2pp/SDLTTF.s: SDL2pp/SDLTTF.cc.s
-
-.PHONY : SDL2pp/SDLTTF.s
-
-# target to generate assembly for a file
-SDL2pp/SDLTTF.cc.s:
-	cd /home/franco/Taller/Rocket-League-sideswipe-Taller-1-FIUBA/build && $(MAKE) -f libs/libSDL2pp/CMakeFiles/SDL2pp.dir/build.make libs/libSDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/SDLTTF.cc.s
-.PHONY : SDL2pp/SDLTTF.cc.s
 
 SDL2pp/Surface.o: SDL2pp/Surface.cc.o
 
@@ -644,6 +609,10 @@ help:
 	@echo "... all (the default if no target is provided)"
 	@echo "... clean"
 	@echo "... depend"
+	@echo "... install/strip"
+	@echo "... install/local"
+	@echo "... install"
+	@echo "... list_install_components"
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... SDL2pp"
@@ -662,9 +631,6 @@ help:
 	@echo "... SDL2pp/Exception.o"
 	@echo "... SDL2pp/Exception.i"
 	@echo "... SDL2pp/Exception.s"
-	@echo "... SDL2pp/Font.o"
-	@echo "... SDL2pp/Font.i"
-	@echo "... SDL2pp/Font.s"
 	@echo "... SDL2pp/Point.o"
 	@echo "... SDL2pp/Point.i"
 	@echo "... SDL2pp/Point.s"
@@ -680,12 +646,6 @@ help:
 	@echo "... SDL2pp/SDL.o"
 	@echo "... SDL2pp/SDL.i"
 	@echo "... SDL2pp/SDL.s"
-	@echo "... SDL2pp/SDLImage.o"
-	@echo "... SDL2pp/SDLImage.i"
-	@echo "... SDL2pp/SDLImage.s"
-	@echo "... SDL2pp/SDLTTF.o"
-	@echo "... SDL2pp/SDLTTF.i"
-	@echo "... SDL2pp/SDLTTF.s"
 	@echo "... SDL2pp/Surface.o"
 	@echo "... SDL2pp/Surface.i"
 	@echo "... SDL2pp/Surface.s"

@@ -39,6 +39,7 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
+  include("/home/franco/Taller/Rocket-League-sideswipe-Taller-1-FIUBA/build/libs/box2d/cmake_install.cmake")
   include("/home/franco/Taller/Rocket-League-sideswipe-Taller-1-FIUBA/build/libs/libSDL2pp/cmake_install.cmake")
 
 endif()

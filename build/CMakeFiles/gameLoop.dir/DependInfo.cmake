@@ -27,6 +27,7 @@ set(CMAKE_CXX_TARGET_INCLUDE_PATH
   "libs/libSDL2pp"
   "/usr/local/include/SDL2"
   "/usr/include/SDL2"
+  "../libs/box2d/include"
   )
 
 # Targets to which this target links.

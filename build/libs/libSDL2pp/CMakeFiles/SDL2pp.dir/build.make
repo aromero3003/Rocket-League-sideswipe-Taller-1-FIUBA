@@ -265,45 +265,6 @@ libs/libSDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/Window.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/SDL2pp.dir/SDL2pp/Window.cc.s"
 	cd /home/franco/Taller/Rocket-League-sideswipe-Taller-1-FIUBA/build/libs/libSDL2pp && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/franco/Taller/Rocket-League-sideswipe-Taller-1-FIUBA/libs/libSDL2pp/SDL2pp/Window.cc -o CMakeFiles/SDL2pp.dir/SDL2pp/Window.cc.s
 
-libs/libSDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/SDLTTF.cc.o: libs/libSDL2pp/CMakeFiles/SDL2pp.dir/flags.make
-libs/libSDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/SDLTTF.cc.o: ../libs/libSDL2pp/SDL2pp/SDLTTF.cc
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/franco/Taller/Rocket-League-sideswipe-Taller-1-FIUBA/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Building CXX object libs/libSDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/SDLTTF.cc.o"
-	cd /home/franco/Taller/Rocket-League-sideswipe-Taller-1-FIUBA/build/libs/libSDL2pp && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/SDL2pp.dir/SDL2pp/SDLTTF.cc.o -c /home/franco/Taller/Rocket-League-sideswipe-Taller-1-FIUBA/libs/libSDL2pp/SDL2pp/SDLTTF.cc
-
-libs/libSDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/SDLTTF.cc.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/SDL2pp.dir/SDL2pp/SDLTTF.cc.i"
-	cd /home/franco/Taller/Rocket-League-sideswipe-Taller-1-FIUBA/build/libs/libSDL2pp && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/franco/Taller/Rocket-League-sideswipe-Taller-1-FIUBA/libs/libSDL2pp/SDL2pp/SDLTTF.cc > CMakeFiles/SDL2pp.dir/SDL2pp/SDLTTF.cc.i
-
-libs/libSDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/SDLTTF.cc.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/SDL2pp.dir/SDL2pp/SDLTTF.cc.s"
-	cd /home/franco/Taller/Rocket-League-sideswipe-Taller-1-FIUBA/build/libs/libSDL2pp && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/franco/Taller/Rocket-League-sideswipe-Taller-1-FIUBA/libs/libSDL2pp/SDL2pp/SDLTTF.cc -o CMakeFiles/SDL2pp.dir/SDL2pp/SDLTTF.cc.s
-
-libs/libSDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/Font.cc.o: libs/libSDL2pp/CMakeFiles/SDL2pp.dir/flags.make
-libs/libSDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/Font.cc.o: ../libs/libSDL2pp/SDL2pp/Font.cc
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/franco/Taller/Rocket-League-sideswipe-Taller-1-FIUBA/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_18) "Building CXX object libs/libSDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/Font.cc.o"
-	cd /home/franco/Taller/Rocket-League-sideswipe-Taller-1-FIUBA/build/libs/libSDL2pp && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/SDL2pp.dir/SDL2pp/Font.cc.o -c /home/franco/Taller/Rocket-League-sideswipe-Taller-1-FIUBA/libs/libSDL2pp/SDL2pp/Font.cc
-
-libs/libSDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/Font.cc.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/SDL2pp.dir/SDL2pp/Font.cc.i"
-	cd /home/franco/Taller/Rocket-League-sideswipe-Taller-1-FIUBA/build/libs/libSDL2pp && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/franco/Taller/Rocket-League-sideswipe-Taller-1-FIUBA/libs/libSDL2pp/SDL2pp/Font.cc > CMakeFiles/SDL2pp.dir/SDL2pp/Font.cc.i
-
-libs/libSDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/Font.cc.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/SDL2pp.dir/SDL2pp/Font.cc.s"
-	cd /home/franco/Taller/Rocket-League-sideswipe-Taller-1-FIUBA/build/libs/libSDL2pp && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/franco/Taller/Rocket-League-sideswipe-Taller-1-FIUBA/libs/libSDL2pp/SDL2pp/Font.cc -o CMakeFiles/SDL2pp.dir/SDL2pp/Font.cc.s
-
-libs/libSDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/SDLImage.cc.o: libs/libSDL2pp/CMakeFiles/SDL2pp.dir/flags.make
-libs/libSDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/SDLImage.cc.o: ../libs/libSDL2pp/SDL2pp/SDLImage.cc
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/franco/Taller/Rocket-League-sideswipe-Taller-1-FIUBA/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_19) "Building CXX object libs/libSDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/SDLImage.cc.o"
-	cd /home/franco/Taller/Rocket-League-sideswipe-Taller-1-FIUBA/build/libs/libSDL2pp && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/SDL2pp.dir/SDL2pp/SDLImage.cc.o -c /home/franco/Taller/Rocket-League-sideswipe-Taller-1-FIUBA/libs/libSDL2pp/SDL2pp/SDLImage.cc
-
-libs/libSDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/SDLImage.cc.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/SDL2pp.dir/SDL2pp/SDLImage.cc.i"
-	cd /home/franco/Taller/Rocket-League-sideswipe-Taller-1-FIUBA/build/libs/libSDL2pp && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/franco/Taller/Rocket-League-sideswipe-Taller-1-FIUBA/libs/libSDL2pp/SDL2pp/SDLImage.cc > CMakeFiles/SDL2pp.dir/SDL2pp/SDLImage.cc.i
-
-libs/libSDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/SDLImage.cc.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/SDL2pp.dir/SDL2pp/SDLImage.cc.s"
-	cd /home/franco/Taller/Rocket-League-sideswipe-Taller-1-FIUBA/build/libs/libSDL2pp && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/franco/Taller/Rocket-League-sideswipe-Taller-1-FIUBA/libs/libSDL2pp/SDL2pp/SDLImage.cc -o CMakeFiles/SDL2pp.dir/SDL2pp/SDLImage.cc.s
-
 # Object files for target SDL2pp
 SDL2pp_OBJECTS = \
 "CMakeFiles/SDL2pp.dir/SDL2pp/AudioDevice.cc.o" \
@@ -321,10 +282,7 @@ SDL2pp_OBJECTS = \
 "CMakeFiles/SDL2pp.dir/SDL2pp/Texture.cc.o" \
 "CMakeFiles/SDL2pp.dir/SDL2pp/TextureLock.cc.o" \
 "CMakeFiles/SDL2pp.dir/SDL2pp/Wav.cc.o" \
-"CMakeFiles/SDL2pp.dir/SDL2pp/Window.cc.o" \
-"CMakeFiles/SDL2pp.dir/SDL2pp/SDLTTF.cc.o" \
-"CMakeFiles/SDL2pp.dir/SDL2pp/Font.cc.o" \
-"CMakeFiles/SDL2pp.dir/SDL2pp/SDLImage.cc.o"
+"CMakeFiles/SDL2pp.dir/SDL2pp/Window.cc.o"
 
 # External object files for target SDL2pp
 SDL2pp_EXTERNAL_OBJECTS =
@@ -345,12 +303,9 @@ libs/libSDL2pp/libSDL2pp.a: libs/libSDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/Texture.
 libs/libSDL2pp/libSDL2pp.a: libs/libSDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/TextureLock.cc.o
 libs/libSDL2pp/libSDL2pp.a: libs/libSDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/Wav.cc.o
 libs/libSDL2pp/libSDL2pp.a: libs/libSDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/Window.cc.o
-libs/libSDL2pp/libSDL2pp.a: libs/libSDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/SDLTTF.cc.o
-libs/libSDL2pp/libSDL2pp.a: libs/libSDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/Font.cc.o
-libs/libSDL2pp/libSDL2pp.a: libs/libSDL2pp/CMakeFiles/SDL2pp.dir/SDL2pp/SDLImage.cc.o
 libs/libSDL2pp/libSDL2pp.a: libs/libSDL2pp/CMakeFiles/SDL2pp.dir/build.make
 libs/libSDL2pp/libSDL2pp.a: libs/libSDL2pp/CMakeFiles/SDL2pp.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/franco/Taller/Rocket-League-sideswipe-Taller-1-FIUBA/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_20) "Linking CXX static library libSDL2pp.a"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/franco/Taller/Rocket-League-sideswipe-Taller-1-FIUBA/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Linking CXX static library libSDL2pp.a"
 	cd /home/franco/Taller/Rocket-League-sideswipe-Taller-1-FIUBA/build/libs/libSDL2pp && $(CMAKE_COMMAND) -P CMakeFiles/SDL2pp.dir/cmake_clean_target.cmake
 	cd /home/franco/Taller/Rocket-League-sideswipe-Taller-1-FIUBA/build/libs/libSDL2pp && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/SDL2pp.dir/link.txt --verbose=$(VERBOSE)
 
