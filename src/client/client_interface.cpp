@@ -13,9 +13,10 @@
 #define RELEASE_SPACE 70
 #define RELEASE_UP 72
 
-#define FRAME_RATE 1000/40
+#define FRAME_RATE 1000/120
 
 #define QUIT 99
+
 
 Client_interface::Client_interface(): 
             sdl(SDL_INIT_VIDEO), 
@@ -25,20 +26,24 @@ Client_interface::Client_interface():
                     640, 480,
                     0),
                     //SDL_WINDOW_RESIZABLE),
-            renderer(window, -1, SDL_RENDERER_ACCELERATED){}
+            renderer(window, -1, SDL_RENDERER_ACCELERATED){
+
+	this->world = new World();
+}
 
 void Client_interface::run_client(const char *serv, const char *port){
 
 	Texture car(renderer, "../data/cars.png");
 	Texture car2(renderer, "../data/cars.png");
-	Texture nitro(renderer, "../data/nitro.png");
+	Texture ball(renderer, "../data/ball.png");
+	//Texture nitro(renderer, "../data/nitro.png");
 	Texture road(renderer, "../data/road.png");
+	Texture court(renderer, "../data/court.png");
 
 	BlockingQueue<int>* pq = new BlockingQueue<int>();
-    World* world = new World();
 	Socket* s = new Socket(serv, port);
 
-	ReceiverThread receiver(s,world);
+	ReceiverThread receiver(s,this->world);
 	SenderThread sender(s, pq);
 	receiver.start();
 	sender.start();
@@ -48,10 +53,9 @@ void Client_interface::run_client(const char *serv, const char *port){
     bool running = true;
     bool going_right, going_left, jumping, nitroing = false;
     uint32_t t1 = SDL_GetTicks();
-
 	while (running) {
         running = handle_events(pq, going_right, going_left, nitroing, jumping);
-        void render_screen();
+        render_screen(car, road, ball, court);
 
         //Constant Rate Loop
         int32_t t2 = SDL_GetTicks();
@@ -120,10 +124,30 @@ bool Client_interface::handle_events(BlockingQueue<int>* pq, bool& going_right, 
     return true;
 }
 
-void Client_interface::render_screen(Texture& car, Texture& road, Texture& nitro){
-
+void Client_interface::render_screen(Texture& car, Texture& road, Texture& ball, Texture& court){
     	renderer.Clear();
-        renderer.SetDrawColor(0xFF, 0xFF, 0xFF, 0xF);
+        //renderer.SetDrawColor(0xFF, 0xFF, 0xFF, 0xF);
+		renderer.Copy(court,NullOpt,Rect(0,0,renderer.GetOutputWidth(),renderer.GetOutputHeight()));
+		renderer.Copy(car,
+					Rect(120,110,120,50),
+					Rect(renderer.GetOutputWidth()/2 + 10*this->world->car1.x_position,
+						renderer.GetOutputHeight()/2 + 120 + (-1)*this->world->car1.y_position,
+						120,
+						50),
+					this->world->car1.angle, 
+					NullOpt, 
+					SDL_FLIP_NONE
+					);
+		renderer.Copy(car,
+					Rect(250,220,120,50), 
+					Rect(renderer.GetOutputWidth()/2 + 10*this->world->car2.x_position,
+						renderer.GetOutputHeight()/2 + 120 + (-1)*this->world->car2.y_position,
+						120,
+						50),
+					this->world->car2.angle,
+					NullOpt,
+					SDL_FLIP_HORIZONTAL);
+		renderer.Copy(ball,NullOpt,Rect(renderer.GetOutputWidth()/2 + this->world->ball.x_position,renderer.GetOutputHeight()/2 + (-1)*this->world->ball.y_position,50,50));
 		//renderer.Copy(road,NullOpt,Rect(0,renderer.GetOutputHeight()/2 - 75,renderer.GetOutputWidth(), 300));
 		//renderer.Copy(car, Rect(src_x,src_y,120,50),Rect((int)position,renderer.GetOutputHeight()/2,120,50));	
 		//if(nitroing){

@@ -16,6 +16,7 @@ class Client_interface{
     SDL2pp::SDL sdl;
 	SDL2pp::Window window;
 	SDL2pp::Renderer renderer;
+    World* world;
 
     public:
         Client_interface();
@@ -24,7 +25,7 @@ class Client_interface{
 
         bool handle_events(BlockingQueue<int>* pq, bool& going_right, bool& going_left, bool& nitroing, bool& jumping);
 
-        void render_screen(Texture& car, Texture& road, Texture& nitro);
+        void render_screen(Texture& car, Texture& road, Texture& ball, Texture& court);
 
         ~Client_interface();
 

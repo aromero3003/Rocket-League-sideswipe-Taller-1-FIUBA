@@ -7,16 +7,18 @@
 #include "ball.h"
 
 class World{
-    private:
+    public:
         Car car1;
         Car car2;
         Ball ball;
         std::mutex mutex;
-    public:
+    
         World();
 
         //thread-safe
-        void update();
+        void update(char* data);
+
+        void print();
 
         //thread-safe
         void draw();

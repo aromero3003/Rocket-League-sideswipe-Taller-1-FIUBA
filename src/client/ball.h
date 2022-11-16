@@ -2,11 +2,10 @@
 #define BALL_H
 
 class Ball{
-    private:
+    public:
         friend class World;
         float x_position;
         float y_position;
-    public:
         Ball();
 
         ~Ball();

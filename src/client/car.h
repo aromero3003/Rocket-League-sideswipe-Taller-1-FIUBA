@@ -2,12 +2,12 @@
 #define CAR_H
 
 class Car{
-    private:
+    public:
         friend class World;
         float x_position;
         float y_position;
+        float angle;
         bool pointing_right;
-    public:
         Car();
 
         ~Car();
