@@ -24,7 +24,7 @@ private:
     bool was_closed;
     ProtectedQueue<GameCommandHandler> &eventQueueRef;
     size_t id;
-    int reciveCommand();
+    int8_t reciveCommand();
 public:
     ProtocolRecv(Socket &skt,ProtectedQueue<GameCommandHandler> &eventQueue,size_t id);
     virtual void run() override;

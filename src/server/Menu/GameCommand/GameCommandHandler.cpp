@@ -1,32 +1,35 @@
 #include "GameCommandHandler.h"
+#include "GameCommand.h"
 
-
+#include <iostream>
+#include <memory>
 GameCommandHandler::GameCommandHandler(size_t id):isEndGame(false),id(id) {}
 
-void GameCommandHandler::createCommand(int parameter) {
+void GameCommandHandler::createCommand(int8_t parameter) {
 
+    std::cerr << "Commando: " << parameter << std::endl;
     if (parameter == PRESS_LEFT) {
-        std::shared_ptr<GameCommand>  command(new LeftCommand(id));
+        this->command = new LeftCommand(id);
     } else     if (parameter == PRESS_RIGHT) {
-        std::shared_ptr<GameCommand>  command(new RightCommand(id));
+        this->command = new RightCommand(id);
     } else     if (parameter == PRESS_SPACE) {
-        std::shared_ptr<GameCommand>  command(new SpaceCommand(id));
+        this->command = new SpaceCommand(id);
     } else     if (parameter == PRESS_UP) {
-        std::shared_ptr<GameCommand>  command(new UpCommand(id));
+        this->command = new UpCommand(id);
     } else     if (parameter == RELEASE_LEFT) {
-        std::shared_ptr<GameCommand>  command(new LeftReleaseCommand(id));
+        this->command = new LeftReleaseCommand(id);
     } else     if (parameter == RELEASE_RIGHT) {
-        std::shared_ptr<GameCommand>  command(new RightReleaseCommand(id));
+        this->command = new RightReleaseCommand(id);
     } else     if (parameter == RELEASE_SPACE) {
-        std::shared_ptr<GameCommand>  command(new SpaceReleaseCommand(id));
+        this->command = new SpaceReleaseCommand(id);
     } else     if (parameter == RELEASE_UP) {
-        std::shared_ptr<GameCommand>  command(new UpReleaseCommand(id));
+        this->command = new UpReleaseCommand(id);
     }  
 }
 
 bool GameCommandHandler::isEnd() { return isEndGame;}
 
-std::shared_ptr<GameCommand> GameCommandHandler::getCommand() {
-        return std::move(command);
+GameCommand* GameCommandHandler::getCommand() {
+        return this->command;
 }
 

@@ -25,7 +25,7 @@ void RunGame::run() {
         for (auto player: players) {
             player->addSnap(*snap); // usar smart pointers (no hay free)
         }
-        usleep(100000);
+        usleep(1000000);
 
 
         //std::shared_ptr<SnapShot> this->gameLogic.getSnap();

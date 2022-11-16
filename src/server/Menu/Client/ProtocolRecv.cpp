@@ -4,11 +4,9 @@ ProtocolRecv::ProtocolRecv(Socket &o_skt,ProtectedQueue<GameCommandHandler> & o_
 skt(o_skt),was_closed(false),eventQueueRef(o_eventQueue),id(o_id){}
 
 
-int ProtocolRecv::reciveCommand(){
-  int oneRequest = 1;
-  while (!was_closed && oneRequest != 0) {
-    skt.recvall(&oneRequest, sizeof(oneRequest), &was_closed);
-  }
+int8_t ProtocolRecv::reciveCommand(){
+  int8_t oneRequest = 1;
+  skt.recvall(&oneRequest, 1, &was_closed);
   return oneRequest;
 }
 void ProtocolRecv::run() {
