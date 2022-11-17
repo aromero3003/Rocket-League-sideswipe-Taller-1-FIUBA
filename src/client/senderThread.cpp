@@ -1,4 +1,5 @@
 #include "senderThread.h"
+#include <cstdint>
 #include <string>
 
 SenderThread::SenderThread(Socket* s, BlockingQueue<int>* pq) {
@@ -7,12 +8,12 @@ SenderThread::SenderThread(Socket* s, BlockingQueue<int>* pq) {
 }
 
 void SenderThread::run() {
-    int action = 0;
+    int8_t action = 0;
     bool closed = false;
     while (1){
         action = pq->pop();
         if (action == 99) break;
-        this->socket->sendall(&action,4, &closed);
+        this->socket->sendall(&action,1, &closed);
     }
 }
 
