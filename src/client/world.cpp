@@ -12,12 +12,12 @@ void World::update(char* data){
     this->car1.x_position = FC(data+17);
     this->car1.y_position = FC(data+13);
     this->car1.angle = FC(data+21);
-    this->car1.pointing_right = data+25;
+    this->car1.pointing_right = data[25];
 
     this->car2.x_position = FC(data+30);
     this->car2.y_position = FC(data+26);
     this->car2.angle = FC(data+34);
-    this->car2.pointing_right = data+38;
+    this->car2.pointing_right = data[38];
 }
 
 void World::print(){
