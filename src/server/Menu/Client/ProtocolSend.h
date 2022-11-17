@@ -3,6 +3,7 @@
 
 #include <istream>
 #include <list>
+#include <memory>
 #include <ostream>
 #include <string>
 #include "ProtectedQueue.h"
@@ -16,11 +17,11 @@ class ProtocolSend: public Thread
 {
 private:
     Socket& skt;
-    BlockingQueue<SnapShot>& snapEventQueue;
+    BlockingQueue<std::shared_ptr<SnapShot>>& snapEventQueue;
     bool was_closed;
     void sendResponse(std::vector<uint8_t>& response);
 public:
-   ProtocolSend(Socket& skt,BlockingQueue<SnapShot>& snapEventQueue);
+   ProtocolSend(Socket& skt,BlockingQueue<std::shared_ptr<SnapShot>> &snapEventQueue);
 
   virtual void run() override;
     virtual ~ProtocolSend()= default;

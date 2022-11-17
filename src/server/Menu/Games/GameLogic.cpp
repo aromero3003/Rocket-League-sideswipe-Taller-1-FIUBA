@@ -1,5 +1,6 @@
 #include "GameLogic.h"
 #include <box2d/b2_body.h>
+#include <memory>
 
 
 GameLogic::GameLogic(size_t cant_players) :
@@ -23,6 +24,8 @@ GameLogic::GameLogic(size_t cant_players) :
     b2FixtureDef scn_fd;
     scn_fd.restitutionThreshold = 1.0f;
     scn_fd.shape = &borders;
+    scn_fd.filter.categoryBits = 0x2;
+    scn_fd.filter.maskBits = 0x1 | 0x4;
 
     b2BodyDef scn_bd;
     b2Body *scenario = world.CreateBody(&scn_bd);
@@ -65,8 +68,8 @@ void GameLogic::step() {
     //setSnap();
 }
 
-SnapShot* GameLogic::getSnap(){
-    SnapShot *snap = new SnapShot;
+std::shared_ptr<SnapShot> GameLogic::getSnap(){
+    std::shared_ptr<SnapShot> snap(new SnapShot);
     snap->add(goal);
 
     snap->add(10.0f);

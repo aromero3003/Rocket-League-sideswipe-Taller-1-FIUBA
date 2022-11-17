@@ -1,7 +1,9 @@
 #include "ProtocolSend.h"
+#include "Snap.h"
+#include <memory>
 
-ProtocolSend::ProtocolSend(Socket&skt,BlockingQueue<SnapShot>& snapEventQueueRef):
-skt(skt),snapEventQueue(snapEventQueueRef),was_closed(false){}
+ProtocolSend::ProtocolSend(Socket&skt,BlockingQueue<std::shared_ptr<SnapShot>> &snapEventQueuePtr):
+skt(skt),snapEventQueue(snapEventQueuePtr),was_closed(false){}
 
 
 void ProtocolSend::sendResponse(std::vector<uint8_t>& response) {
@@ -13,7 +15,7 @@ void ProtocolSend::run() {
   try {
     //sendResponse(numberPlayer);
     while(!was_closed){
-    sendResponse(snapEventQueue.pop().getMsg());
+    sendResponse(snapEventQueue.pop()->getMsg());
     }
   } catch (const LibError& err) {
 
