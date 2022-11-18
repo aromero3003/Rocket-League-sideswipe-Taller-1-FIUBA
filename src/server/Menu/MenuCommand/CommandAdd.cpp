@@ -1,18 +1,9 @@
 #include "CommandAdd.h"
-CommandAdd::CommandAdd(std::istream& paramenters) : CommandWithParameters() {
+CommandAdd::CommandAdd(std::istream& paramenters, size_t id) : CommandWithParameters(id) {
   std::getline(paramenters, gameName);
 }
-void CommandAdd::run(GameHandler& games) {
-  //try
-  //games.addPlayerToGame(gameName,coplete)
-  //if compte
-  // sendOkComplete(gameName)
-  //send ok(cliente)
-  ///cacth
-  ///sendError(client)
+void CommandAdd::run() {
   if (games.addPlayerToGame(gameName) == OK) {
     response.append("OK\n");
-  } else {
-    response.append("ERROR\n");
   }
 }

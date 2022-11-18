@@ -15,8 +15,8 @@ class CommandWithParameters : public Command {
   std::string gameName;
 
  public:
-  CommandWithParameters() : Command(), gameName() {}
-  virtual void run(GameHandler& gameHandler) override{};
+  CommandWithParameters(size_t id) : Command(id), gameName() {}
+  virtual void run() override{};
   virtual ~CommandWithParameters() {}
 };
 

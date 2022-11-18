@@ -1,5 +1,5 @@
-#ifndef __COMMANDLIST_H__
-#define __COMMANDLIST_H__
+#ifndef __BADCOMMAND_H__
+#define __BADCOMMAND_H__
 
 #include <istream>
 #include <list>
@@ -9,11 +9,11 @@
 #include "../Games/GameHandler.h"
 #include "Command.h"
 
-class CommandList : public Command {
+class BadCommand : public Command {
  public:
-  explicit CommandList(size_t id);
+  explicit BadCommand(size_t id);
   void run() override;
-  virtual ~CommandList() {}
+  virtual ~BadCommand() {}
 };
 
 #endif

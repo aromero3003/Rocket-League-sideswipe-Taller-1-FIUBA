@@ -1,6 +1,7 @@
 #include "CommandList.h"
 
-void CommandList::run(GameHandler& games) {
+CommandList::CommandList(size_t id):Command(id){}
+void CommandList::run() {
   std::string list;
   if (games.listAllWithOcupation(list) == OK) {
     response.append("OK\n");

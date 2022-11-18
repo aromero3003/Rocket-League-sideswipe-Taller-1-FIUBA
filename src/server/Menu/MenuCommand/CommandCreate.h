@@ -15,8 +15,8 @@ class CommandCreate : public CommandWithParameters {
   int capacity;
 
  public:
-  explicit CommandCreate(std::istream& paramenters);
-  void run(GameHandler& gameHandler) override;
+  CommandCreate(std::istream& paramenters,size_t id);
+  void run() override;
   virtual ~CommandCreate() {}
 };
 

@@ -1,28 +1,26 @@
 #include "CommandHandler.h"
 
-CommandHandler::CommandHandler() { command = nullptr; }
+CommandHandler::CommandHandler() {}
 
-CommandHandler::~CommandHandler() {
-    if (command) delete command;
-}
+CommandHandler::~CommandHandler() {}
 
-void CommandHandler::createCommand(std::istream &parameters) {
+std::unique_ptr<Command> CommandHandler::createCommand(std::istream &parameters,size_t id) {
     std::string type;
     parameters >> type >> std::ws;
 
     if (type == "LISTAR") {
-        command = new CommandList();
+        std::unique_ptr<Command>  command(new CommandList(id));
+        return command;
     } else if (type == "CREAR") {
-        command = new CommandCreate(parameters);
+        std::unique_ptr<Command>  command(new CommandCreate(parameters,id));
+        return command;
     } else if (type == "UNIR") {
-        command = new CommandAdd(parameters);
-    } else {
-        throw std::invalid_argument("tipo de comando no encontrado :" + type);
-    }
+        std::unique_ptr<Command>  command(new CommandAdd(parameters,id));
+        return command;
+    } else if (type == "TRANSFORM") {
+        std::unique_ptr<Command>  command(new CommandTransform(id));
+        return command;
+    } 
+    std::unique_ptr<Command>  command(new BadCommand(id));
+    return command; 
 }
-
-void CommandHandler::run(GameHandler &games) {
-    if (command != nullptr) command->run(games);
-}
-
-std::string &CommandHandler::getResponse() { return command->getResponse(); }

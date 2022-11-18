@@ -12,8 +12,8 @@
 ////ADD
 class CommandAdd : public CommandWithParameters {
  public:
-  explicit CommandAdd(std::istream& paramenters);
-  void run(GameHandler& gameHandler) override;
+  CommandAdd(std::istream& paramenters, size_t id);
+  void run() override;
   virtual ~CommandAdd() {}
 };
 

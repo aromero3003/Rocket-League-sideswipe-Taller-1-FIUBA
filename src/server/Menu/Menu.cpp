@@ -1,22 +1,18 @@
 #include "Menu.h"
 
 Menu::Menu():
-clientsHandler(ClientsHandler()),
-   gameHandler(GameHandler()),
-    runGame(gameHandler.addRunGame()){}
-
+    menuEventQueue (BlockingQueue<std::unique_ptr<MenuEvent>>),
+    menuLogic(menuEventQueue,){
+        menuLogic.start();
+    }
 void Menu::conectNewClient(Socket&& sktAccepted,size_t id){
-    runGame.addPlayer(
-        clientsHandler.conectNewGamingClient(std::move(sktAccepted),id,runGame.getRefGamingQueue())
-                    );
+    std::unique_ptr<MenuEventAddClient> event(new MenuEventAddClient(std::move(sktAccepted),id));
+    menuEventQueue.push(event);
 }
-
-void Menu::cleanDisconectClients(){
-    clientsHandler.cleanDisconectClients();
+  
+void Menu::pushCommandEvent(std::unique_ptr<MenuEvent> event){
+    menuEventQueue.push(event);
 }
-void Menu::disconectAll(){
-  clientsHandler.disconectAll();
-}
-void Menu::startGame(){
-    runGame.start();
-}
+Menu::~Menu():{
+        menuLogic.join();
+    }
