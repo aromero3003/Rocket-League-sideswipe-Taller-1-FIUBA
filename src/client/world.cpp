@@ -46,7 +46,7 @@ void World::draw(std::vector<Texture>& car_textures, Texture& ball, Texture& cou
         renderer.Copy(car_textures[i],
                     Rect(0,50*i,120,50),
                     Rect(renderer.GetOutputWidth()/2 + 20* this->cars[i].x_position,
-                        renderer.GetOutputHeight()/2  + (-20)*this->cars[i].y_position,
+                        renderer.GetOutputHeight()/2 + 280  + (-20)*this->cars[i].y_position,
                         120,
                         50),
                 this->cars[i].angle, 

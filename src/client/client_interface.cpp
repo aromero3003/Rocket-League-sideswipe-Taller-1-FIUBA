@@ -40,7 +40,7 @@ void Client_interface::run_client(const char *serv, const char *port){
 	std::vector<Texture> car_textures;
 
 	for(int i = 0; i < n_cars; i++){
-		car_textures.emplace_back(renderer, SDL2pp::Surface("../data/cars.png").SetColorKey(true,0));
+		car_textures.emplace_back(renderer, "../data/cars.png");
 	}
 	Texture ball(renderer, "../data/ball.png");
 	Texture court(renderer, "../data/court.png");
