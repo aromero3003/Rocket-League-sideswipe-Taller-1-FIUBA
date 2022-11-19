@@ -16,6 +16,9 @@ set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -ggdb -DDEBUG -fno-inline ")
 # threads
 set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pthread")
 
+# DEBUG
+set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DALAN_DEBUG")
+
 
 
 include_directories(${PROJECT_SOURCE_DIR}/src/common)
