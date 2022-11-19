@@ -16,14 +16,15 @@ void World::create_cars(int n_cars){
 
 void World::update(char* data){
     std::lock_guard<std::mutex> lock(mutex);
+
     this->ball.x_position = FC(data+1);
     this->ball.y_position = FC(data+5);
 
     for(size_t i=0; i < this->cars.size(); i++){
-        this->cars[i].y_position = FC(data+(i*13));
-        this->cars[i].x_position = FC(data+(i*13 + 4));
-        this->cars[i].angle = FC(data+(i*13 + 8));
-        this->cars[i].pointing_right = bool(data+(i*13 + 12));
+        this->cars[i].y_position = FC(data+((i+1)*13));
+        this->cars[i].x_position = FC(data+((i+1)*13 + 4));
+        this->cars[i].angle = FC(data+((i+1)*13 + 8));
+        this->cars[i].pointing_right = bool(data+((i+1)*13 + 12));
     }
 }
 
@@ -53,27 +54,6 @@ void World::draw(std::vector<Texture>& car_textures, Texture& ball, Texture& cou
                 SDL_FLIP_NONE
                 );
     }
-    /*
-    renderer.Copy(car,
-                Rect(120,110,120,50),
-                Rect(renderer.GetOutputWidth()/2 + 10* this->car1.x_position,
-                    renderer.GetOutputHeight()/2 + 120 + (-5)*this->car1.y_position,
-                    120,
-                    50),
-                this->car1.angle, 
-                NullOpt, 
-                SDL_FLIP_NONE
-                );
-    renderer.Copy(car,
-                Rect(250,220,120,50), 
-                Rect(renderer.GetOutputWidth()/2 + 10*this->car2.x_position,
-                    renderer.GetOutputHeight()/2 + 120 + (-5)*this->car2.y_position,
-                    120,
-                    50),
-                this->car2.angle,
-                NullOpt,
-                SDL_FLIP_HORIZONTAL);
-    */
     renderer.Copy(ball, 
                 NullOpt, 
                 Rect(renderer.GetOutputWidth()/2 + this->ball.x_position,

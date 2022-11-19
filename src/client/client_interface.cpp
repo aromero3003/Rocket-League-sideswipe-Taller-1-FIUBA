@@ -38,6 +38,7 @@ void Client_interface::run_client(const char *serv, const char *port){
 	this->world->create_cars(n_cars);
 
 	std::vector<Texture> car_textures;
+
 	for(int i = 0; i < n_cars; i++){
 		car_textures.emplace_back(renderer, SDL2pp::Surface("../data/cars.png").SetColorKey(true,0));
 	}
