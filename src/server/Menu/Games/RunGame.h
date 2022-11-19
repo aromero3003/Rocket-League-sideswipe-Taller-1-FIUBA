@@ -10,11 +10,13 @@
 #include "../Client/GamingClient.h"
 #include "ProtectedQueue.h"
 #include "thread.h"
+#include "socket.h"
 #include "liberror.h"
 
 class RunGame : public Thread {
  private:
   GameLogic gameLogic;
+
   ProtectedQueue<GameCommandHandler> gammingEventQueue;
   std::vector<GamingClient*> players;
  public:
