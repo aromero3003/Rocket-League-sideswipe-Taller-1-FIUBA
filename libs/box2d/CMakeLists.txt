@@ -4,7 +4,7 @@ cmake_minimum_required(VERSION 3.8)
 project(box2d VERSION 2.4.1)
 
 # set(CMAKE_CONFIGURATION_TYPES "Debug;RelWithDebInfo" CACHE STRING "" FORCE)
-
+#set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -ggdb")
 set(CMAKE_CXX_VISIBILITY_PRESET hidden)
 set(CMAKE_VISIBILITY_INLINES_HIDDEN ON)
 
