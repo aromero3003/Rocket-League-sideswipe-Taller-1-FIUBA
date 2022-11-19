@@ -24,7 +24,7 @@ void World::update(char* data){
         this->cars[i].y_position = FC(data+((i+1)*13));
         this->cars[i].x_position = FC(data+((i+1)*13 + 4));
         this->cars[i].angle = FC(data+((i+1)*13 + 8));
-        this->cars[i].pointing_right = bool(data+((i+1)*13 + 12));
+        this->cars[i].pointing_right = data[(i+1)*13 + 12];
     }
 }
 
