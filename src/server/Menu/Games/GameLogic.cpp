@@ -1,11 +1,12 @@
 #include "GameLogic.h"
+#include "GameObjects/Constants.h"
 #include <box2d/b2_body.h>
 #include <memory>
 
 
 GameLogic::GameLogic(size_t cant_players) :
-    world(b2Vec2(0.0f, -GRAVITY)) {
-    //ball(this->world, 0.0f, SCENARIO_HEIGHT / 2.0f) {
+    world(b2Vec2(0.0f, -GRAVITY)),
+    ball(this->world, 0.0f, SCENARIO_HEIGHT / 2.0f) {
 
     // WORLD
 
@@ -24,8 +25,8 @@ GameLogic::GameLogic(size_t cant_players) :
     b2FixtureDef scn_fd;
     scn_fd.restitutionThreshold = 1.0f;
     scn_fd.shape = &borders;
-    scn_fd.filter.categoryBits = 0x2;
-    scn_fd.filter.maskBits = 0x1 | 0x4;
+    scn_fd.filter.categoryBits = SCENARIO_BITS;
+    scn_fd.filter.maskBits = CAR_BITS | BALL_BITS;
 
     b2BodyDef scn_bd;
     b2Body *scenario = world.CreateBody(&scn_bd);
@@ -63,6 +64,10 @@ void GameLogic::move_player_up(size_t id) {
 //    this->players[id].moveRight();
 }
 
+void GameLogic::brake_player(size_t id) {
+    this->players[id].brake();
+}
+
 void GameLogic::step() {
     this->world.Step(TIME_STEP, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
     //setSnap();
@@ -72,9 +77,9 @@ std::shared_ptr<SnapShot> GameLogic::getSnap(){
     std::shared_ptr<SnapShot> snap(new SnapShot);
     snap->add(goal);
 
-    snap->add(10.0f);
-    snap->add(20.0f);
-    snap->add(0.0f);
+    snap->add(this->ball.getPosition().x);
+    snap->add(this->ball.getPosition().y);
+    snap->add(this->ball.getAngle());
 
     for (Car &player : this->players) {
         snap->add(player.getPosition().y);
