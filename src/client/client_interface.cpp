@@ -48,7 +48,7 @@ void Client_interface::run_client(const char *serv, const char *port){
 	BlockingQueue<int>* pq = new BlockingQueue<int>();
 	Socket* s = new Socket(serv, port);
 
-	ReceiverThread receiver(s,this->world);
+	ReceiverThread receiver(s,this->world, n_cars);
 	SenderThread sender(s, pq);
 	receiver.start();
 	sender.start();
