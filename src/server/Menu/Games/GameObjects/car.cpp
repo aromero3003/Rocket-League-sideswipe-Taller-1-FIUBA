@@ -49,7 +49,7 @@ Car::Car(b2World &world, const b2Vec2 &position) {
         wheel1 = world.CreateBody(&wheel_def);
         wheel1->CreateFixture(&wheel_fd);
 
-        wheel_def.position.Set(1.0f, 0.4f);
+        wheel_def.position.Set(x + 1.0f, y + 0.4f);
         wheel2 = world.CreateBody(&wheel_def);
         wheel2->CreateFixture(&wheel_fd);
     }
