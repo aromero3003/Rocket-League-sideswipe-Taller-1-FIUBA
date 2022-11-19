@@ -1,6 +1,5 @@
-
-
 #include "car.h"
+#include "Constants.h"
 
 Car::Car(b2World &world, const b2Vec2 &position) {
     float x = position.x, y = position.y;
@@ -24,8 +23,8 @@ Car::Car(b2World &world, const b2Vec2 &position) {
         chassis_fd.density = 10.0f;
         chassis_fd.friction = 0.3f;
         chassis_fd.shape = &chassis_shape;
-        chassis_fd.filter.categoryBits = 0x1;
-        chassis_fd.filter.maskBits = 0x2 | 0x4;
+        chassis_fd.filter.categoryBits = CAR_BITS;
+        chassis_fd.filter.maskBits = SCENARIO_BITS | BALL_BITS;
 
         this->chassis = world.CreateBody(&chassis_def);
         this->chassis->CreateFixture(&chassis_fd);
@@ -39,8 +38,8 @@ Car::Car(b2World &world, const b2Vec2 &position) {
         wheel_fd.shape = &circle;
         wheel_fd.density = 1.0f;
         wheel_fd.friction = 0.9f;
-        wheel_fd.filter.categoryBits = 0x1;
-        wheel_fd.filter.maskBits = 0x2 | 0x4;
+        wheel_fd.filter.categoryBits = CAR_BITS;
+        wheel_fd.filter.maskBits = SCENARIO_BITS | BALL_BITS;
 
         b2BodyDef wheel_def;
         wheel_def.type = b2_dynamicBody;
@@ -49,7 +48,7 @@ Car::Car(b2World &world, const b2Vec2 &position) {
         wheel1 = world.CreateBody(&wheel_def);
         wheel1->CreateFixture(&wheel_fd);
 
-        wheel_def.position.Set(1.0f, 0.4f);
+        wheel_def.position.Set(x + 1.0f, y + 0.4f);
         wheel2 = world.CreateBody(&wheel_def);
         wheel2->CreateFixture(&wheel_fd);
     }

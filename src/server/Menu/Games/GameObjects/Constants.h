@@ -18,9 +18,12 @@
 #define SCENARIO_HALF_WIDTH 20
 #define SCENARIO_WIDTH SCENARIO_HALF_WIDTH * 2
 #define SCENARIO_BORDERS 12
+#define SCENARIO_BITS 0x2
 
 // Ball
 #define BALL_RADIUS 1.0f
-#define BALL_CATEGORY_BITS 0x01
+#define BALL_BITS 0x04
 
+// Car
+#define CAR_BITS 0x1
 #endif

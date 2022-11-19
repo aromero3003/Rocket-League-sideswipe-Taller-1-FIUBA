@@ -1,4 +1,5 @@
 #include "ball.h"
+#include "Constants.h"
 
 
 Ball::Ball(b2World &world, float x, float y) {
@@ -10,11 +11,13 @@ Ball::Ball(b2World &world, float x, float y) {
     ball_def.position.Set(x, y);
 
     b2FixtureDef ball_fd;
+    ball_fd.shape = &circle;
     ball_fd.density = 1.0f;
     ball_fd.friction = 0.3f;
     ball_fd.restitution = 0.9f;
     ball_fd.restitutionThreshold = 1.0f;
-    ball_fd.filter.categoryBits = BALL_CATEGORY_BITS;
+    ball_fd.filter.categoryBits = BALL_BITS;
+    ball_fd.filter.categoryBits = CAR_BITS | SCENARIO_BITS;
 
     this->ball = world.CreateBody(&ball_def);
     this->ball->CreateFixture(&ball_fd);
