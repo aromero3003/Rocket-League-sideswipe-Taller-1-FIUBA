@@ -22,9 +22,9 @@ void World::update(char* data){
 
 void World::print(){
     std::lock_guard<std::mutex> lock(mutex);
-    std::cout << "Ball: (x,y) = (" << this->ball.x_position  << " | " <<  this->ball.y_position << ")" << std::endl;
-    std::cout << "Car 1: (x,y) = ("<< this->car1.x_position << " | " << this->car1.y_position << ")" << std::endl;
-    std::cout << "Car 2: (x,y) = ("<< this->car2.x_position << " | " << this->car2.y_position << ")" << std::endl;
+    std::cout << "Ball: (x,y) = (" << this->ball.x_position  << " | " <<  this->ball.y_position << ")"<< std::endl;
+    std::cout << "Car 1: (x,y) = ("<< this->car1.x_position << " | " << this->car1.y_position << ") angle:" << this->car1.angle << std::endl;
+    std::cout << "Car 2: (x,y) = ("<< this->car2.x_position << " | " << this->car2.y_position << ") angle:" << this->car2.angle << std::endl;
 }
 
 void World::draw(){

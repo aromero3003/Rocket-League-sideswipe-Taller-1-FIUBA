@@ -24,8 +24,8 @@ Client_interface::Client_interface():
                     SDL_WINDOWPOS_UNDEFINED,
                     SDL_WINDOWPOS_UNDEFINED,
                     640, 480,
-                    0),
-                    //SDL_WINDOW_RESIZABLE),
+                    //0),
+                    SDL_WINDOW_RESIZABLE),
             renderer(window, -1, SDL_RENDERER_ACCELERATED){
 
 	this->world = new World();
