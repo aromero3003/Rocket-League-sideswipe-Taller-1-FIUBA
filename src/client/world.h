@@ -2,6 +2,7 @@
 #define WORLD_H
 
 #include <mutex>
+#include <vector>
 #include <SDL2pp/SDL2pp.hh>
 
 #include "car.h"
@@ -9,7 +10,6 @@
 
 class World{
     public:
-        Ball caca;
         Ball ball;
         std::mutex mutex;
         std::vector<Car> cars;

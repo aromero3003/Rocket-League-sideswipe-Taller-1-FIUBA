@@ -1,5 +1,6 @@
 #include "client_interface.h"
 #include <iostream>
+#include <vector>
 #include <exception>
 #include <chrono>
 #include <string>
@@ -35,15 +36,12 @@ void Client_interface::run_client(const char *serv, const char *port){
 
 	int n_cars = 2;
 	this->world->create_cars(n_cars);
+
 	std::vector<Texture> car_textures;
 	for(int i = 0; i < n_cars; i++){
-		car_textures.emplace_back(renderer, "../data/cars.png");
+		car_textures.emplace_back(renderer, SDL2pp::Surface("../data/cars.png").SetColorKey(true,0));
 	}
-
-	//Texture car(renderer,"../data/cars.png");
-	//Texture car2(renderer, "../data/cars.png");
 	Texture ball(renderer, "../data/ball.png");
-	//Texture nitro(renderer, "../data/nitro.png");
 	Texture court(renderer, "../data/court.png");
 
 	BlockingQueue<int>* pq = new BlockingQueue<int>();
@@ -58,11 +56,11 @@ void Client_interface::run_client(const char *serv, const char *port){
 
     bool running = true;
     bool going_right, going_left, jumping, nitroing = false;
+
     uint32_t t1 = SDL_GetTicks();
 	while (running) {
         running = handle_events(pq, going_right, going_left, nitroing, jumping);
 		render_screen(car_textures, ball, court);
-        //render_screen(car, road, ball, court);
 
         //Constant Rate Loop
         int32_t t2 = SDL_GetTicks();
@@ -80,6 +78,13 @@ void Client_interface::run_client(const char *serv, const char *port){
 	}
     delete pq;
     delete s;
+}
+
+
+void Client_interface::render_screen(std::vector<Texture>& car_textures, Texture& ball, Texture& court){
+    	renderer.Clear();
+		this->world->draw(car_textures, ball, court, renderer);		
+		renderer.Present();
 }
 
 bool Client_interface::handle_events(BlockingQueue<int>* pq, bool& going_right, bool& going_left, bool& nitroing, bool& jumping) {
@@ -131,79 +136,5 @@ bool Client_interface::handle_events(BlockingQueue<int>* pq, bool& going_right, 
     return true;
 }
 
-void Client_interface::render_screen(std::vector<Texture>& car_textures, Texture& ball, Texture& court){
-    	renderer.Clear();
-        //renderer.SetDrawColor(0xFF, 0xFF, 0xFF, 0xF);
-		this->world->draw(car_textures, ball, court, renderer);
-		
-		//renderer.Copy(road,NullOpt,Rect(0,renderer.GetOutputHeight()/2 - 75,renderer.GetOutputWidth(), 300));
-		//renderer.Copy(car, Rect(src_x,src_y,120,50),Rect((int)position,renderer.GetOutputHeight()/2,120,50));	
-		//if(nitroing){
-		//  renderer.Copy(nitro, Rect(nitro_x,nitro_y,200,200), Rect((int)position - 55,renderer.GetOutputHeight()/2 + 15,70,20));
-		//}
-		renderer.Present();
-}
 
 Client_interface::~Client_interface(){}
-/*
-	bool is_running_right = false;
-	bool is_running_left = false;
-	bool nitroing = false;
-	int run_phase = -1;      // animation phases
-	int nitro_phase = -1;
-	float position = 0.0;    // car position
-
-	unsigned int prev_ticks = SDL_GetTicks();
-
-    unsigned int frame_ticks = SDL_GetTicks();
-		unsigned int frame_delta = frame_ticks - prev_ticks;
-		prev_ticks = frame_ticks;
-*/
-
-
-/*
-		float speed = 0.2;
-		if (is_running_left) {
-			if (nitroing) speed = 1;
-			position -= frame_delta * speed;
-			run_phase = (frame_ticks / 100) % 2;
-		}
-		if (is_running_right) {
-			if (nitroing) speed = 1;
-			position += frame_delta * speed;
-			run_phase = (frame_ticks / 100) % 2;			
-		}
-		 
-		if (!is_running_left && !is_running_right) {
-			run_phase = 0;
-			nitro_phase = 0;
-		}
-
-		if (nitroing) {
-			nitro_phase = (frame_ticks / 100) % 8;
-		}
-
-
-		// If player passes past the right side of the window, wrap him
-		// to the left side
-		if (position > renderer.GetOutputWidth())
-			position = -50;
-
-	// fin 
-
-		// Clear screen
-
-
-		int src_x = 120;
-		int src_y = 110;
-		
-		if (is_running_right || is_running_left) {
-			src_x = 243;
-		}
-
-		int nitro_x = 0;
-		int nitro_y = 0;
-		if (nitroing) {
-			nitro_x = 250 * nitro_phase;
-		}
-        */

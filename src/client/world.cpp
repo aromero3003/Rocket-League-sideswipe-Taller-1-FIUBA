@@ -1,5 +1,6 @@
 #include "world.h"
 #include <iostream>
+#include <string>
 #define FC *(float*)
 
 using namespace SDL2pp;
@@ -22,28 +23,17 @@ void World::update(char* data){
         this->cars[i].y_position = FC(data+(i*13));
         this->cars[i].x_position = FC(data+(i*13 + 4));
         this->cars[i].angle = FC(data+(i*13 + 8));
-        this->cars[i].pointing_right = data+(i*13 + 12);
+        this->cars[i].pointing_right = bool(data+(i*13 + 12));
     }
-/*
-    this->car1.x_position = FC(data+17);
-    this->car1.y_position = FC(data+13);
-    this->car1.angle = FC(data+21);
-    this->car1.pointing_right = data[25];
-
-    this->car2.x_position = FC(data+30);
-    this->car2.y_position = FC(data+26);
-    this->car2.angle = FC(data+34);
-    this->car2.pointing_right = data+38;
-*/
 }
 
 void World::print(){
     std::lock_guard<std::mutex> lock(mutex);
+    std::cout << this->cars.size() << std::endl;
     std::cout << "Ball: (x,y) = (" << this->ball.x_position  << " | " <<  this->ball.y_position << ")" << std::endl;
-    //std::cout << "Ball: (x,y) = (" << this->ball.x_position  << " | " <<  this->ball.y_position << ")" << std::endl;
     std::cout << "Car 1: (x,y) = ("<< this->cars[0].x_position << " | " << this->cars[0].y_position << ")" << std::endl;
     std::cout << "Car 2: (x,y) = ("<< this->cars[1].x_position << " | " << this->cars[1].y_position << ")" << std::endl;
-    //std::cout << "Car 2: (x,y) = ("<< this->car2.x_position << " | " << this->car2.y_position << ")" << std::endl;
+
 }
 
 void World::draw(std::vector<Texture>& car_textures, Texture& ball, Texture& court, Renderer& renderer){
@@ -55,7 +45,7 @@ void World::draw(std::vector<Texture>& car_textures, Texture& ball, Texture& cou
         renderer.Copy(car_textures[i],
                     Rect(0,50*i,120,50),
                     Rect(renderer.GetOutputWidth()/2 + 20* this->cars[i].x_position,
-                        renderer.GetOutputHeight()/2  + (20)*this->cars[i].y_position,
+                        renderer.GetOutputHeight()/2  + (-20)*this->cars[i].y_position,
                         120,
                         50),
                 this->cars[i].angle, 
