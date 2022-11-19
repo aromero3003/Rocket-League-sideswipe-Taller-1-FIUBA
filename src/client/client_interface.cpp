@@ -23,8 +23,8 @@ Client_interface::Client_interface():
             window("Rocket League 2D",
                     SDL_WINDOWPOS_UNDEFINED,
                     SDL_WINDOWPOS_UNDEFINED,
-                    640, 480,
-                    0),
+                    920, 600,
+                    SDL_WINDOW_RESIZABLE),
                     //SDL_WINDOW_RESIZABLE),
             renderer(window, -1, SDL_RENDERER_ACCELERATED){
 
@@ -33,11 +33,17 @@ Client_interface::Client_interface():
 
 void Client_interface::run_client(const char *serv, const char *port){
 
-	Texture car(renderer, "../data/cars.png");
-	Texture car2(renderer, "../data/cars.png");
+	int n_cars = 2;
+	this->world->create_cars(n_cars);
+	std::vector<Texture> car_textures;
+	for(int i = 0; i < n_cars; i++){
+		car_textures.emplace_back(renderer, "../data/cars.png");
+	}
+
+	//Texture car(renderer,"../data/cars.png");
+	//Texture car2(renderer, "../data/cars.png");
 	Texture ball(renderer, "../data/ball.png");
 	//Texture nitro(renderer, "../data/nitro.png");
-	Texture road(renderer, "../data/road.png");
 	Texture court(renderer, "../data/court.png");
 
 	BlockingQueue<int>* pq = new BlockingQueue<int>();
@@ -55,7 +61,8 @@ void Client_interface::run_client(const char *serv, const char *port){
     uint32_t t1 = SDL_GetTicks();
 	while (running) {
         running = handle_events(pq, going_right, going_left, nitroing, jumping);
-        render_screen(car, road, ball, court);
+		render_screen(car_textures, ball, court);
+        //render_screen(car, road, ball, court);
 
         //Constant Rate Loop
         int32_t t2 = SDL_GetTicks();
@@ -124,37 +131,17 @@ bool Client_interface::handle_events(BlockingQueue<int>* pq, bool& going_right, 
     return true;
 }
 
-void Client_interface::render_screen(Texture& car, Texture& road, Texture& ball, Texture& court){
+void Client_interface::render_screen(std::vector<Texture>& car_textures, Texture& ball, Texture& court){
     	renderer.Clear();
         //renderer.SetDrawColor(0xFF, 0xFF, 0xFF, 0xF);
-		renderer.Copy(court,NullOpt,Rect(0,0,renderer.GetOutputWidth(),renderer.GetOutputHeight()));
-		renderer.Copy(car,
-					Rect(120,110,120,50),
-					Rect(renderer.GetOutputWidth()/2 + 10*this->world->car1.x_position,
-						renderer.GetOutputHeight()/2 + 120 + (-1)*this->world->car1.y_position,
-						120,
-						50),
-					this->world->car1.angle, 
-					NullOpt, 
-					SDL_FLIP_NONE
-					);
-		renderer.Copy(car,
-					Rect(250,220,120,50), 
-					Rect(renderer.GetOutputWidth()/2 + 10*this->world->car2.x_position,
-						renderer.GetOutputHeight()/2 + 120 + (-1)*this->world->car2.y_position,
-						120,
-						50),
-					this->world->car2.angle,
-					NullOpt,
-					SDL_FLIP_HORIZONTAL);
-		renderer.Copy(ball,NullOpt,Rect(renderer.GetOutputWidth()/2 + this->world->ball.x_position,renderer.GetOutputHeight()/2 + (-1)*this->world->ball.y_position,50,50));
+		this->world->draw(car_textures, ball, court, renderer);
+		
 		//renderer.Copy(road,NullOpt,Rect(0,renderer.GetOutputHeight()/2 - 75,renderer.GetOutputWidth(), 300));
 		//renderer.Copy(car, Rect(src_x,src_y,120,50),Rect((int)position,renderer.GetOutputHeight()/2,120,50));	
 		//if(nitroing){
 		//  renderer.Copy(nitro, Rect(nitro_x,nitro_y,200,200), Rect((int)position - 55,renderer.GetOutputHeight()/2 + 15,70,20));
 		//}
 		renderer.Present();
-    
 }
 
 Client_interface::~Client_interface(){}

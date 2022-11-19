@@ -7,7 +7,7 @@ GameCommandHandler::GameCommandHandler(size_t id):isEndGame(false),id(id) {}
 
 void GameCommandHandler::createCommand(int8_t parameter) {
 
-    std::cerr << "Commando: " << parameter << std::endl;
+    std::cerr << "Commando: " << (int)parameter << std::endl;
     if (parameter == PRESS_LEFT) {
         this->command = new LeftCommand(id);
     } else     if (parameter == PRESS_RIGHT) {

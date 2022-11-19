@@ -25,7 +25,9 @@ class Client_interface{
 
         bool handle_events(BlockingQueue<int>* pq, bool& going_right, bool& going_left, bool& nitroing, bool& jumping);
 
-        void render_screen(Texture& car, Texture& road, Texture& ball, Texture& court);
+        //void render_screen(Texture& car, Texture& road, Texture& ball, Texture& court);
+
+        void render_screen(std::vector<Texture>& car_textures, Texture& ball, Texture& court);
 
         ~Client_interface();
 

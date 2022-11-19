@@ -1,7 +1,7 @@
 #include "receiverThread.h"
 #include <string>
 
-#define FC *(float*)
+#define FC *(int*)
 
 ReceiverThread::ReceiverThread(Socket* s, World* world) {
  this->socket = s;

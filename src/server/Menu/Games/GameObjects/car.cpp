@@ -8,6 +8,7 @@ Car::Car(b2World &world, const b2Vec2 &position) {
         b2BodyDef chassis_def;
         chassis_def.type = b2_dynamicBody;
         chassis_def.position.Set(x, y + 1.0f);
+        chassis_def.fixedRotation = true;
 
 
         b2PolygonShape chassis_shape;
@@ -24,6 +25,8 @@ Car::Car(b2World &world, const b2Vec2 &position) {
         chassis_fd.density = 10.0f;
         chassis_fd.friction = 0.3f;
         chassis_fd.shape = &chassis_shape;
+        chassis_fd.filter.categoryBits = 0x1;
+        chassis_fd.filter.maskBits = 0x2 | 0x4;
 
         this->chassis = world.CreateBody(&chassis_def);
         this->chassis->CreateFixture(&chassis_fd);
@@ -37,6 +40,8 @@ Car::Car(b2World &world, const b2Vec2 &position) {
         wheel_fd.shape = &circle;
         wheel_fd.density = 1.0f;
         wheel_fd.friction = 0.9f;
+        wheel_fd.filter.categoryBits = 0x1;
+        wheel_fd.filter.maskBits = 0x2 | 0x4;
 
         b2BodyDef wheel_def;
         wheel_def.type = b2_dynamicBody;
@@ -93,14 +98,14 @@ void Car::jump() {
 }
 
 void Car::moveLeft() {
-    this->damper1->SetMotorSpeed(50.0f);
-    this->damper2->SetMotorSpeed(50.0f);
+    this->damper1->SetMotorSpeed(50000.0f);
+    this->damper2->SetMotorSpeed(50000.0f);
     this->orientation = LEFT;
 }
 
 void Car::moveRight() {
-    this->damper1->SetMotorSpeed(-50.0f);
-    this->damper2->SetMotorSpeed(-50.0f);
+    this->damper1->SetMotorSpeed(-50000.0f);
+    this->damper2->SetMotorSpeed(-50000.0f);
     this->orientation = RIGHT;
 }
 
