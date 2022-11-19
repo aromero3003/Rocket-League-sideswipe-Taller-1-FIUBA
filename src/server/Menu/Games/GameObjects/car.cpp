@@ -7,7 +7,7 @@ Car::Car(b2World &world, const b2Vec2 &position) {
         b2BodyDef chassis_def;
         chassis_def.type = b2_dynamicBody;
         chassis_def.position.Set(x, y + 1.0f);
-        //chassis_def.fixedRotation = true;
+        chassis_def.fixedRotation = true;
 
 
         b2PolygonShape chassis_shape;
