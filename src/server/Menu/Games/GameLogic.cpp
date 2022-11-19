@@ -1,5 +1,6 @@
 #include "GameLogic.h"
 #include <box2d/b2_body.h>
+#include <memory>
 
 
 GameLogic::GameLogic(size_t cant_players) :
@@ -67,8 +68,8 @@ void GameLogic::step() {
     //setSnap();
 }
 
-SnapShot* GameLogic::getSnap(){
-    SnapShot *snap = new SnapShot;
+std::shared_ptr<SnapShot> GameLogic::getSnap(){
+    std::shared_ptr<SnapShot> snap(new SnapShot);
     snap->add(goal);
 
     snap->add(10.0f);

@@ -3,6 +3,7 @@
 
 #include <istream>
 #include <list>
+#include <memory>
 #include <ostream>
 #include <string>
 
@@ -22,14 +23,14 @@ class GamingClient
 private:
     size_t id;
     Socket skt;
-    BlockingQueue<SnapShot> snapEventQueue;
+    BlockingQueue<std::shared_ptr<SnapShot>>snapEventQueue;
     ProtocolSend protocolSend;
     ProtocolRecv protocolRecv;
 
 public:
     GamingClient(Socket &&skt,size_t id,ProtectedQueue<GameCommandHandler> &eventQueue);
     bool isDisconect();
-    void addSnap(SnapShot &snap);
+    void addSnap(std::shared_ptr<SnapShot> snap);
     void start();
     ~GamingClient();
 };

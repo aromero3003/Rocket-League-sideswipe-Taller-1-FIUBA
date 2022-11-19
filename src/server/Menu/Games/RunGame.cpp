@@ -1,4 +1,5 @@
 #include "RunGame.h"
+#include <memory>
 #include <unistd.h>
 
 RunGame::RunGame():gameLogic(2),gammingEventQueue(),players(){}
@@ -21,14 +22,13 @@ void RunGame::run() {
         }
         this->gameLogic.step();
 
-        SnapShot *snap = this->gameLogic.getSnap();
+        std::shared_ptr<SnapShot> snap = this->gameLogic.getSnap();
         for (auto player: players) {
-            player->addSnap(*snap); // usar smart pointers (no hay free)
+            player->addSnap(snap);
         }
         usleep(1000000/120);
 
 
-        //std::shared_ptr<SnapShot> this->gameLogic.getSnap();
     }
     } catch (const std::exception& err) {
         std::cerr << "Something went wrong and an exception was caught: "
