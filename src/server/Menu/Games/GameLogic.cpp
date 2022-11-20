@@ -1,26 +1,42 @@
 #include "GameLogic.h"
 #include "GameObjects/Constants.h"
 #include <box2d/b2_body.h>
+#include <box2d/b2_math.h>
 #include <memory>
 
 
 GameLogic::GameLogic(size_t cant_players) :
     world(b2Vec2(0.0f, -GRAVITY)),
-    ball(this->world, 0.0f, SCENARIO_HEIGHT / 2.0f) {
+    ball(this->world, SCENARIO_HALF_WIDTH + 6.0f, -SCENARIO_HEIGHT / 2.0f) {
 
     // WORLD
 
     b2Vec2 scenario_borders[SCENARIO_BORDERS];
+    /*
     scenario_borders[0] = scenario_borders[11]  = b2Vec2(SCENARIO_HALF_WIDTH, 0.0f);
     scenario_borders[1] = scenario_borders[10]  = b2Vec2(SCENARIO_HALF_WIDTH, 11.0f);
     scenario_borders[2] = scenario_borders[9]  = b2Vec2(SCENARIO_HALF_WIDTH + 6, 11.0f);
     scenario_borders[3] = scenario_borders[8]  = b2Vec2(SCENARIO_HALF_WIDTH + 6, 19.0f);
     scenario_borders[4] = scenario_borders[7] = b2Vec2(SCENARIO_HALF_WIDTH, 19.0f);
     scenario_borders[5] = scenario_borders[6] = b2Vec2(SCENARIO_HALF_WIDTH, SCENARIO_HEIGHT);
-    for(int i = 0; i < 6; i++)
-        scenario_borders[i].x *= -1;
+    */
+
+    scenario_borders[0] = b2Vec2(6.0f, 0.0f);
+    scenario_borders[1] = b2Vec2(SCENARIO_WIDTH + 6.0f, 0.0f);
+    scenario_borders[2] = b2Vec2(SCENARIO_WIDTH + 6.0f, -22.0f);
+    scenario_borders[3] = b2Vec2(SCENARIO_WIDTH + 12.0f, -22.0f);
+    scenario_borders[4] = b2Vec2(SCENARIO_WIDTH + 12.0f, -SCENARIO_HEIGHT);
+    scenario_borders[5] = b2Vec2(0.0f, -SCENARIO_HEIGHT);
+    scenario_borders[6] = b2Vec2(0.0f, -SCENARIO_HEIGHT + 8.0f);
+    scenario_borders[7] = b2Vec2(6.0f, -SCENARIO_HEIGHT + 8.0f);
+
+
+    //for(int i = 0; i < 6; i++)
+    //for(int i = 0; i < 6; i++)
+    //    scenario_borders[i].x *= -1;
     b2ChainShape borders;
-    borders.CreateLoop(scenario_borders, SCENARIO_BORDERS);
+    //borders.CreateLoop(scenario_borders, SCENARIO_BORDERS);
+    borders.CreateLoop(scenario_borders, 8);
 
     b2FixtureDef scn_fd;
     scn_fd.restitutionThreshold = 1.0f;
@@ -44,8 +60,8 @@ GameLogic::GameLogic(size_t cant_players) :
         this->players.emplace_back(this->world, b2Vec2((float)i * delta_x, 1.0f));
         */
     // creo solo dos jugadores
-    this->players.emplace_back(this->world, b2Vec2(-SCENARIO_HALF_WIDTH / 2.0f, 1.0f));
-    this->players.emplace_back(this->world, b2Vec2(SCENARIO_HALF_WIDTH / 2.0f, 1.0f));
+    this->players.emplace_back(this->world, b2Vec2(SCENARIO_HALF_WIDTH /2.0f + 6.0f, -SCENARIO_HEIGHT + 2.0f));
+    this->players.emplace_back(this->world, b2Vec2(SCENARIO_HALF_WIDTH * 3.0f / 2.0f, -SCENARIO_HEIGHT + 2.0f));
 }
 
 void GameLogic::jump_player(size_t id) {
