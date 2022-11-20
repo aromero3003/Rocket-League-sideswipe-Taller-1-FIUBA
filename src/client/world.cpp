@@ -29,36 +29,18 @@ void World::update(char* data){
 }
 
 void World::draw(std::vector<Texture>& car_textures, Texture& ball, Texture& court, Renderer& renderer){
-
     std::lock_guard<std::mutex> lock(mutex);
+    
     int flip;
-    std::cout << renderer.GetOutputWidth() << " " << renderer.GetOutputHeight() << std::endl;
     renderer.Copy(court,NullOpt,Rect(0,0,renderer.GetOutputWidth(),renderer.GetOutputHeight()));
 
     for(size_t i = 0; i < car_textures.size(); i++){
         renderer.Copy(car_textures[i],
-                    Rect(0,50*i,120,50),
+                    Rect(0,(1000/12)*i,250,1000/12),
                     Rect(20*this->cars[i].x_position - 30,(-20)*this->cars[i].y_position - 15,60,30)
                     ,this->cars[i].angle,
                     NullOpt,
                     flip = (this->cars[i].pointing_right == true) ? SDL_FLIP_NONE : SDL_FLIP_HORIZONTAL);
-/*
-        renderer.Copy(car_textures[i],
-                    Rect(0,50*i,120,50),
-                    Rect(renderer.GetOutputWidth()/2 + 20*this->cars[i].x_position - 30,
-                        renderer.GetOutputHeight()/2 + 280  + (-20)*this->cars[i].y_position - 18,
-                        60,
-                        36),
-                this->cars[i].angle, 
-                NullOpt,
-                flip = (this->cars[i].pointing_right == true) ? SDL_FLIP_NONE : SDL_FLIP_HORIZONTAL
-                );
-                renderer.Copy(ball, 
-                NullOpt, 
-                Rect(renderer.GetOutputWidth()/2 + 20*this->ball.x_position - 20,
-                    renderer.GetOutputHeight() + (-20)*this->ball.y_position - 20, 
-                    40, 40));
-*/
     }
     renderer.Copy(ball, NullOpt, Rect(20*this->ball.x_position -20,(-20)*this->ball.y_position-20, 40, 40));
 }

@@ -8,11 +8,11 @@
 #define PRESS_RIGHT 65
 #define PRESS_LEFT 66
 #define PRESS_SPACE 67
-#define PRESS_UP 71
+#define PRESS_SHIFT 71
 #define RELEASE_RIGHT 68
 #define RELEASE_LEFT 69
 #define RELEASE_SPACE 70
-#define RELEASE_UP 72
+#define RELEASE_SHIFT 72
 
 #define FRAME_RATE 1000/120
 
@@ -106,13 +106,13 @@ bool Client_interface::handle_events(BlockingQueue<int>* pq, bool& going_right, 
 							if(!going_left) pq->push(PRESS_LEFT);
                             going_left = true;
 							break;
-                        case SDLK_UP: 
-							if(!jumping) pq->push(PRESS_UP);
-                            jumping = true;
+                        case SDLK_LSHIFT: 
+							if(!nitroing) pq->push(PRESS_SHIFT);
+                            nitroing = true;
 							break;
 						case SDLK_SPACE:
-							if(!nitroing) pq->push(PRESS_SPACE);
-                            nitroing = true;
+							if(!jumping) pq->push(PRESS_SPACE);
+                            jumping = true;
 							break;
 						}
 			} else if (event.type == SDL_KEYUP) {
@@ -127,10 +127,12 @@ bool Client_interface::handle_events(BlockingQueue<int>* pq, bool& going_right, 
 						break;
 					case SDLK_SPACE:
 						pq->push(RELEASE_SPACE);
-                        nitroing = false;
+                        jumping = false;
 						break;
-					case SDLK_UP:
-						jumping = false;
+					case SDLK_LSHIFT:
+						pq->push(RELEASE_SHIFT);
+						nitroing = false;
+						break;
 				}
 			}
 		}
