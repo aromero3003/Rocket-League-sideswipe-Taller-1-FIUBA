@@ -9,7 +9,6 @@ Car::Car(b2World &world, const b2Vec2 &position) {
         chassis_def.position.Set(x, y + 1.0f);
         chassis_def.fixedRotation = true;
 
-
         b2PolygonShape chassis_shape;
         b2Vec2 vertices[6];
         vertices[0].Set(1.5f, -0.5f);
