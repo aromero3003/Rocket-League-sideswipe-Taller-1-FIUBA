@@ -24,7 +24,7 @@ Client_interface::Client_interface():
             window("Rocket League 2D",
                     SDL_WINDOWPOS_UNDEFINED,
                     SDL_WINDOWPOS_UNDEFINED,
-                    920, 600,
+                    1040, 600,
                     SDL_WINDOW_RESIZABLE),
                     //SDL_WINDOW_RESIZABLE),
             renderer(window, -1, SDL_RENDERER_ACCELERATED){
