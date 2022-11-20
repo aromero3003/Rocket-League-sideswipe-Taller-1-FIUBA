@@ -1,5 +1,6 @@
 #include "Constants.h"
 #include "car.h"
+#include <box2d/b2_math.h>
 
 Car::Car(b2World &world, const b2Vec2 &position) {
     float x = position.x, y = position.y;
@@ -88,6 +89,8 @@ Car::Car(b2World &world, const b2Vec2 &position) {
         joint_def.enableLimit = true;
         this->damper2 = (b2WheelJoint *)world.CreateJoint(&joint_def);
     }
+
+    this->nitro = false;
 }
 
 void Car::jump() {
@@ -110,6 +113,15 @@ void Car::moveRight() {
 void Car::brake() {
     this->damper1->SetMotorSpeed(0.0f);
     this->damper2->SetMotorSpeed(0.0f);
+    this->chassis->ApplyForceToCenter(b2Vec2(50.0f * (orientation == RIGHT ? 1 : -1),0.0f), true);
+}
+
+void Car::activate_nitro() {
+    this->nitro = true;
+}
+
+void Car::deactivate_nitro() {
+    this->nitro = false;
 }
 
 const uint8_t Car::getOrientation() {

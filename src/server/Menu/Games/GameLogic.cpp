@@ -84,6 +84,14 @@ void GameLogic::brake_player(size_t id) {
     this->players[id].brake();
 }
 
+void GameLogic::activate_nitro_player(size_t id) {
+    this->players[id].activate_nitro();
+}
+
+void GameLogic::deactivate_nitro_player(size_t id) {
+    this->players[id].deactivate_nitro();
+}
+
 void GameLogic::step() {
     this->world.Step(TIME_STEP, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
     //setSnap();

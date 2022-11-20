@@ -14,17 +14,17 @@ void GameCommandHandler::createCommand(int8_t parameter) {
         this->command = new RightCommand(id);
     } else     if (parameter == PRESS_SPACE) {
         this->command = new SpaceCommand(id);
-    } else     if (parameter == PRESS_UP) {
-        this->command = new UpCommand(id);
+    } else     if (parameter == PRESS_SHIFT) {
+        this->command = new NitroCommand(id);
     } else     if (parameter == RELEASE_LEFT) {
         this->command = new LeftReleaseCommand(id);
     } else     if (parameter == RELEASE_RIGHT) {
         this->command = new RightReleaseCommand(id);
     } else     if (parameter == RELEASE_SPACE) {
         this->command = new SpaceReleaseCommand(id);
-    } else     if (parameter == RELEASE_UP) {
-        this->command = new UpReleaseCommand(id);
-    }  
+    } else     if (parameter == RELEASE_SHIFT) {
+        this->command = new NitroReleaseCommand(id);
+    }
 }
 
 bool GameCommandHandler::isEnd() { return isEndGame;}
