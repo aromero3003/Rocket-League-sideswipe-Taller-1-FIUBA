@@ -41,18 +41,25 @@ void World::update(char* data){
 
 void World::draw(std::vector<Texture>& car_textures, Texture& ball, Texture& court, Renderer& renderer){
     std::lock_guard<std::mutex> lock(mutex);
-    
     int flip;
+
+    //Show court, always the same
     renderer.Copy(court,NullOpt,Rect(0,0,renderer.GetOutputWidth(),renderer.GetOutputHeight()));
 
+    //Show all cars
     for(size_t i = 0; i < car_textures.size(); i++){
         renderer.Copy(car_textures[i],
                     Rect(0,(1000/12)*i,250,1000/12),
-                    Rect(20*this->cars[i].x_position - 30,(-20)*this->cars[i].y_position - 15,60,30)
+                    Rect(20*this->cars[i].x_position - 30,
+                        (-20)*this->cars[i].y_position - 15,
+                        60,
+                        30)
                     ,this->cars[i].angle,
                     NullOpt,
                     flip = (this->cars[i].pointing_right == true) ? SDL_FLIP_NONE : SDL_FLIP_HORIZONTAL);
     }
+
+    //Show ball
     renderer.Copy(ball, NullOpt, Rect(20*this->ball.x_position -20,(-20)*this->ball.y_position-20, 40, 40));
 }
 
