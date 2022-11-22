@@ -6,7 +6,7 @@ class Car{
         friend class World;
         float x_position;
         float y_position;
-        float angle;
+        double angle;
         bool pointing_right;
         Car();
 
