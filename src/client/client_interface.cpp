@@ -85,7 +85,8 @@ void Client_interface::run_client(const char *serv, const char *port){
 
 void Client_interface::render_screen(std::vector<Texture>& car_textures, Texture& ball, Texture& court){
     	renderer.Clear();
-		this->world->draw(car_textures, ball, court, renderer);		
+		this->world->draw(car_textures, ball, court, renderer);	
+		this->world->print();	
 		renderer.Present();
 }
 
