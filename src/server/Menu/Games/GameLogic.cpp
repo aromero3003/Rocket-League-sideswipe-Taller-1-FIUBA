@@ -93,6 +93,10 @@ void GameLogic::deactivate_nitro_player(size_t id) {
 }
 
 void GameLogic::step() {
+    for (Car &player : this->players) {
+        if (player.nitro == true)
+            player.boost();
+    }
     this->world.Step(TIME_STEP, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
     //setSnap();
 }
