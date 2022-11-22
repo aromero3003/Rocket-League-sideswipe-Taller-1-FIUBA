@@ -30,6 +30,9 @@ Para iniciar el cliente
 ## Instrucciones de Juego
 
 FLECHA IZQ ............. Moverse a izquierda
+
 FLECHA DER ............. Moverse a derecha
+
 SPACE .................. Saltar
+
 LEFT SHIFT ............. Boost
