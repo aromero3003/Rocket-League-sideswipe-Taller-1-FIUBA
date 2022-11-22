@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 2.4)
 project(Rocket-league)
 
+
+
 set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package(Threads REQUIRED)
 #standard c++
@@ -51,9 +53,10 @@ if(APPLE)
   set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -I/usr/local/include -L/usr/local/lib -lSDL2")
 endif()
 
-# Agrego la libreria SDL2pp habilitando manejo de imagenes y de letras
+# Agrego la libreria SDL2pp habilitando manejo de imagenes, letras y sonidos
 SET(SDL2PP_WITH_IMAGE YES)
 SET(SDL2PP_WITH_TTF YES)
+set(SDL2PP_WITH_MIXER YES)
 add_subdirectory(libs/libSDL2pp)
 
 # Agrego la carpeta con los headers autogenerados a los includes
