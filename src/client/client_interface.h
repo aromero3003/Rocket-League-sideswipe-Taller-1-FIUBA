@@ -16,6 +16,7 @@ class Client_interface{
     SDL2pp::SDL sdl;
 	SDL2pp::Window window;
 	SDL2pp::Renderer renderer;
+    SDL2pp::Mixer mixer;
     World* world;
 
     public:

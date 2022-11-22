@@ -27,8 +27,8 @@ Client_interface::Client_interface():
                     1040, 600,
                     0),
                     //SDL_WINDOW_RESIZABLE),
-            renderer(window, -1, SDL_RENDERER_ACCELERATED){
-
+            renderer(window, -1, SDL_RENDERER_ACCELERATED),
+			mixer(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 4096){
 	this->world = new World();
 }
 
@@ -36,14 +36,15 @@ void Client_interface::run_client(const char *serv, const char *port){
 
 	int n_cars = 2;
 	this->world->create_cars(n_cars);
-
 	std::vector<Texture> car_textures;
-
 	for(int i = 0; i < n_cars; i++){
 		car_textures.emplace_back(renderer, "../data/cars.png");
 	}
 	Texture ball(renderer, "../data/ball.png");
 	Texture court(renderer, "../data/court.png");
+
+	Chunk sound("../data/car_ignition.wav");
+	mixer.PlayChannel(-1, sound);
 
 	BlockingQueue<int>* pq = new BlockingQueue<int>();
 	Socket* s = new Socket(serv, port);
