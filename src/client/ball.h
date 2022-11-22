@@ -6,6 +6,7 @@ class Ball{
         friend class World;
         float x_position;
         float y_position;
+        float angle;
         Ball();
 
         ~Ball();

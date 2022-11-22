@@ -16,10 +16,21 @@ void World::create_cars(int n_cars){
 
 void World::update(char* data){
     std::lock_guard<std::mutex> lock(mutex);
+    
+    //UPDATE FLAGS
+    char flags = data[0];
+    this->goal = (flags && GOAL_FLAG);
+    this->nitro = (flags && NITRO_FLAG);
+    this->car_ball_collision = (flags && CAR_BALL_COLLISION);
+    this->car_terrain_collision = (flags && CAR_TERRAIN_COLLISION);
+    this->ball_terrain_collision = (flags && BALL_TERRAIN_COLLISION);
 
+    //UPDATE BALL
     this->ball.x_position = FC(data+1);
     this->ball.y_position = FC(data+5);
+    this->ball.angle = FC(data+9);
 
+    //UPDATE ALL CARS
     for(size_t i=0; i < this->cars.size(); i++){
         this->cars[i].y_position = FC(data+((i+1)*13));
         this->cars[i].x_position = FC(data+((i+1)*13 + 4));
