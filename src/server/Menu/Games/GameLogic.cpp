@@ -2,6 +2,7 @@
 #include "GameObjects/Constants.h"
 #include <box2d/b2_body.h>
 #include <box2d/b2_math.h>
+#include <cstdint>
 #include <memory>
 
 
@@ -113,7 +114,10 @@ std::shared_ptr<SnapShot> GameLogic::getSnap(){
         snap->add(player.getPosition().y);
         snap->add(player.getPosition().x);
         snap->add(player.getAngle());
-        snap->add(player.getOrientation());
+        uint8_t flags = player.getOrientation();  // 0 LEFT | 1 RIGHT   xxxx xxx1
+        flags |= player.nitro << 1;               // 0 OFF | 1 ON       xxxx xx1x
+        //flags |= player.nitro << 2;  IMPACT     // 0 FALSE | 1 TRUE   xxxx x1xx
+        snap->add(flags);
     }
     return snap;
 }
