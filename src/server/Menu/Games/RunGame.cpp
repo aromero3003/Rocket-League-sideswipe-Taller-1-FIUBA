@@ -2,6 +2,10 @@
 #include <memory>
 #include <unistd.h>
 
+#ifdef ALAN_DEBUG
+extern Socket alan;
+#endif  // ALAN_DEBUG
+
 RunGame::RunGame():gameLogic(2),gammingEventQueue(),players(){}
   ProtectedQueue<GameCommandHandler> & RunGame::getRefGamingQueue(){
     return gammingEventQueue;
@@ -18,7 +22,13 @@ void RunGame::run() {
     while(1){
 
         while (! gammingEventQueue.is_empty()) {
-            gammingEventQueue.pop().getCommand()->run(gameLogic);
+            GameCommand *command = gammingEventQueue.pop().getCommand();
+            command->run(gameLogic);
+#ifdef ALAN_DEBUG
+            uint8_t debug_data = command->num;
+            bool was_closed = false;
+            alan.sendall(&debug_data, 1, &was_closed);
+#endif // ALAN_DEBUG
         }
         this->gameLogic.step();
 
