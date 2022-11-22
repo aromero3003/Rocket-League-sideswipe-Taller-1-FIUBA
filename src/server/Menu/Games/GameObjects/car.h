@@ -22,7 +22,6 @@ class Car {
     b2WheelJoint *damper1;
     b2WheelJoint *damper2;
     bool orientation;
-    bool nitro;
     uint8_t nitro_cant;
 
  public:
@@ -31,12 +30,17 @@ class Car {
     void moveRight();
     void brake();
     void jump();
+    void boost();
     void activate_nitro();
     void deactivate_nitro();
     const b2Vec2 getPosition();
     const float getAngle();
     const uint8_t getOrientation();
 
+    bool has_jumped;
+    double time_elapsed;
+    bool nitro;
+    bool go_up;
 };
 
 #endif  // __CAR_H__

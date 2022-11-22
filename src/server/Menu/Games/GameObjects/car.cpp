@@ -113,7 +113,12 @@ void Car::moveRight() {
 void Car::brake() {
     this->damper1->SetMotorSpeed(0.0f);
     this->damper2->SetMotorSpeed(0.0f);
-    this->chassis->ApplyForceToCenter(b2Vec2(50.0f * (orientation == RIGHT ? 1 : -1),0.0f), true);
+    if(this->has_jumped)
+        return;
+    b2Vec2 opossite_vector = this->chassis->GetLinearVelocity();
+    opossite_vector.y = 0;
+    opossite_vector.x *= -1.0f * 4;
+    this->chassis->ApplyLinearImpulseToCenter(opossite_vector, true);
 }
 
 void Car::activate_nitro() {
@@ -122,6 +127,15 @@ void Car::activate_nitro() {
 
 void Car::deactivate_nitro() {
     this->nitro = false;
+}
+
+void Car::boost() {
+    //b2Vec2 current_vel(this->chassis->GetLinearVelocity());
+    //if (current_vel.x * current_vel.x + current_vel.y * current_vel.y > 100.0f) return;
+    float angle = this->chassis->GetAngle();
+    b2Vec2 boost_vec(200 * cos(angle) , 200 * sin(angle));
+    if (this->orientation == LEFT) boost_vec.x *= -1;
+    this->chassis->ApplyForceToCenter(boost_vec ,true);
 }
 
 const uint8_t Car::getOrientation() {

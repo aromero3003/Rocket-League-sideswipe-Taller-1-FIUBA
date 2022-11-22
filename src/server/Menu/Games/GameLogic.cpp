@@ -2,6 +2,7 @@
 #include "GameObjects/Constants.h"
 #include <box2d/b2_body.h>
 #include <box2d/b2_math.h>
+#include <cstdint>
 #include <memory>
 
 
@@ -93,6 +94,10 @@ void GameLogic::deactivate_nitro_player(size_t id) {
 }
 
 void GameLogic::step() {
+    for (Car &player : this->players) {
+        if (player.nitro == true)
+            player.boost();
+    }
     this->world.Step(TIME_STEP, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
     //setSnap();
 }
@@ -109,7 +114,10 @@ std::shared_ptr<SnapShot> GameLogic::getSnap(){
         snap->add(player.getPosition().y);
         snap->add(player.getPosition().x);
         snap->add(player.getAngle());
-        snap->add(player.getOrientation());
+        uint8_t flags = player.getOrientation();  // 0 LEFT | 1 RIGHT   xxxx xxx1
+        flags |= player.nitro << 1;               // 0 OFF | 1 ON       xxxx xx1x
+        //flags |= player.nitro << 2;  IMPACT     // 0 FALSE | 1 TRUE   xxxx x1xx
+        snap->add(flags);
     }
     return snap;
 }
