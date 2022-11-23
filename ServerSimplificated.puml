@@ -1,14 +1,34 @@
 @startuml
 'https://plantuml.com/class-diagram
-Server "1"*--"1" AcceptThread
-AcceptThread "1"*-left-"1" GameHandler
-AcceptThread "1"*-right-"1" MenuClientsHandler
-GameHandler "1" *-- "0..*" GamesMonitor
-GameHandler "1" *-- "0..*" RunGame
 
-RunGame "1"*--"1" GameThread
-GameThread "1" *-- "0..*" EventQueue
-EventQueue "1" *-- "0..*" RunGameMonitor
+Server "1"*--"1" AcceptThread
+AcceptThread "1"*--"1" Menu
+
+
+Menu "1"*--"1" GameHandler
+GameHandler *-- "0..*" RunGames
+
+GameHandler "1" *-- "1" GamesNoStartedMonitor
+GamesNoStartedMonitor "1" *-- "0..*" GamesNoStarted
+
+
+Menu"1"*--"1"ClientsMonitor
+ClientsMonitor"1"*--"1"ClientsHandler
+ClientsHandler"1"*--"0..*"ClientHandler
+ClientHandler "1"*--"1"ClientThread
+ClientThread "1"*--"1" ComandHandler
+ClientThread "1"*--"1" ServerMenuProtocol
+ServerMenuProtocol "1"*--"1"  Socket
+
+RunGames "1"*--"0..*" GameThread
+
+ProtocolSend "1"*--"1" SnapEventQueue
+GameThread "1" *-- "0..*" ActionEventQueue
+ActionEventQueue "1" *-- "0..*" RunGame
+RunGame "1" *-- "1" SnapHandler
+RunGame "1" *-- "0..*" Car
+RunGame "1" *-- "0..*" Ball
+
 GameThread "1" *-- "2..*" GamingClients
 GamingClients "1"*--"1" ProtocolSend
 GamingClients "1"*--"1" ProtocolRecv
@@ -19,12 +39,6 @@ GamingComand <|-- GamingComandTurbo
 GamingComand <|-- GamingComandRight
 GamingComand <|-- GamingComandLeft
 
-
-MenuClientsHandler "1"*--"1"MenuClientHandler
-MenuClientHandler "1"*--"1"ClientThread
-ClientThread "1"*--"1" ComandHandler
-ClientThread "1"*--"1" ServerMenuProtocol
-ServerMenuProtocol "1"*--"1"  Socket
 
 ComandHandler "1"--"1" Comand
 Comand <|-- ComandWithParameters
