@@ -44,6 +44,7 @@ void World::update(char* data){
 void World::draw(std::vector<Texture>& car_textures,
                  Texture& ball, 
                  Texture& court, 
+                 Texture& nitro, 
                  Renderer& renderer,
                  Chunk& ball_sound,
                  Mixer& mixer){
@@ -64,7 +65,20 @@ void World::draw(std::vector<Texture>& car_textures,
                     ,this->cars[i].angle,
                     NullOpt,
                     flip = (this->cars[i].pointing_right == true) ? SDL_FLIP_NONE : SDL_FLIP_HORIZONTAL);
-    }
+        if (this->cars[i].nitro){
+
+        int nitro_x_position;
+
+        nitro_x_position = this->cars[i].pointing_right ? -15 : 80;
+
+        renderer.Copy(nitro,
+                    Rect(0,0,800/5,150),
+                    Rect(20*this->cars[i].x_position - 40 + nitro_x_position,(-20)*this->cars[i].y_position - 20,20,40), 
+                    this->cars[i].angle - 90,
+                    Point(0,0),
+                    flip = (this->cars[i].pointing_right == true) ? SDL_FLIP_NONE : SDL_FLIP_VERTICAL);
+        }
+   }
 
     //Show ball
     renderer.Copy(ball, NullOpt, Rect(20*this->ball.x_position -20,(-20)*this->ball.y_position-20, 40, 40));

@@ -34,6 +34,7 @@ void Client_interface::run_client(){
 	//load textures and sounds
 	Texture ball(renderer, "../data/ball.png");
 	Texture court(renderer, "../data/court.png");
+	Texture nitro(renderer, "../data/nitro.png");
 
 	Chunk sound("../data/car_ignition.wav");
 	Chunk ball_sound("../data/ball_bounce.wav");
@@ -53,7 +54,7 @@ void Client_interface::run_client(){
 	while (running) {
 
         running = handle_events(pq, going_right, going_left, nitroing, jumping);
-		render_screen_and_sounds(car_textures, ball, court, ball_sound);
+		render_screen_and_sounds(car_textures, ball, court,nitro, ball_sound);
 
         //Constant Rate Loop
         int32_t t2 = SDL_GetTicks();
@@ -73,9 +74,9 @@ void Client_interface::run_client(){
 }
 
 
-void Client_interface::render_screen_and_sounds(std::vector<Texture>& car_textures, Texture& ball, Texture& court, Chunk& ball_sound){
+void Client_interface::render_screen_and_sounds(std::vector<Texture>& car_textures, Texture& ball, Texture& court, Texture& nitro, Chunk& ball_sound){
 		renderer.Clear();
-		this->world->draw(car_textures, ball, court, renderer, ball_sound, mixer);	
+		this->world->draw(car_textures, ball, court, nitro, renderer, ball_sound, mixer);	
 		renderer.Present();
 }
 

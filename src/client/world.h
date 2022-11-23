@@ -35,6 +35,7 @@ class World{
         void draw(std::vector<SDL2pp::Texture>& car_textures,
                  SDL2pp::Texture& ball, 
                  SDL2pp::Texture& court, 
+                 SDL2pp::Texture& nitro,
                  SDL2pp::Renderer& renderer,
                  SDL2pp::Chunk& ball_sound, 
                  SDL2pp::Mixer& mixer);
