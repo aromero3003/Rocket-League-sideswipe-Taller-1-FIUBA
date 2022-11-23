@@ -1,5 +1,6 @@
 #include "ball.h"
 #include "Constants.h"
+#include <box2d/b2_contact.h>
 
 
 Ball::Ball(b2World &world, float x, float y) {
@@ -29,4 +30,11 @@ const b2Vec2 Ball::getPosition() {
 
 const float Ball::getAngle() {
     return this->ball->GetAngle();
+}
+
+const bool Ball::isColliding() {
+    uint8_t prev_collitions = this->current_collisions;
+    current_collisions = 0;
+    for (b2ContactEdge* ce = this->ball->GetContactList(); ce; ce = ce->next, current_collisions++);
+    return this->current_collisions > prev_collitions;
 }
