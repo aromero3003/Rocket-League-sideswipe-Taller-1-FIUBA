@@ -24,11 +24,11 @@ void Games::startRungame(std::map<std::string, Game>::iterator i){
     allRunGames.back()->start();
 } 
 
-void Games::addPlayerToGame(const std::string& name,Socket&& o_skt,size_t o_id) {
+void Games::addPlayerToGame(const std::string& name,Socket&& o_skt,size_t o_id,int cantPlayers) {
   std::map<std::string, Game>::iterator i;
   if (exists(name, i)) {
     if (!i->second.isComplete()) {
-      i->second.addPlayer(std::move(o_skt),o_id);
+      i->second.addPlayer(std::move(o_skt),o_id,cantPlayers);
       if (i->second.isComplete())
         startRungame(i);
     }

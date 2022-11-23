@@ -17,7 +17,7 @@ class GameHandler {
   GameHandler();
   void addGame(const std::string& name, const int intcapacity);
   void listAllWithOcupation(std::string& list);
-  void addPlayerToGame(const std::string& name,Socket&& o_skt,size_t o_id);
+  void addPlayerToGame(const std::string& name,Socket&& o_skt,size_t o_id, int cantPlayers);
   ~GameHandler()=default;
 };
 

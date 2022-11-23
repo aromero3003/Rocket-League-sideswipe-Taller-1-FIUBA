@@ -21,8 +21,13 @@ Client_interface::Client_interface(const char *serv, const char *port):
 }
 
 void Client_interface::run_client(){
-
 	int n_cars = 2;
+
+	MenuThread menuThread(this->socket, n_cars);
+	menuThread.run();
+	menuThread.join();
+
+
 
 	//create N cars and car_textures
 	this->world->create_cars(n_cars);

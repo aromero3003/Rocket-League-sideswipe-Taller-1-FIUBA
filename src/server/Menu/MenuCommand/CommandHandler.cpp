@@ -1,6 +1,6 @@
 #include "CommandHandler.h"
 
-CommandHandler::CommandHandler():isEnd(false) {}
+CommandHandler::CommandHandler():isAddFlag(false) {}
 
 CommandHandler::~CommandHandler() {}
 
@@ -16,7 +16,7 @@ std::unique_ptr<Command> CommandHandler::createCommand(std::istream &&parameters
         return command;
     } else if (type == "UNIR") {
         std::unique_ptr<Command>  command(new IncompleteCommandAdd(parameters));
-        this->isEnd=true;
+        this->isAddFlag=true;
         return command;
     }   else {
         std::unique_ptr<Command>  command(new BadCommand());
@@ -25,4 +25,4 @@ std::unique_ptr<Command> CommandHandler::createCommand(std::istream &&parameters
     
 }
 
-bool CommandHandler::isAdd() { return !isEnd;}
+bool CommandHandler::isAdd() { return this->isAddFlag;}

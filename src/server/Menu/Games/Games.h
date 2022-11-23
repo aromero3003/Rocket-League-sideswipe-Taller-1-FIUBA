@@ -22,7 +22,7 @@ class Games {
  public:
   Games() : allGames() {}
   void addGame(const std::string& name, const int capacity);
-  void addPlayerToGame(const std::string& name,Socket&& o_skt,size_t o_id);
+  void addPlayerToGame(const std::string& name,Socket&& o_skt,size_t o_id, int cantPlayers);
   void listAllWithOcupation(std::string& list);
   ~Games() = default;
 };

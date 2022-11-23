@@ -17,7 +17,7 @@ class Game {
  public:
   explicit Game(const int capacity);
 
-  void addPlayer(Socket&& skt,size_t id);
+  void addPlayer(Socket&& skt,size_t id, int cantPlayers);
 
   std::unique_ptr<RunGame> getRunGame();
 

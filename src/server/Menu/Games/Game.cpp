@@ -2,10 +2,11 @@
 
 Game::Game(const int capacity) : capacity(capacity), occupation(0),clients() {}
 
-void Game::addPlayer(Socket&& skt,size_t id) {
+void Game::addPlayer(Socket&& skt,size_t id,int cantPlayers) {
   
   if (occupation < capacity){
     occupation++;
+    cantPlayers=capacity;
     std::unique_ptr<StandbyClient> client (new StandbyClient (std::move(skt),id));
     clients.push_back(std::move(client));
   } 

@@ -17,7 +17,7 @@
 // error
 class CommandHandler {
  private:
-  bool isEnd;
+  bool isAddFlag;
  public:
   CommandHandler();
   std::unique_ptr<Command> createCommand(std::istream &&parameters) ;
