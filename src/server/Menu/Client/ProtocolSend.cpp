@@ -2,8 +2,8 @@
 #include "Snap.h"
 #include <memory>
 
-ProtocolSend::ProtocolSend(Socket&skt,BlockingQueue<std::shared_ptr<SnapShot>> &snapEventQueuePtr):
-skt(skt),snapEventQueue(snapEventQueuePtr),was_closed(false){}
+ProtocolSend::ProtocolSend(Socket& o_skt,BlockingQueue<std::shared_ptr<SnapShot>>& snapEventQueuePtr):
+skt(o_skt),snapEventQueue(snapEventQueuePtr),was_closed(false){}
 
 
 void ProtocolSend::sendResponse(std::vector<uint8_t>& response) {
@@ -20,5 +20,5 @@ void ProtocolSend::run() {
   } catch (const LibError& err) {
 
   }
-  }
+}
   

@@ -1,14 +1,14 @@
 #include "CommandCreate.h"
 
-CommandCreate::CommandCreate(std::istream& paramenters, size_t id) : CommandWithParameters(id) {
+CommandCreate::CommandCreate(std::istream& paramenters) : CommandWithParameters() {
   paramenters >> capacity >> std::ws;
   std::getline(paramenters, gameName);
 }
 
-void CommandCreate::run() {
-  if (games.addGame(std::move(gameName), std::move(capacity)) == OK) {
+void CommandCreate::run(GameHandler &games) {
+  games.addGame(std::move(gameName), std::move(capacity)) ;
     response.append("OK\n");
-  } 
+  
 }
 
 

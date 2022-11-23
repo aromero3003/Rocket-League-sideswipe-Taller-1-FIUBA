@@ -13,6 +13,6 @@ void AcceptThread::run() {
     
     }
   } catch (const LibError& err) {
-    menu.disconectAll();
+   
   }
 }

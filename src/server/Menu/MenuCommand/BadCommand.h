@@ -1,18 +1,17 @@
-#ifndef __BADCOMMAND_H__
-#define __BADCOMMAND_H__
+#ifndef __BADCOMAND_H__
+#define __BADCOMAND_H__
 
 #include <istream>
 #include <list>
 #include <ostream>
 #include <string>
-
-#include "../Games/GameHandler.h"
 #include "Command.h"
 
-class BadCommand : public Command {
+////Bad
+class BadCommand : public Command{
  public:
-  explicit BadCommand(size_t id);
-  void run() override;
+  BadCommand();
+  void run(GameHandler &games) {};
   virtual ~BadCommand() {}
 };
 

@@ -6,14 +6,18 @@
 #include <ostream>
 #include <string>
 
-#include "../Games/GameHandler.h"
 #include "CommandWithParameters.h"
+#include "socket.h"
 
 ////ADD
 class CommandAdd : public CommandWithParameters {
+ private:
+     Socket skt;
+     size_t id;
  public:
-  CommandAdd(std::istream& paramenters, size_t id);
-  void run() override;
+  CommandAdd(std::istream& paramenters,Socket&& o_skt,size_t o_id);
+  void run(GameHandler &games) override;
+  void setup(Socket&& o_skt,size_t o_id);
   virtual ~CommandAdd() {}
 };
 

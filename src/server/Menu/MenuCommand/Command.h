@@ -5,17 +5,17 @@
 #include <list>
 #include <ostream>
 #include <string>
-#include "MenuEvent.h"
-
-class Command: public MenuEvent {
+#include "../Exceptions/MenuCommandEx.h"
+#include "../Games/GameHandler.h"
+class Command {
  protected:
   std::string response;
-  size_t id;
 
+  virtual void run(GameHandler &games) {};
  public:
-  Command(size_t id);
-  std::string& getResponse();
-  virtual void run() = 0;
+  Command();
+  void execut(GameHandler &games);
+  std::string getResponse();
   virtual ~Command() {}
 };
 

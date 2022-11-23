@@ -12,7 +12,6 @@
 #include "socket.h"
 #include "Menu/Menu.h"
 #include "thread.h"
-#include "MenuCommand/MenuEvent.h"
 #include "BlockingQueue.h"
 #include <memory.h>
 
@@ -20,7 +19,7 @@ class AcceptThread : public Thread {
  private:
   bool& serverIsOpen;
   Socket soktRef;
-
+  
  public:
   AcceptThread(Socket& soktRef, bool& serverStatus);
   virtual void run() override;

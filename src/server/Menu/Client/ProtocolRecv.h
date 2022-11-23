@@ -26,7 +26,8 @@ private:
     size_t id;
     int8_t reciveCommand();
 public:
-    ProtocolRecv(Socket &skt,ProtectedQueue<GameCommandHandler> &eventQueue,size_t id);
+    ProtocolRecv(Socket& skt ,size_t id,ProtectedQueue<GameCommandHandler>& eventQueue);
     virtual void run() override;
+    virtual ~ProtocolRecv()= default;
 };
 #endif
