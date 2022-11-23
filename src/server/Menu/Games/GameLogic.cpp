@@ -104,7 +104,9 @@ void GameLogic::step() {
 
 std::shared_ptr<SnapShot> GameLogic::getSnap(){
     std::shared_ptr<SnapShot> snap(new SnapShot);
-    snap->add(goal);
+    uint8_t match_flags = this->goal;  // 2 BITS // 0 NONE | 1 RED | 2 BLUE
+    match_flags |= this->ball.isColliding() << 2; // 0 FALSE | 1 TRUE  xxxx x1xx
+    snap->add(match_flags);
 
     snap->add(this->ball.getPosition().x);
     snap->add(this->ball.getPosition().y);

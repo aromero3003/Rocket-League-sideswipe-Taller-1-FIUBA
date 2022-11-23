@@ -12,6 +12,10 @@
 #define SUCCESS 0
 #define SERVPORT argv[1]
 
+#ifdef ALAN_DEBUG
+Socket alan("localhost", "8080");
+#endif  //  ALAN_DEBUG
+
 int main(int argc, char* argv[]) {
     try {
         Socket skt(SERVPORT);
