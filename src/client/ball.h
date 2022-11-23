@@ -7,6 +7,8 @@ class Ball{
         float x_position;
         float y_position;
         float angle;
+        bool collision;
+
         Ball();
 
         ~Ball();

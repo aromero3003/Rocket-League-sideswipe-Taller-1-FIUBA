@@ -8,6 +8,8 @@ class Car{
         float y_position;
         double angle;
         bool pointing_right;
+        bool nitro;
+        
         Car();
 
         ~Car();
