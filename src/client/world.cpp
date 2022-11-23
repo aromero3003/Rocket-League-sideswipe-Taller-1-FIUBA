@@ -20,13 +20,14 @@ void World::update(char* data){
     
     //UPDATE FLAGS
     char flags = data[0];
-    this->goal = (flags && (RED_GOAL_FLAG || BLUE_GOAL_FLAG)) > 0;
+    this->goal = (flags & (RED_GOAL_FLAG | BLUE_GOAL_FLAG)) > 0;
 
     //UPDATE BALL
     this->ball.x_position = FC(data+1);
     this->ball.y_position = FC(data+5);
     this->ball.angle = FC(data+9);
-    this->ball.collision = (flags && BALL_COLLISION);
+
+    this->ball.collision = (flags & BALL_COLLISION);
 
     //UPDATE ALL CARS
     for(size_t i=0; i < this->cars.size(); i++){
@@ -34,8 +35,8 @@ void World::update(char* data){
         this->cars[i].x_position = FC(data+((i+1)*13 + 4));
         this->cars[i].angle = (-180/PI)*FC(data+((i+1)*13 + 8));
 
-        this->cars[i].pointing_right = (data[(i+1)*13 + 12] && POINTING_RIGHT);
-        this->cars[i].nitro = (data[(i+1)*13 + 12] && NITRO);
+        this->cars[i].pointing_right = (data[(i+1)*13 + 12] & POINTING_RIGHT);
+        this->cars[i].nitro = (data[(i+1)*13 + 12] & NITRO);
     }
 }
 
@@ -62,6 +63,15 @@ void World::draw(std::vector<Texture>& car_textures, Texture& ball, Texture& cou
 
     //Show ball
     renderer.Copy(ball, NullOpt, Rect(20*this->ball.x_position -20,(-20)*this->ball.y_position-20, 40, 40));
+    
+    if(this->ball.collision){
+        std::cout << "bounce" << std::endl;
+        this->ball.collision = false;
+        }
+    if(this->goal){
+        std::cout << "gol putos" << std::endl;
+        this->goal = false;
+    }
 }
 
 

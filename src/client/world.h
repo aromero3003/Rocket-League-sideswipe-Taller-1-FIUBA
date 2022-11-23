@@ -7,12 +7,6 @@
 #include "car.h"
 #include "ball.h"
 
-//#define GOAL_FLAG 0x01
-//#define NITRO_FLAG 0x02
-//#define CAR_BALL_COLLISION 0x04
-//#define CAR_TERRAIN_COLLISION 0x08
-//#define BALL_TERRAIN_COLLISION 0x10
-
 #define RED_GOAL_FLAG 0x01
 #define BLUE_GOAL_FLAG 0x02
 #define BALL_COLLISION 0x04

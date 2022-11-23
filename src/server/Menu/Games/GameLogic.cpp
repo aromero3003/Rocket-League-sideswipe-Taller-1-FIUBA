@@ -9,7 +9,8 @@
 
 GameLogic::GameLogic(size_t cant_players) :
     world(b2Vec2(0.0f, -GRAVITY)),
-    ball(this->world, SCENARIO_HALF_WIDTH + 6.0f, -SCENARIO_HEIGHT / 2.0f) {
+    ball(this->world, SCENARIO_HALF_WIDTH + 6.0f, -SCENARIO_HEIGHT / 2.0f),
+    goal(0) {
 
     // WORLD
 
@@ -99,8 +100,14 @@ void GameLogic::step() {
         if (player.nitro == true)
             player.boost();
     }
-    if (ball.isColliding())
-        std::cout << "BOunce" << std::endl;
+    if(ball.getPosition().x < 6.0f - BALL_RADIUS){
+        goal = 2;
+    } else if (ball.getPosition().x > SCENARIO_WIDTH + 6.0f + BALL_RADIUS) {
+        goal = 1;
+    } else {
+        goal = 0;
+    }
+    
     this->world.Step(TIME_STEP, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
     //setSnap();
 }
@@ -108,7 +115,7 @@ void GameLogic::step() {
 std::shared_ptr<SnapShot> GameLogic::getSnap(){
     std::shared_ptr<SnapShot> snap(new SnapShot);
     uint8_t match_flags = this->goal;  // 2 BITS // 0 NONE | 1 RED | 2 BLUE
-    //match_flags |= this->ball.isColliding() << 2; // 0 FALSE | 1 TRUE  xxxx x1xx
+    match_flags |= this->ball.isColliding() << 2; // 0 FALSE | 1 TRUE  xxxx x1xx
     snap->add(match_flags);
 
     snap->add(this->ball.getPosition().x);
