@@ -2,11 +2,13 @@
 #include <memory>
 #include <unistd.h>
 
+
 RunGame::RunGame():
 gameLogic(2),gammingEventQueue(),players(){}
 void RunGame::addPlayer(std::unique_ptr<GamingClient>&& player) {
     this->players.push_back(std::move(player));
 }
+
   ProtectedQueue<GameCommandHandler> & RunGame::getRefGamingQueue(){
     return gammingEventQueue;
   }
@@ -19,7 +21,13 @@ void RunGame::run() {
     while(1){
 
         while (! gammingEventQueue.is_empty()) {
-            gammingEventQueue.pop().getCommand()->run(gameLogic);
+            GameCommand *command = gammingEventQueue.pop().getCommand();
+            command->run(gameLogic);
+#ifdef ALAN_DEBUG
+            uint8_t debug_data = command->num;
+            bool was_closed = false;
+            alan.sendall(&debug_data, 1, &was_closed);
+#endif // ALAN_DEBUG
         }
         this->gameLogic.step();
 

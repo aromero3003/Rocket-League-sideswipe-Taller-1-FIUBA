@@ -1,5 +1,7 @@
 #include "ball.h"
 
-Ball::Ball(){}
+Ball::Ball(){
+    this->collision = false;
+}
 
 Ball::~Ball(){}

@@ -1,6 +1,6 @@
-
-
+#include "Constants.h"
 #include "car.h"
+#include <box2d/b2_math.h>
 
 Car::Car(b2World &world, const b2Vec2 &position) {
     float x = position.x, y = position.y;
@@ -8,7 +8,7 @@ Car::Car(b2World &world, const b2Vec2 &position) {
         b2BodyDef chassis_def;
         chassis_def.type = b2_dynamicBody;
         chassis_def.position.Set(x, y + 1.0f);
-
+        //chassis_def.fixedRotation = false;
 
         b2PolygonShape chassis_shape;
         b2Vec2 vertices[6];
@@ -24,8 +24,8 @@ Car::Car(b2World &world, const b2Vec2 &position) {
         chassis_fd.density = 10.0f;
         chassis_fd.friction = 0.3f;
         chassis_fd.shape = &chassis_shape;
-        chassis_fd.filter.categoryBits = 0x1;
-        chassis_fd.filter.maskBits = 0x2 | 0x4;
+        chassis_fd.filter.categoryBits = CAR_BITS;
+        chassis_fd.filter.maskBits = SCENARIO_BITS | BALL_BITS;
 
         this->chassis = world.CreateBody(&chassis_def);
         this->chassis->CreateFixture(&chassis_fd);
@@ -39,8 +39,8 @@ Car::Car(b2World &world, const b2Vec2 &position) {
         wheel_fd.shape = &circle;
         wheel_fd.density = 1.0f;
         wheel_fd.friction = 0.9f;
-        wheel_fd.filter.categoryBits = 0x1;
-        wheel_fd.filter.maskBits = 0x2 | 0x4;
+        wheel_fd.filter.categoryBits = CAR_BITS;
+        wheel_fd.filter.maskBits = BALL_BITS | SCENARIO_BITS;
 
         b2BodyDef wheel_def;
         wheel_def.type = b2_dynamicBody;
@@ -49,7 +49,7 @@ Car::Car(b2World &world, const b2Vec2 &position) {
         wheel1 = world.CreateBody(&wheel_def);
         wheel1->CreateFixture(&wheel_fd);
 
-        wheel_def.position.Set(1.0f, 0.4f);
+        wheel_def.position.Set(x + 1.0f, y + 0.4f);
         wheel2 = world.CreateBody(&wheel_def);
         wheel2->CreateFixture(&wheel_fd);
     }
@@ -89,6 +89,8 @@ Car::Car(b2World &world, const b2Vec2 &position) {
         joint_def.enableLimit = true;
         this->damper2 = (b2WheelJoint *)world.CreateJoint(&joint_def);
     }
+
+    this->nitro = false;
 }
 
 void Car::jump() {
@@ -97,20 +99,43 @@ void Car::jump() {
 }
 
 void Car::moveLeft() {
-    this->damper1->SetMotorSpeed(50.0f);
-    this->damper2->SetMotorSpeed(50.0f);
+    this->damper1->SetMotorSpeed(50000.0f);
+    this->damper2->SetMotorSpeed(50000.0f);
     this->orientation = LEFT;
 }
 
 void Car::moveRight() {
-    this->damper1->SetMotorSpeed(-50.0f);
-    this->damper2->SetMotorSpeed(-50.0f);
+    this->damper1->SetMotorSpeed(-50000.0f);
+    this->damper2->SetMotorSpeed(-50000.0f);
     this->orientation = RIGHT;
 }
 
 void Car::brake() {
     this->damper1->SetMotorSpeed(0.0f);
     this->damper2->SetMotorSpeed(0.0f);
+    if(this->has_jumped)
+        return;
+    b2Vec2 opossite_vector = this->chassis->GetLinearVelocity();
+    opossite_vector.y = 0;
+    opossite_vector.x *= -1.0f * 4;
+    this->chassis->ApplyLinearImpulseToCenter(opossite_vector, true);
+}
+
+void Car::activate_nitro() {
+    this->nitro = true;
+}
+
+void Car::deactivate_nitro() {
+    this->nitro = false;
+}
+
+void Car::boost() {
+    //b2Vec2 current_vel(this->chassis->GetLinearVelocity());
+    //if (current_vel.x * current_vel.x + current_vel.y * current_vel.y > 100.0f) return;
+    float angle = this->chassis->GetAngle();
+    b2Vec2 boost_vec(200 * cos(angle) , 200 * sin(angle));
+    if (this->orientation == LEFT) boost_vec.x *= -1;
+    this->chassis->ApplyForceToCenter(boost_vec ,true);
 }
 
 const uint8_t Car::getOrientation() {

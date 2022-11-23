@@ -10,11 +10,13 @@
 class Ball {
  private:
     b2Body *ball;
+    uint8_t current_collisions;
 
  public:
     Ball(b2World &world, float x, float y);
     const b2Vec2 getPosition();
     const float getAngle();
+    const bool isColliding();
     // getSnapshotData
 };
 

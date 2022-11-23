@@ -1,5 +1,8 @@
 #include "car.h"
 
-Car::Car(){}
+Car::Car(){
+    pointing_right = false;
+    nitro = false;
+}
 
 Car::~Car(){}

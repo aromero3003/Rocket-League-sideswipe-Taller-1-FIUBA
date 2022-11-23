@@ -15,5 +15,6 @@ public:
   GameCommand(size_t id);
   virtual void run(GameLogic& gameLogic) =0;
   virtual ~GameCommand()  =default;
+  int num;
 };
 #endif
