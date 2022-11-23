@@ -63,7 +63,6 @@ void Client_interface::run_client(const char *serv, const char *port){
 	while (running) {
         running = handle_events(pq, going_right, going_left, nitroing, jumping);
 		render_screen(car_textures, ball, court);
-
         //Constant Rate Loop
         int32_t t2 = SDL_GetTicks();
         int32_t rest = FRAME_RATE - (t2-t1);
