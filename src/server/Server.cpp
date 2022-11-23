@@ -15,7 +15,7 @@ void Server::run() { acceptThread.start(); }
 
 void Server::shutdown() {
   serverStatus = false;
-  acceptThread.disconect();
+ // acceptThread.disconect();
   acceptThread.join();
 }
 

@@ -29,10 +29,11 @@ include_directories(${PROJECT_SOURCE_DIR}/libs/box2d/include)
 
 file(GLOB server_SRC    
 
+     "src/server/Menu/Client/*.cpp"
+     "src/server/Menu/Excptions/*.h"
      "src/common/*.cpp"
      "src/server/*.cpp"
      "src/server/Menu/*.cpp"
-     "src/server/Menu/Client/*.cpp"
      "src/server/Menu/Games/*.cpp"
      "src/server/Menu/Games/GameObjects/*.cpp"
      "src/server/Menu/MenuCommand/*.cpp"

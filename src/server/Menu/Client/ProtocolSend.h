@@ -21,7 +21,7 @@ private:
     bool was_closed;
     void sendResponse(std::vector<uint8_t>& response);
 public:
-   ProtocolSend(Socket& skt,BlockingQueue<std::shared_ptr<SnapShot>> &snapEventQueue);
+   ProtocolSend(Socket& skt,BlockingQueue<std::shared_ptr<SnapShot>>& snapEventQueue);
 
   virtual void run() override;
     virtual ~ProtocolSend()= default;

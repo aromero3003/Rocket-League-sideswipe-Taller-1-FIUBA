@@ -6,7 +6,6 @@
 #include <ostream>
 #include <string>
 
-#include "../Games/GameHandler.h"
 #include "CommandWithParameters.h"
 
 // CREATE
@@ -15,8 +14,8 @@ class CommandCreate : public CommandWithParameters {
   int capacity;
 
  public:
-  explicit CommandCreate(std::istream& paramenters);
-  void run(GameHandler& gameHandler) override;
+  CommandCreate(std::istream& paramenters);
+  void run(GameHandler &games) override;
   virtual ~CommandCreate() {}
 };
 

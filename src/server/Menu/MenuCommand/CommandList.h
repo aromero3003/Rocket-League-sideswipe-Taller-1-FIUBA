@@ -6,13 +6,11 @@
 #include <ostream>
 #include <string>
 
-#include "../Games/GameHandler.h"
 #include "Command.h"
-
 class CommandList : public Command {
  public:
-  CommandList() : Command() {}
-  void run(GameHandler& gameHandler) override;
+  explicit CommandList();
+  void run(GameHandler &games) override;
   virtual ~CommandList() {}
 };
 

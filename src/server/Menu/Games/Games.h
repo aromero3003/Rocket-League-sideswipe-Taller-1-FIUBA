@@ -6,21 +6,24 @@
 #include <string>
 #include <utility>
 
+#include "../Exceptions/MenuCommandEx.h"
 #include "Game.h"
-#define OK 0
-#define ERRORINGAMES -1
+#include "RunGame.h"
 
 class Games {
  private:
   std::map<std::string, Game> allGames;
+
+  std::vector<std::unique_ptr<RunGame>> allRunGames;
   bool exists(const std::string& name,
               std::map<std::string, Game>::iterator& i);
-
+ void startRungame(std::map<std::string, Game>::iterator i);
+ 
  public:
   Games() : allGames() {}
-  int addGame(const std::string& name, const int capacity);
-  int addPlayerToGame(const std::string& name);
-  int listAllWithOcupation(std::string& list);
+  void addGame(const std::string& name, const int capacity);
+  void addPlayerToGame(const std::string& name,Socket&& o_skt,size_t o_id);
+  void listAllWithOcupation(std::string& list);
   ~Games() = default;
 };
 #endif

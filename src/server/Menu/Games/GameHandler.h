@@ -8,20 +8,16 @@
 
 #include "Games.h"
 #include "RunGame.h"
-
 class GameHandler {
  private:
   std::mutex mutexgames;
   Games games;
-  RunGame runGame;
 
  public:
   GameHandler();
-  RunGame& addRunGame();
-  int addGame(const std::string& name, const int intcapacity);
-  
-  int listAllWithOcupation(std::string& list);
-  int addPlayerToGame(const std::string& name);
+  void addGame(const std::string& name, const int intcapacity);
+  void listAllWithOcupation(std::string& list);
+  void addPlayerToGame(const std::string& name,Socket&& o_skt,size_t o_id);
   ~GameHandler()=default;
 };
 

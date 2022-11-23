@@ -5,16 +5,17 @@
 #include <list>
 #include <ostream>
 #include <string>
+#include "../Exceptions/MenuCommandEx.h"
 #include "../Games/GameHandler.h"
-
 class Command {
  protected:
   std::string response;
 
+  virtual void run(GameHandler &games) {};
  public:
-  Command() : response() {}
-  std::string& getResponse();
-  virtual void run(GameHandler& gameHandler) = 0;
+  Command();
+  void execut(GameHandler &games);
+  std::string getResponse();
   virtual ~Command() {}
 };
 

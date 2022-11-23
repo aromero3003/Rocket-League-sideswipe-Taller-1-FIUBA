@@ -1,32 +1,20 @@
 #include "GameHandler.h"
 
-GameHandler::GameHandler() : mutexgames(), games(), runGame() {}
+GameHandler::GameHandler() : mutexgames(), games(){}
 
-int GameHandler::addGame(const std::string& name, const int capacity) {
-  mutexgames.lock();
-  int res = games.addGame(name, capacity);
-  mutexgames.unlock();
-  return res;
-}
-  RunGame& GameHandler::addRunGame(){
-      return runGame;
-  }
-int GameHandler::listAllWithOcupation(std::string& list) {
-  mutexgames.lock();
-  int res = games.listAllWithOcupation(list);
-  mutexgames.unlock();
-  return res;
+void GameHandler::addGame(const std::string& name, const int capacity) {
+  std::lock_guard<std::mutex> lock(mutexgames);
+  games.addGame(name, capacity);
+
 }
 
-int GameHandler::addPlayerToGame(const std::string& name) {
-  mutexgames.lock();
-  int res = games.addPlayerToGame(name);
-  //addPlayerToGame game devolvera
-  //if complete 
-  //tranform to thread  game t o rungame
-  //borrar game? (notrungames)   game monitor<-es donde estoy
-  //rungame . inicar (game)
-  //return game
-  mutexgames.unlock();
-  return res;
+void GameHandler::listAllWithOcupation(std::string& list) {
+  std::lock_guard<std::mutex> lock(mutexgames);
+  games.listAllWithOcupation(list);
+
+}
+
+void GameHandler::addPlayerToGame(const std::string& name,Socket&& o_skt,size_t o_id) {
+  std::lock_guard<std::mutex> lock(mutexgames);
+  games.addPlayerToGame(name,std::move(o_skt),o_id);
 }

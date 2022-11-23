@@ -1,31 +1,28 @@
 #include "ClientsHandler.h"
-#include <vector>
-
-ClientsHandler::ClientsHandler() {}
-
-GamingClient* ClientsHandler::conectNewGamingClient(Socket&& soktAccepted, size_t id,ProtectedQueue<GameCommandHandler> &eventQueue){
- GamingClient* client=
-      new GamingClient(std::move(soktAccepted),id,eventQueue);
-  clients.push_back(client);
-  return client;
+/*
+ClientsHandler::ClientsHandler(BlockingQueue<std::unique_ptr<MenuEvent>>& queue):
+  gameclients(),menuclients(),menuEventQueueRef(queue) {}
+*/
+ClientsHandler::ClientsHandler(GameHandler& games):
+  menuclients(), gamesRef(games){}
+  
+void ClientsHandler::conectNewClient(Socket &&skt,size_t id){
+  std::shared_ptr<MenuClient> client(new MenuClient(std::move(skt),id,gamesRef));
+  menuclients.push_back(client);
 }
-
 
 // si se deconecta algun cliente lo joineo -esto no esta explicito...- y borro
 // ref
 void ClientsHandler::cleanDisconectClients() {
-  clients.erase(
-      std::remove_if(clients.begin(), clients.end(),
-                     [](GamingClient* client) { return client->isDisconect(); }),
-      clients.end());
+  menuclients.erase(
+      std::remove_if(menuclients.begin(), menuclients.end(),
+                     [&](const std::shared_ptr<MenuClient> & client) { return client.get()->isDisconect(); }),
+      menuclients.end());
+
 }
-/// si tengo referencia a algun cliente tengo q joineralo
+
 void ClientsHandler::disconectAll() {
-  for (GamingClient* client : clients) {
-    delete client;
-  }
-  
-  clients.clear();
+  menuclients.clear();
 }
 
 ClientsHandler::~ClientsHandler() { disconectAll(); }

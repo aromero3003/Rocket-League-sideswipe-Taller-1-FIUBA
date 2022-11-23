@@ -1,32 +1,30 @@
-#ifndef __CLIENTS_HANLER_H__
-#define __CLIENTS_HANLER_H__
+#ifndef __CLIENTSHANLER_H__
+#define __CLIENTSHANLER_H__
 #include <algorithm>
 #include <utility>
 #include <vector>
 #include <memory>
-
+#include <iterator>
 #include "socket.h"
 #include "GamingClient.h"
+#include "MenuClient.h"
 #include "../Games/GameHandler.h"
 
-
 class ClientsHandler {
+
  private:
-  std::vector<GamingClient*> clients;
-  GameHandler gameHandler;
-
-
+  std::vector<std::shared_ptr<MenuClient>> menuclients;
+  GameHandler& gamesRef;
  public:
-  ClientsHandler();
+  ClientsHandler(GameHandler& games);
 
-  GamingClient* conectNewGamingClient(Socket&& soktAccepted, size_t id,ProtectedQueue<GameCommandHandler> &eventQueue);
-
+  void conectNewClient(Socket &&skt,size_t id);
+  
   void cleanDisconectClients();
 
   void disconectAll();
 
-  ClientsHandler(ClientsHandler &&other);
-
   ~ClientsHandler();
 };
+
 #endif

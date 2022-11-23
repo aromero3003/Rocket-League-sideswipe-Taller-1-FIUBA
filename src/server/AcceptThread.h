@@ -12,12 +12,14 @@
 #include "socket.h"
 #include "Menu/Menu.h"
 #include "thread.h"
+#include "BlockingQueue.h"
+#include <memory.h>
+
 class AcceptThread : public Thread {
  private:
   bool& serverIsOpen;
   Socket soktRef;
-  Menu menu;
-
+  
  public:
   AcceptThread(Socket& soktRef, bool& serverStatus);
   virtual void run() override;

@@ -16,7 +16,7 @@ class CommandWithParameters : public Command {
 
  public:
   CommandWithParameters() : Command(), gameName() {}
-  virtual void run(GameHandler& gameHandler) override{};
+  virtual void run(GameHandler &games) override{};
   virtual ~CommandWithParameters() {}
 };
 
