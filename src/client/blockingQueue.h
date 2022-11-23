@@ -22,10 +22,10 @@ public:
     }
 
     T pop() {
-        std::unique_lock<std::mutex> lock(mutex);
-        while (internal.empty()) {
-            cv.wait(lock);
-        }
+    std::unique_lock<std::mutex> lock(mutex);
+    while (internal.empty()) {
+        cv.wait(lock);
+    }
     T element = internal.front();
     internal.pop();
     return element;

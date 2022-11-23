@@ -5,52 +5,42 @@
 #include <chrono>
 #include <string>
 
-#define PRESS_RIGHT 65
-#define PRESS_LEFT 66
-#define PRESS_SPACE 67
-#define PRESS_SHIFT 71
-#define RELEASE_RIGHT 68
-#define RELEASE_LEFT 69
-#define RELEASE_SPACE 70
-#define RELEASE_SHIFT 72
-
-#define FRAME_RATE 1000/120
-
-#define QUIT 99
-
-
-Client_interface::Client_interface(): 
+Client_interface::Client_interface(const char *serv, const char *port): 
             sdl(SDL_INIT_VIDEO), 
             window("Rocket League 2D",
                     SDL_WINDOWPOS_UNDEFINED,
                     SDL_WINDOWPOS_UNDEFINED,
                     1040, 600,
                     0),
-                    //SDL_WINDOW_RESIZABLE),
             renderer(window, -1, SDL_RENDERER_ACCELERATED),
 			mixer(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 4096){
+
 	this->world = new World();
+	this->socket = new Socket(serv, port);
+	this->pq = new BlockingQueue<int>();
 }
 
-void Client_interface::run_client(const char *serv, const char *port){
+void Client_interface::run_client(){
 
 	int n_cars = 2;
+
+	//create N cars and car_textures
 	this->world->create_cars(n_cars);
 	std::vector<Texture> car_textures;
 	for(int i = 0; i < n_cars; i++){
 		car_textures.emplace_back(renderer, "../data/cars.png");
 	}
+
+	//load textures and sounds
 	Texture ball(renderer, "../data/ball.png");
 	Texture court(renderer, "../data/court.png");
 
 	Chunk sound("../data/car_ignition.wav");
-	mixer.PlayChannel(-1, sound);
+	Chunk ball_sound("../data/ball_bounce.wav");
 
-	BlockingQueue<int>* pq = new BlockingQueue<int>();
-	Socket* s = new Socket(serv, port);
-
-	ReceiverThread receiver(s,this->world, n_cars);
-	SenderThread sender(s, pq);
+	//launch threads
+	ReceiverThread receiver(this->socket,this->world, n_cars);
+	SenderThread sender(this->socket, this->pq);
 	receiver.start();
 	sender.start();
 
@@ -61,8 +51,10 @@ void Client_interface::run_client(const char *serv, const char *port){
 
     uint32_t t1 = SDL_GetTicks();
 	while (running) {
+
         running = handle_events(pq, going_right, going_left, nitroing, jumping);
-		render_screen(car_textures, ball, court);
+		render_screen_and_sounds(car_textures, ball, court, ball_sound);
+
         //Constant Rate Loop
         int32_t t2 = SDL_GetTicks();
         int32_t rest = FRAME_RATE - (t2-t1);
@@ -77,15 +69,13 @@ void Client_interface::run_client(const char *serv, const char *port){
         t1 += FRAME_RATE;
         //Constant Rate Loop
 	}
-    delete pq;
-    delete s;
+	mixer.HaltChannel(-1);
 }
 
 
-void Client_interface::render_screen(std::vector<Texture>& car_textures, Texture& ball, Texture& court){
-    	renderer.Clear();
-		this->world->draw(car_textures, ball, court, renderer);	
-		this->world->print();	
+void Client_interface::render_screen_and_sounds(std::vector<Texture>& car_textures, Texture& ball, Texture& court, Chunk& ball_sound){
+		renderer.Clear();
+		this->world->draw(car_textures, ball, court, renderer, ball_sound, mixer);	
 		renderer.Present();
 }
 
@@ -97,7 +87,7 @@ bool Client_interface::handle_events(BlockingQueue<int>* pq, bool& going_right, 
 				} else if (event.type == SDL_KEYDOWN) {
 					switch (event.key.keysym.sym) {
 						case SDLK_ESCAPE: case SDLK_q:
-								pq->push(QUIT);
+								//pq->push(QUIT);
 								return false;
 						case SDLK_RIGHT:
                             if(!going_right) pq->push(PRESS_RIGHT);
@@ -141,4 +131,7 @@ bool Client_interface::handle_events(BlockingQueue<int>* pq, bool& going_right, 
 }
 
 
-Client_interface::~Client_interface(){}
+Client_interface::~Client_interface(){
+	delete this->socket;
+	delete this->pq;
+}

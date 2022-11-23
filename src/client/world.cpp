@@ -41,7 +41,12 @@ void World::update(char* data){
 }
 
 
-void World::draw(std::vector<Texture>& car_textures, Texture& ball, Texture& court, Renderer& renderer){
+void World::draw(std::vector<Texture>& car_textures,
+                 Texture& ball, 
+                 Texture& court, 
+                 Renderer& renderer,
+                 Chunk& ball_sound,
+                 Mixer& mixer){
     std::lock_guard<std::mutex> lock(mutex);
     int flip;
 
@@ -63,26 +68,15 @@ void World::draw(std::vector<Texture>& car_textures, Texture& ball, Texture& cou
 
     //Show ball
     renderer.Copy(ball, NullOpt, Rect(20*this->ball.x_position -20,(-20)*this->ball.y_position-20, 40, 40));
-    
+
     if(this->ball.collision){
-        std::cout << "bounce" << std::endl;
+        mixer.PlayChannel(-1, ball_sound);
         this->ball.collision = false;
-        }
+    }
+
     if(this->goal){
-        std::cout << "gol putos" << std::endl;
         this->goal = false;
     }
-}
-
-
-void World::print(){
-    std::lock_guard<std::mutex> lock(mutex);
-    //std::cout << "Ball: (x,y) = (" << this->ball.x_position  << " | " <<  this->ball.y_position << ")" << std::endl;
-    //std::cout << "Car 1: (x,y) = ("<< this->cars[0].x_position << " | " << this->cars[0].y_position << ")" << std::endl;
-    //std::cout << "Car 2: (x,y) = ("<< this->cars[1].x_position << " | " << this->cars[1].y_position << ")" << std::endl;
-    //for(size_t i=0; i < this->cars.size(); i++){
-    //    std::cout << "car[" << i << "]: " <<this->cars[i].angle << std::endl;
-    //}
 }
 
 World::~World(){}
