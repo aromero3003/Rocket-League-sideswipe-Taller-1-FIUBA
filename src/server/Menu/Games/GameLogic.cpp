@@ -3,6 +3,7 @@
 #include <box2d/b2_body.h>
 #include <box2d/b2_math.h>
 #include <cstdint>
+#include <iostream>
 #include <memory>
 
 
@@ -98,6 +99,8 @@ void GameLogic::step() {
         if (player.nitro == true)
             player.boost();
     }
+    if (ball.isColliding())
+        std::cout << "BOunce" << std::endl;
     this->world.Step(TIME_STEP, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
     //setSnap();
 }
@@ -105,7 +108,7 @@ void GameLogic::step() {
 std::shared_ptr<SnapShot> GameLogic::getSnap(){
     std::shared_ptr<SnapShot> snap(new SnapShot);
     uint8_t match_flags = this->goal;  // 2 BITS // 0 NONE | 1 RED | 2 BLUE
-    match_flags |= this->ball.isColliding() << 2; // 0 FALSE | 1 TRUE  xxxx x1xx
+    //match_flags |= this->ball.isColliding() << 2; // 0 FALSE | 1 TRUE  xxxx x1xx
     snap->add(match_flags);
 
     snap->add(this->ball.getPosition().x);

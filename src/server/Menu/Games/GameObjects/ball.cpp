@@ -1,6 +1,7 @@
 #include "ball.h"
 #include "Constants.h"
 #include <box2d/b2_contact.h>
+#include <iostream>
 
 
 Ball::Ball(b2World &world, float x, float y) {
@@ -36,5 +37,6 @@ const bool Ball::isColliding() {
     uint8_t prev_collitions = this->current_collisions;
     current_collisions = 0;
     for (b2ContactEdge* ce = this->ball->GetContactList(); ce; ce = ce->next, current_collisions++);
+    //std::cout << (this->current_collisions > prev_collitions) << std::endl;
     return this->current_collisions > prev_collitions;
 }
