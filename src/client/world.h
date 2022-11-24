@@ -38,6 +38,7 @@ class World{
                  SDL2pp::Texture& nitro,
                  SDL2pp::Renderer& renderer,
                  SDL2pp::Chunk& ball_sound, 
+                 SDL2pp::Chunk& nitro_sound,
                  SDL2pp::Mixer& mixer);
 
 

@@ -25,5 +25,7 @@ bool ReceiverThread::is_alive(){
 }
 
 ReceiverThread::~ReceiverThread(){
+    std::cout << "cerrando receiver" << std::endl;
     this->join();
+    std::cout << "receiver CERRADO" << std::endl;
 }

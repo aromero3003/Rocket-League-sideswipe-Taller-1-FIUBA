@@ -22,5 +22,7 @@ bool SenderThread::is_alive(){
 }
 
 SenderThread::~SenderThread(){
+    std::cout << "cerrando sender" << std::endl;
     this->join();
+    std::cout << "sender CERRADO" << std::endl;
 }

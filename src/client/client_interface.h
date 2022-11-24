@@ -41,7 +41,7 @@ class Client_interface{
 
         bool handle_events(BlockingQueue<int>* pq, bool& going_right, bool& going_left, bool& nitroing, bool& jumping);
 
-        void render_screen_and_sounds(std::vector<Texture>& car_textures, Texture& ball, Texture& court, Texture& nitro, Chunk& ball_sound);
+        void render_screen_and_sounds(std::vector<Texture>& car_textures, Texture& ball, Texture& court, Texture& nitro, Chunk& nitro_sound, Chunk& ball_sound);
 
         ~Client_interface();
 
