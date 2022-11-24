@@ -2,6 +2,7 @@
 #include "GameObjects/Constants.h"
 #include <box2d/b2_body.h>
 #include <box2d/b2_math.h>
+#include <cmath>
 #include <cstdint>
 #include <iostream>
 #include <memory>
@@ -99,6 +100,7 @@ void GameLogic::step() {
     for (Car &player : this->players) {
         if (player.nitro == true)
             player.boost();
+        player.update();
     }
     if(ball.getPosition().x < 6.0f - BALL_RADIUS){
         goal = 2;
@@ -107,7 +109,8 @@ void GameLogic::step() {
     } else {
         goal = 0;
     }
-    
+    //std::cout << std::cos(this->players[0].getAngle()) << "      " << cos(this->players[1].getAngle()) << std::endl;
+    //std::cout << this->players[0].getPosition().y << "      " << this->players[1].getPosition().y  << '\n'<< std::endl;
     this->world.Step(TIME_STEP, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
     //setSnap();
 }

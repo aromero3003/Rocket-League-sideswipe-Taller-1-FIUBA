@@ -24,6 +24,8 @@ class Car {
     bool orientation;
     uint8_t nitro_cant;
 
+    bool onSurface(bool touching);
+
  public:
     Car(b2World &world, const b2Vec2 &position);
     void moveLeft();
@@ -36,6 +38,7 @@ class Car {
     const b2Vec2 getPosition();
     const float getAngle();
     const uint8_t getOrientation();
+    void update();
 
     bool has_jumped;
     double time_elapsed;
