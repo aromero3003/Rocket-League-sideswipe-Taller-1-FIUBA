@@ -160,8 +160,10 @@ void Car::update() {
     float angle = this->getAngle();
     if (position.y < -SCENARIO_HEIGHT + 1.0f) {
         if (not this->onSurface(false) and this->chassis->GetLinearVelocity().y < 0.0f)
-            this->orientation = std::cos(angle) >= 0 ? RIGHT : LEFT;
-        this->chassis->SetTransform(position, 0.0f);
+            if (std::cos(angle) < 0) {
+                this->orientation = not this->orientation;
+                this->chassis->SetTransform(position, angle + b2_pi);
+            }
     }
 }
 const uint8_t Car::getOrientation() {
