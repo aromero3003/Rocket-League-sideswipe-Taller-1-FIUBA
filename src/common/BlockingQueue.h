@@ -6,6 +6,8 @@
 #include <mutex>
 #include <condition_variable>
 
+#include <iostream>
+
 template<class T>
 class BlockingQueue {
  private:
@@ -34,10 +36,8 @@ class BlockingQueue {
     T pop() {
         std::unique_lock<std::mutex> lock(this->mutex);
         this->wait_while_empty(lock);
-
         T item = this->queue.front();
         this->queue.pop();
-
         return item;
     }
 

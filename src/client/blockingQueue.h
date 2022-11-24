@@ -28,7 +28,7 @@ public:
     }
     T element = internal.front();
     internal.pop();
-    return element;
+    return element;    
     }
 
     ~BlockingQueue(){}

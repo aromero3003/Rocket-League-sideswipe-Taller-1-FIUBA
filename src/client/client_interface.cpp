@@ -36,8 +36,11 @@ void Client_interface::run_client(){
 	Texture court(renderer, "../data/court.png");
 	Texture nitro(renderer, "../data/nitro.png");
 
-	Chunk sound("../data/car_ignition.wav");
+	Chunk ingition_sound("../data/car_ignition.wav");
 	Chunk ball_sound("../data/ball_bounce.wav");
+	Chunk nitro_sound("../data/nitro.wav");
+
+	mixer.PlayChannel(-1,ingition_sound,0);
 
 	//launch threads
 	ReceiverThread receiver(this->socket,this->world, n_cars);
@@ -54,7 +57,7 @@ void Client_interface::run_client(){
 	while (running) {
 
         running = handle_events(pq, going_right, going_left, nitroing, jumping);
-		render_screen_and_sounds(car_textures, ball, court,nitro, ball_sound);
+		render_screen_and_sounds(car_textures, ball, court,nitro, ball_sound, nitro_sound);
 
         //Constant Rate Loop
         int32_t t2 = SDL_GetTicks();
@@ -74,9 +77,13 @@ void Client_interface::run_client(){
 }
 
 
-void Client_interface::render_screen_and_sounds(std::vector<Texture>& car_textures, Texture& ball, Texture& court, Texture& nitro, Chunk& ball_sound){
+void Client_interface::render_screen_and_sounds(std::vector<Texture>& car_textures,
+												Texture& ball, Texture& court, 
+												Texture& nitro, 
+												Chunk& ball_sound, 
+												Chunk& nitro_sound){
 		renderer.Clear();
-		this->world->draw(car_textures, ball, court, nitro, renderer, ball_sound, mixer);	
+		this->world->draw(car_textures, ball, court, nitro, renderer, ball_sound,nitro_sound, mixer);	
 		renderer.Present();
 }
 
@@ -84,11 +91,14 @@ bool Client_interface::handle_events(BlockingQueue<int>* pq, bool& going_right, 
 		SDL_Event event;
 		while (SDL_PollEvent(&event)) {
 			if (event.type == SDL_QUIT) { 
+				delete this->socket;
 				return false;
 				} else if (event.type == SDL_KEYDOWN) {
 					switch (event.key.keysym.sym) {
 						case SDLK_ESCAPE: case SDLK_q:
-								//pq->push(QUIT);
+								pq->push(QUIT);
+								this->socket->shutdown(2);
+								this->socket->close();
 								return false;
 						case SDLK_RIGHT:
                             if(!going_right) pq->push(PRESS_RIGHT);
@@ -133,6 +143,6 @@ bool Client_interface::handle_events(BlockingQueue<int>* pq, bool& going_right, 
 
 
 Client_interface::~Client_interface(){
-	delete this->socket;
 	delete this->pq;
+	delete this->socket;
 }
