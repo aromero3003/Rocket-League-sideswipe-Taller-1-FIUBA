@@ -28,7 +28,7 @@ void MenuThread::run() {
             std::string s1("LISTAR");
             sendCommand(std::move(s1));
             if (reciveResponse().str() == "OK\n"){
-              std::string s2("CREAR 4 tomako");
+              std::string s2 ("CREAR 4 tomako");
               sendCommand(std::move(s2));
             } else {
               std::string s2("UNIR tomako");

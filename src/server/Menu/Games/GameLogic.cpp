@@ -66,8 +66,8 @@ GameLogic::GameLogic(size_t cant_players) :
     /*
     this->players.emplace_back(this->world, b2Vec2(SCENARIO_HALF_WIDTH /2.0f + 6.0f, -SCENARIO_HEIGHT + 2.0f));
     this->players.emplace_back(this->world, b2Vec2(SCENARIO_HALF_WIDTH * 3.0f / 2.0f, -SCENARIO_HEIGHT + 2.0f));*/
-    for(size_t i=1;i!=cant_players;i++){
-          this->players.emplace_back(this->world, b2Vec2(SCENARIO_HALF_WIDTH /2.0f + 6.0f, -SCENARIO_HEIGHT + 2.0f));
+    for(size_t i=0;i<cant_players;i++){
+          this->players.emplace_back(this->world, b2Vec2(SCENARIO_HALF_WIDTH /2.0f + 6.0f+(float)i, -SCENARIO_HEIGHT + 2.0f));
     }
 }
 
