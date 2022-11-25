@@ -12,8 +12,9 @@
 #include "AcceptThread.h"
 class Server {
  private:
-  AcceptThread acceptThread;
   bool serverStatus;
+  AcceptThread acceptThread;
+
   void shutdown();
 
  public:

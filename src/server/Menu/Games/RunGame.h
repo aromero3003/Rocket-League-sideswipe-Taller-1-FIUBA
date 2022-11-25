@@ -16,11 +16,12 @@ class RunGame : public Thread {
  private:
   GameLogic gameLogic;
   ProtectedQueue<GameCommandHandler> gammingEventQueue;
-  std::vector<GamingClient*> players;
+  std::vector<std::unique_ptr<GamingClient>> players;
  public:
+ 
   RunGame();
   ProtectedQueue<GameCommandHandler> & getRefGamingQueue();
-  void  addPlayer(GamingClient* gamingClient);
+  void addPlayer(std::unique_ptr<GamingClient>&& player);
   virtual void run() override;
   virtual ~RunGame() = default;
 };

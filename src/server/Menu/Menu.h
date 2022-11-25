@@ -2,21 +2,22 @@
 #define __MENU_H__
 
 #include "socket.h"
+
 #include "Client/ClientsHandler.h"
 #include "Games/GameHandler.h"
-#include "Games/RunGame.h"/// reafactorizar !!!!!!!
-class Menu  {
+
+
+//la idea de la clase es que funcione como un monitor 
+//pero sin serlo utiliza threads para la ejecucion de metodos
+// y utiliza BlockingQueue para ser threadsafe (sus eventos no generan nuevos eventos)
+class Menu {
  private:
-  ClientsHandler clientsHandler;
   GameHandler gameHandler;
-  RunGame& runGame; /// reafactorizar !!!!!!!
+  ClientsHandler clientsHandler;
 
  public:
   Menu();
   void conectNewClient(Socket&& sktAccepted,size_t id);
-  void cleanDisconectClients();
-  void disconectAll();
-  void startGame();
-  virtual ~Menu() = default;
+   ~Menu();
 };
 #endif

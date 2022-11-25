@@ -1,12 +1,12 @@
 #include "Games.h"
 
-int Games::addGame(const std::string& name, int capacity) {
+void Games::addGame(const std::string& name, int capacity) {
   std::map<std::string, Game>::iterator i;
   if (!exists(name, i)) {
     allGames.insert({name, Game(capacity)});
-    return OK;
+  } else {
+    throw MenuCommandEx();
   }
-  return ERRORINGAMES;
 }
 
 bool Games::exists(const std::string& name,
@@ -18,26 +18,30 @@ bool Games::exists(const std::string& name,
     return true;
   }
 }
+void Games::startRungame(std::map<std::string, Game>::iterator gameNoStart){
+    allRunGames.push_back(gameNoStart->second.getRunGame());
+    allGames.extract(gameNoStart);
+    allRunGames.back()->start();
+} 
 
-int Games::addPlayerToGame(const std::string& name) {
+void Games::addPlayerToGame(const std::string& name,Socket&& o_skt,size_t o_id,int cantPlayers) {
   std::map<std::string, Game>::iterator i;
   if (exists(name, i)) {
     if (!i->second.isComplete()) {
-      i->second.addPlayer();
+      i->second.addPlayer(std::move(o_skt),o_id,cantPlayers);
       if (i->second.isComplete())
-        std::cout << "Comenzando partida " << name << "...\n";
-      return OK;
+        startRungame(i);
     }
+  } else {
+    throw  MenuCommandEx();
   }
-  return ERRORINGAMES;
 }
 
-int Games::listAllWithOcupation(std::string& list) {
+void Games::listAllWithOcupation(std::string& list) {
   for (auto& game : allGames) {
     list.append(game.first);
     list.append(" ");
     list.append(game.second.getOccupation());
     list.append("\n");
   }
-  return OK;
 }

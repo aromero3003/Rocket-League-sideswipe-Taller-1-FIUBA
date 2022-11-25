@@ -9,13 +9,13 @@
 #include <string>
 #include <utility>
 Server::Server(Socket& skt)
-    : acceptThread(skt, serverStatus), serverStatus(true) {}
+    : serverStatus(true), acceptThread(skt, serverStatus) {}
 
 void Server::run() { acceptThread.start(); }
 
 void Server::shutdown() {
   serverStatus = false;
-  acceptThread.disconect();
+ // acceptThread.disconect();
   acceptThread.join();
 }
 

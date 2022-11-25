@@ -7,22 +7,22 @@
 #include <utility>
 
 #include "Command.h"
-#include "CommandAdd.h"
+#include "IncompleteCommandAdd.h"
+#include "BadCommand.h"
 #include "CommandCreate.h"
 #include "CommandList.h"
-#include "../Games/GameHandler.h"
+#include <memory.h>
 // encapsula el manejo de memoria de los comandos par apoder
 // aplicar RAII y y polimorfismo sin tener q pensar en la liberacion en caso de
 // error
 class CommandHandler {
  private:
-  Command* command;
-
+  bool isAddFlag;
  public:
   CommandHandler();
-  void createCommand(std::istream& parameters);
-  void run(GameHandler& game);
-  std::string& getResponse();
+  std::unique_ptr<Command> createCommand(std::istream &&parameters) ;
+  bool isAdd();
+  
   ~CommandHandler();
 };
 

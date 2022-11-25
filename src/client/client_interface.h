@@ -7,6 +7,7 @@
 #include "socket.h"
 #include "blockingQueue.h"
 #include "world.h"
+#include "menuThread.h"
 
 #define PRESS_RIGHT 65
 #define PRESS_LEFT 66

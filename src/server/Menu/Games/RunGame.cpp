@@ -2,22 +2,21 @@
 #include <memory>
 #include <unistd.h>
 
-#ifdef ALAN_DEBUG
-extern Socket alan;
-#endif  // ALAN_DEBUG
 
-RunGame::RunGame():gameLogic(2),gammingEventQueue(),players(){}
+RunGame::RunGame():
+gameLogic(2),gammingEventQueue(),players(){}
+void RunGame::addPlayer(std::unique_ptr<GamingClient>&& player) {
+    this->players.push_back(std::move(player));
+}
+
   ProtectedQueue<GameCommandHandler> & RunGame::getRefGamingQueue(){
     return gammingEventQueue;
   }
 
-void  RunGame::addPlayer(GamingClient* gamingClient){
-    players.emplace_back(gamingClient);
-}
 
 void RunGame::run() {
   try {
-      for(auto player : players)
+      for(auto &&player : players)
           player->start();
     while(1){
 
@@ -33,7 +32,7 @@ void RunGame::run() {
         this->gameLogic.step();
 
         std::shared_ptr<SnapShot> snap = this->gameLogic.getSnap();
-        for (auto player: players) {
+        for (auto && player : players) {
             player->addSnap(snap);
         }
         usleep(1000000/120);

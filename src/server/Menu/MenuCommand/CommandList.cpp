@@ -1,11 +1,10 @@
 #include "CommandList.h"
 
-void CommandList::run(GameHandler& games) {
+CommandList::CommandList():Command(){}
+void CommandList::run(GameHandler &games) {
   std::string list;
-  if (games.listAllWithOcupation(list) == OK) {
+  games.listAllWithOcupation(list);
     response.append("OK\n");
     response.append(list);
-  } else {
-    response.append("ERROR\n");
-  }
+  
 }
