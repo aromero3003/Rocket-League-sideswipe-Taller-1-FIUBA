@@ -10,6 +10,7 @@ void Game::addPlayer(Socket&& skt,size_t id,int cantPlayers) {
     std::unique_ptr<StandbyClient> client (new StandbyClient (std::move(skt),id));
     clients.push_back(std::move(client));
   } 
+  ///trhow ex
 }
 
 std::unique_ptr<RunGame> Game::getRunGame(){

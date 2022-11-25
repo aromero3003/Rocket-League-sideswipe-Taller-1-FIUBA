@@ -1,8 +1,7 @@
 #include "menuThread.h"
 
-MenuThread::MenuThread(Socket* s, int n) {
+MenuThread::MenuThread(Socket* s, int &n):n_cars(n){
  this->skt = s;
- this->n_cars = n;
  this->was_closed=false;
 }
 void MenuThread::sendCommand(std::string&& response) {
@@ -36,12 +35,14 @@ void MenuThread::run() {
             sendCommand(std::move(s3));
             std::cout << reciveResponse().str() << std::endl;
 
-            std::string s4("UNIRSE tomako");
+            std::string s4("UNIR tomako");
             sendCommand(std::move(s4));
+            std::cout <<"hata aca llega" << std::endl;
 
         //}
     }
     catch (const LibError& err) {
+      std::cerr << err.what();
       
-    }
+    }    
 }  

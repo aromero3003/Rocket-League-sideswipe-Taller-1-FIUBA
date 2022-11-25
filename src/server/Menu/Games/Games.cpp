@@ -18,9 +18,9 @@ bool Games::exists(const std::string& name,
     return true;
   }
 }
-void Games::startRungame(std::map<std::string, Game>::iterator i){
-    allRunGames.push_back(i->second.getRunGame());
-    allGames.extract(i);
+void Games::startRungame(std::map<std::string, Game>::iterator gameNoStart){
+    allRunGames.push_back(gameNoStart->second.getRunGame());
+    allGames.extract(gameNoStart);
     allRunGames.back()->start();
 } 
 

@@ -24,7 +24,7 @@ void Client_interface::run_client(){
 	int n_cars = 2;
 
 	MenuThread menuThread(this->socket, n_cars);
-	menuThread.run();
+	menuThread.start();
 	menuThread.join();
 
 
