@@ -4,6 +4,7 @@
 #include <box2d/b2_contact.h>
 #include <box2d/b2_fixture.h>
 #include <box2d/b2_math.h>
+#include <cmath>
 #include <cstdint>
 #include <iostream>
 #include "Constants.h"
@@ -190,16 +191,18 @@ public:
         }
         if(car.go_up == true)
             car.up();
-        std::cout << (number_of_bounces == 1 ? "CANT JUMP" : "JUMP CAN") << std::endl;
+        float angle = car.getAngle();
+        //std::cout << angle << ": sin " << std::sin(angle) << "   cos " << std::cos(angle) << std::endl;
+        //std::cout << (number_of_bounces == 1 ? "CANT JUMP" : "JUMP CAN") << std::endl;
         //ball.is_bouncing();
         //if (ball.is_bouncing()) std::cout << "BOUNCE: " /*<< number_of_bounces*/ << std::endl;
         //if (car.isHittingBall()) std::cout << "HIT: " /*<< number_of_bounces*/ << std::endl;
         //if (car.isHittingBall()) std::cout << "HIT: " /*<< number_of_bounces*/ << std::endl;
         //std::cout << car.getAngle() << std::endl;
 		//g_camera.m_center.x = m_car->GetPosition().x;
-        if (ball.getPosition().x > SCENARIO_WIDTH + 6.0f + BALL_RADIUS
-                || ball.getPosition().x < 6.0f - BALL_RADIUS)
-            std::cout << "GOAL" << std::endl;
+        //if (ball.getPosition().x > SCENARIO_WIDTH + 6.0f + BALL_RADIUS
+        //        || ball.getPosition().x < 6.0f - BALL_RADIUS)
+        //    std::cout << "GOAL" << std::endl;
 #ifdef SOCKET_DEBUG
         while (not comms.is_empty()) {
             int c = comms.pop();
