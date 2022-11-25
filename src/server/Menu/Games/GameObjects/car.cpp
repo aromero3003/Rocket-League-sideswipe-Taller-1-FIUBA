@@ -1,6 +1,7 @@
 #include "Constants.h"
 #include "car.h"
 #include <box2d/b2_math.h>
+#include <cmath>
 
 Car::Car(b2World &world, const b2Vec2 &position) {
     float x = position.x, y = position.y;
@@ -41,10 +42,11 @@ Car::Car(b2World &world, const b2Vec2 &position) {
         wheel_fd.friction = 0.9f;
         wheel_fd.filter.categoryBits = CAR_BITS;
         wheel_fd.filter.maskBits = BALL_BITS | SCENARIO_BITS;
+        wheel_fd.restitution = 0.0f;
 
         b2BodyDef wheel_def;
         wheel_def.type = b2_dynamicBody;
-        wheel_def.position.Set(x - 1.0f, y + 0.35f);
+        wheel_def.position.Set(x - 1.0f, y + 0.4f);
 
         wheel1 = world.CreateBody(&wheel_def);
         wheel1->CreateFixture(&wheel_fd);
@@ -101,13 +103,15 @@ void Car::jump() {
 void Car::moveLeft() {
     this->damper1->SetMotorSpeed(50000.0f);
     this->damper2->SetMotorSpeed(50000.0f);
-    this->orientation = LEFT;
+    if (this->onSurface(true))
+        this->orientation = LEFT;
 }
 
 void Car::moveRight() {
     this->damper1->SetMotorSpeed(-50000.0f);
     this->damper2->SetMotorSpeed(-50000.0f);
-    this->orientation = RIGHT;
+    if (this->onSurface(true))
+        this->orientation = RIGHT;
 }
 
 void Car::brake() {
@@ -129,6 +133,19 @@ void Car::deactivate_nitro() {
     this->nitro = false;
 }
 
+bool Car::onSurface(bool touching) {
+    b2ContactEdge *ce1 = this->wheel1->GetContactList();
+    b2ContactEdge *ce2 = this->wheel2->GetContactList();
+    if (touching)
+    return ce1 != nullptr
+        and ce2 != nullptr
+        and ce1->contact->IsTouching()
+        and ce2->contact->IsTouching();
+    else
+    return ce1 != nullptr
+        and ce2 != nullptr;
+}
+
 void Car::boost() {
     //b2Vec2 current_vel(this->chassis->GetLinearVelocity());
     //if (current_vel.x * current_vel.x + current_vel.y * current_vel.y > 100.0f) return;
@@ -138,6 +155,17 @@ void Car::boost() {
     this->chassis->ApplyForceToCenter(boost_vec ,true);
 }
 
+void Car::update() {
+    b2Vec2 position(this->getPosition());
+    float angle = this->getAngle();
+    if (position.y < -SCENARIO_HEIGHT + 1.0f) {
+        if (not this->onSurface(false) and this->chassis->GetLinearVelocity().y < 0.0f)
+            if (std::cos(angle) < 0) {
+                this->orientation = not this->orientation;
+                this->chassis->SetTransform(position, angle + b2_pi);
+            }
+    }
+}
 const uint8_t Car::getOrientation() {
     return this->orientation;
 }

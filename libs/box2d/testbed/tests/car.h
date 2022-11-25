@@ -6,6 +6,7 @@
 #include "box2d/b2_common.h"
 #include "box2d/b2_math.h"
 #include "box2d/b2_polygon_shape.h"
+#include "box2d/b2_types.h"
 #include "box2d/b2_wheel_joint.h"
 #include "box2d/box2d.h"
 #include "box2d/b2_world.h"
@@ -22,28 +23,34 @@ class Car {
     b2WheelJoint *damper1;
     b2WheelJoint *damper2;
     bool orientation;
-    uint8_t nitro_cant;
+    uint8_t nitro_amount;
 
-    bool onSurface(bool touching);
+    bool colliding_ball;
+    void move();
+    bool onSurface();
 
  public:
     Car(b2World &world, const b2Vec2 &position);
     void moveLeft();
     void moveRight();
+    void up();
     void brake();
     void jump();
     void boost();
-    void activate_nitro();
-    void deactivate_nitro();
     const b2Vec2 getPosition();
     const float getAngle();
     const uint8_t getOrientation();
+    bool isColliding();
+    bool isHittingBall();
+    void set_nitro (bool on);
     void update();
 
+    // Refactorizar
     bool has_jumped;
-    double time_elapsed;
+    bool orientationShow;
     bool nitro;
     bool go_up;
+
 };
 
 #endif  // __CAR_H__

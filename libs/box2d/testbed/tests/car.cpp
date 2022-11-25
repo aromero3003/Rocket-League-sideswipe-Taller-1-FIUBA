@@ -1,284 +1,251 @@
-// MIT License
 
-// Copyright (c) 2019 Erin Catto
 
-// Permission is hereby granted, free of charge, to any person obtaining a copy
-// of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights
-// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-// copies of the Software, and to permit persons to whom the Software is
-// furnished to do so, subject to the following conditions:
+#include "car.h"
+#include "box2d/b2_math.h"
+#include <box2d/b2_contact.h>
+#include <cmath>
+#include <iostream>
+#include "Constants.h"
 
-// The above copyright notice and this permission notice shall be included in all
-// copies or substantial portions of the Software.
+int number_of_bounces(0);
+#ifndef __CAR_STATE_H__
+#define __CAR_STATE_H__
+typedef enum {
+    S_NOP,
+    S_JUMP,
+    S_RIGHT,
+    S_LEFT,
+    S_UP,
+    S_DOWN,
+    S_TURBO,
+    S_DOUBLE_JUMP,
+    S_FLIP_R,
+    S_FLIP_L,
+    S_FLIP_U,
+    S_FLIP_D
+} state_t;
 
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-// SOFTWARE.
+#endif  //  __CAR_STATE_H__
 
-#include "test.h"
+Car::Car(b2World &world, const b2Vec2 &position) : has_jumped(false), nitro(false), nitro_amount(0){
+    //this->time_elapsed = 0;
+    this->orientation = this->orientationShow = RIGHT;
+    float x = position.x, y = position.y;
+    {
+        b2BodyDef chassis_def;
+        chassis_def.type = b2_dynamicBody;
+        chassis_def.position.Set(x, y + 1.0f);
+        chassis_def.angularDamping = 0.5f;
 
-// This is a fun demo that shows off the wheel joint
-class Car : public Test
-{
-public:
-	Car()
-	{		
-		m_speed = 50.0f;
 
-		b2Body* ground = NULL;
-		{
-			b2BodyDef bd;
-			ground = m_world->CreateBody(&bd);
+        b2PolygonShape chassis_shape;
+        b2Vec2 vertices[6];
+        vertices[0].Set(1.5f, -0.5f);
+        vertices[1].Set(1.5f, 0.2f);
+        vertices[2].Set(0.5f, 0.9f);
+        vertices[3].Set(-0.5f, 0.9f);
+        vertices[4].Set(-1.5f, 0.2f);
+        vertices[5].Set(-1.5f, -0.5f);
+        chassis_shape.Set(vertices, 6);
 
-			b2EdgeShape shape;
+        b2FixtureDef chassis_fd;
+        chassis_fd.density = 6.0f;
+        chassis_fd.friction = 0.3f;
+        chassis_fd.shape = &chassis_shape;
+        chassis_fd.filter.categoryBits = 0x1;
+        chassis_fd.filter.maskBits = 0x2 | 0x4;
 
-			b2FixtureDef fd;
-			fd.shape = &shape;
-			fd.density = 0.0f;
-			fd.friction = 0.6f;
+        this->chassis = world.CreateBody(&chassis_def);
+        this->chassis->CreateFixture(&chassis_fd);
+    }
 
-			shape.SetTwoSided(b2Vec2(-20.0f, 0.0f), b2Vec2(20.0f, 0.0f));
-			ground->CreateFixture(&fd);
+    {
+        b2CircleShape circle;
+        circle.m_radius = 0.4f;
 
-			float hs[10] = {0.25f, 1.0f, 4.0f, 0.0f, 0.0f, -1.0f, -2.0f, -2.0f, -1.25f, 0.0f};
+        b2FixtureDef wheel_fd;
+        wheel_fd.shape = &circle;
+        wheel_fd.density = 1.0f;
+        wheel_fd.friction = 0.9f;
+        wheel_fd.filter.categoryBits = 0x1;
+        wheel_fd.filter.maskBits = 0x2 | 0x4;
 
-			float x = 20.0f, y1 = 0.0f, dx = 5.0f;
+        b2BodyDef wheel_def;
+        wheel_def.type = b2_dynamicBody;
+        wheel_def.position.Set(x - 1.0f, y + 0.35f);
 
-			for (int32 i = 0; i < 10; ++i)
-			{
-				float y2 = hs[i];
-				shape.SetTwoSided(b2Vec2(x, y1), b2Vec2(x + dx, y2));
-				ground->CreateFixture(&fd);
-				y1 = y2;
-				x += dx;
-			}
+        wheel1 = world.CreateBody(&wheel_def);
+        wheel1->CreateFixture(&wheel_fd);
 
-			for (int32 i = 0; i < 10; ++i)
-			{
-				float y2 = hs[i];
-				shape.SetTwoSided(b2Vec2(x, y1), b2Vec2(x + dx, y2));
-				ground->CreateFixture(&fd);
-				y1 = y2;
-				x += dx;
-			}
+        wheel_def.position.Set(x + 1.0f, y + 0.4f);
+        wheel2 = world.CreateBody(&wheel_def);
+        wheel2->CreateFixture(&wheel_fd);
+    }
 
-			shape.SetTwoSided(b2Vec2(x, 0.0f), b2Vec2(x + 40.0f, 0.0f));
-			ground->CreateFixture(&fd);
+    {
+        b2WheelJointDef joint_def;
+        b2Vec2 axis(0.0f, 1.0f);
 
-			x += 80.0f;
-			shape.SetTwoSided(b2Vec2(x, 0.0f), b2Vec2(x + 40.0f, 0.0f));
-			ground->CreateFixture(&fd);
+        float mass1 = this->wheel1->GetMass();
+        float mass2 = this->wheel2->GetMass();
 
-			x += 40.0f;
-			shape.SetTwoSided(b2Vec2(x, 0.0f), b2Vec2(x + 10.0f, 5.0f));
-			ground->CreateFixture(&fd);
+        float hertz = 4.0f;
+        float damping_ratio = 0.7f;
+        float omega = 2.0f * b2_pi * hertz;
 
-			x += 20.0f;
-			shape.SetTwoSided(b2Vec2(x, 0.0f), b2Vec2(x + 40.0f, 0.0f));
-			ground->CreateFixture(&fd);
+#define TRANSLATION 0.25f
 
-			x += 40.0f;
-			shape.SetTwoSided(b2Vec2(x, 0.0f), b2Vec2(x, 20.0f));
-			ground->CreateFixture(&fd);
-		}
+        joint_def.Initialize(this->chassis, this->wheel1, this->wheel1->GetPosition(), axis);
+        joint_def.motorSpeed = 0.0f;
+        joint_def.maxMotorTorque = 12.0f;
+        joint_def.enableMotor = true;
+        joint_def.stiffness = mass1 * omega * omega;
+        joint_def.damping = 2.0f * mass1 * damping_ratio * omega;
+        joint_def.lowerTranslation = -TRANSLATION;
+        joint_def.upperTranslation = TRANSLATION;
+        joint_def.enableLimit = true;
+        this->damper1 = (b2WheelJoint *)world.CreateJoint(&joint_def);
 
-		// Teeter
-		{
-			b2BodyDef bd;
-			bd.position.Set(140.0f, 1.0f);
-			bd.type = b2_dynamicBody;
-			b2Body* body = m_world->CreateBody(&bd);
+        joint_def.Initialize(this->chassis, this->wheel2, this->wheel2->GetPosition(), axis);
+        joint_def.motorSpeed = 0.0f;
+        joint_def.maxMotorTorque = 12.0f;
+        joint_def.enableMotor = true;
+        joint_def.stiffness = mass2 * omega * omega;
+        joint_def.damping = 2.0f * mass1 * damping_ratio * omega;
+        joint_def.lowerTranslation = -TRANSLATION;
+        joint_def.upperTranslation = TRANSLATION;
+        joint_def.enableLimit = true;
+        this->damper2 = (b2WheelJoint *)world.CreateJoint(&joint_def);
+    }
+}
 
-			b2PolygonShape box;
-			box.SetAsBox(10.0f, 0.25f);
-			body->CreateFixture(&box, 1.0f);
+void Car::jump() {
+    if (this->has_jumped)
+        return;
+    this->wheel1->ApplyLinearImpulseToCenter(b2Vec2(0.0f,100.0f), true);
+    this->wheel2->ApplyLinearImpulseToCenter(b2Vec2(0.0f,100.0f), true);
+    has_jumped = number_of_bounces = true;
+}
 
-			b2RevoluteJointDef jd;
-			jd.Initialize(ground, body, body->GetPosition());
-			jd.lowerAngle = -8.0f * b2_pi / 180.0f;
-			jd.upperAngle = 8.0f * b2_pi / 180.0f;
-			jd.enableLimit = true;
-			m_world->CreateJoint(&jd);
+void Car::set_nitro(bool on) {
+    this->nitro = on;
+}
 
-			body->ApplyAngularImpulse(100.0f, true);
-		}
+void Car::move() {
+    this->damper1->SetMotorSpeed(40.0f * (this->orientation == LEFT ? 1 : -1));
+    this->damper2->SetMotorSpeed(40.0f * (this->orientation == LEFT ? 1 : -1));
+    //if (not this->onSurface())
+    if (this->has_jumped)
+        this->chassis->ApplyTorque(this->orientation == RIGHT ? 200.0f : -200.0f, true);
+}
 
-		// Bridge
-		{
-			int32 N = 20;
-			b2PolygonShape shape;
-			shape.SetAsBox(1.0f, 0.125f);
+void Car::moveLeft() {
+    this->orientation = LEFT;
+    this->move();
+}
 
-			b2FixtureDef fd;
-			fd.shape = &shape;
-			fd.density = 1.0f;
-			fd.friction = 0.6f;
+void Car::moveRight() {
+    this->orientation = RIGHT;
+    this->move();
+}
 
-			b2RevoluteJointDef jd;
+void Car::boost() {
+    //b2Vec2 current_vel(this->chassis->GetLinearVelocity());
+    //if (current_vel.x * current_vel.x + current_vel.y * current_vel.y > 100.0f) return;
+    float angle = this->chassis->GetAngle();
+    b2Vec2 boost_vec(200 * cos(angle) , 400 * sin(angle));
+    if (this->orientation == LEFT) boost_vec.x *= -1;
+    this->chassis->ApplyForceToCenter(boost_vec ,true);
+}
 
-			b2Body* prevBody = ground;
-			for (int32 i = 0; i < N; ++i)
-			{
-				b2BodyDef bd;
-				bd.type = b2_dynamicBody;
-				bd.position.Set(161.0f + 2.0f * i, -0.125f);
-				b2Body* body = m_world->CreateBody(&bd);
-				body->CreateFixture(&fd);
+void Car::up() {
+    float angle = this->chassis->GetAngle();
+    float torque = this->orientation == LEFT ? -800.0f : 800.0f;
+    if (this->orientation == RIGHT && angle > 90)
+        torque *= -0.5;
+    //else if(this->orientation == LEFT && angle)
+    this->chassis->ApplyTorque(torque, true);
+}
 
-				b2Vec2 anchor(160.0f + 2.0f * i, -0.125f);
-				jd.Initialize(prevBody, body, anchor);
-				m_world->CreateJoint(&jd);
+void Car::brake() {
+    float angle = this->chassis->GetAngle();
+    this->damper1->SetMotorSpeed(0.0f);
+    this->damper2->SetMotorSpeed(0.0f);
+    if(not this->has_jumped) {
+        b2Vec2 opossite_vector = this->chassis->GetLinearVelocity();
+        opossite_vector.y = 0;
+        opossite_vector.x *= -1.0f * 4;
+        this->chassis->ApplyLinearImpulseToCenter(opossite_vector, true);
+    }
+}
 
-				prevBody = body;
-			}
+const uint8_t Car::getOrientation() {
+    return this->orientationShow;
+}
 
-			b2Vec2 anchor(160.0f + 2.0f * N, -0.125f);
-			jd.Initialize(prevBody, ground, anchor);
-			m_world->CreateJoint(&jd);
-		}
+const b2Vec2 Car::getPosition() {
+    return chassis->GetPosition();
+}
 
-		// Boxes
-		{
-			b2PolygonShape box;
-			box.SetAsBox(0.5f, 0.5f);
+const float Car::getAngle() {
+    return chassis->GetAngle();
+}
 
-			b2Body* body = NULL;
-			b2BodyDef bd;
-			bd.type = b2_dynamicBody;
+bool Car::onSurface() {
+    b2ContactEdge *ce1 = this->wheel1->GetContactList();
+    b2ContactEdge *ce2 = this->wheel2->GetContactList();
+    return ce1 != nullptr
+        and ce2 != nullptr
+        and ce1->contact->IsTouching()
+        and ce2->contact->IsTouching();
+}
+/*
+bool Car::isPartHittingBall(b2Body *body) {
+    for(b2ContactEdge *ce = this->chassis->GetContactList(); ce ; ce = ce->next) {
+        b2Contact *c = ce->contact;
+        uint8_t cat_A = c->GetFixtureA()->GetFilterData().categoryBits;
+        uint8_t cat_B = c->GetFixtureB()->GetFilterData().categoryBits;
+        if ((cat_A == CAR_BITS and cat_B == BALL_BITS) or (cat_A == BALL_BITS and cat_B == CAR_BITS)) {
+            if (not this->colliding_ball and c->IsTouching())
+                return this->colliding_ball = true;
+            return false;
+        }
+        return false;
+}
+*/
 
-			bd.position.Set(230.0f, 0.5f);
-			body = m_world->CreateBody(&bd);
-			body->CreateFixture(&box, 0.5f);
+bool Car::isHittingBall() {
+    for(b2ContactEdge *ce = this->chassis->GetContactList(); ce ; ce = ce->next) {
+        if (not ce->contact->IsTouching())
+            continue;
+        uint8_t cat_A = ce->contact->GetFixtureA()->GetFilterData().categoryBits;
+        uint8_t cat_B = ce->contact->GetFixtureB()->GetFilterData().categoryBits;
+        if ((cat_A == CAR_BITS and cat_B == BALL_BITS) or (cat_A == BALL_BITS and cat_B == CAR_BITS)) {
+            if (not this->colliding_ball)
+                return this->colliding_ball = true;
+            return false;
+        }
+    }
+    return this->colliding_ball = false;
+        //    std::cout << "FIXture A es el auto" << std::endl;
+        //else if (c->GetFixtureB()->GetFilterData().categoryBits == CAR_BITS)
+        //    std::cout << "FIXture B es el auto" << std::endl;
+}
 
-			bd.position.Set(230.0f, 1.5f);
-			body = m_world->CreateBody(&bd);
-			body->CreateFixture(&box, 0.5f);
+bool Car::isColliding() {
+    //this->chassis
+    //number_of_bounces = 
+    return false;
+}
 
-			bd.position.Set(230.0f, 2.5f);
-			body = m_world->CreateBody(&bd);
-			body->CreateFixture(&box, 0.5f);
+void Car::update() {
+    if (this->onSurface())
+        this->has_jumped = number_of_bounces = false;
 
-			bd.position.Set(230.0f, 3.5f);
-			body = m_world->CreateBody(&bd);
-			body->CreateFixture(&box, 0.5f);
-
-			bd.position.Set(230.0f, 4.5f);
-			body = m_world->CreateBody(&bd);
-			body->CreateFixture(&box, 0.5f);
-		}
-
-		// Car
-		{
-			b2PolygonShape chassis;
-			b2Vec2 vertices[8];
-			vertices[0].Set(-1.5f, -0.5f);
-			vertices[1].Set(1.5f, -0.5f);
-			vertices[2].Set(1.5f, 0.0f);
-			vertices[3].Set(0.0f, 0.9f);
-			vertices[4].Set(-1.15f, 0.9f);
-			vertices[5].Set(-1.5f, 0.2f);
-			chassis.Set(vertices, 6);
-
-			b2CircleShape circle;
-			circle.m_radius = 0.4f;
-
-			b2BodyDef bd;
-			bd.type = b2_dynamicBody;
-			bd.position.Set(0.0f, 1.0f);
-			m_car = m_world->CreateBody(&bd);
-			m_car->CreateFixture(&chassis, 1.0f);
-
-			b2FixtureDef fd;
-			fd.shape = &circle;
-			fd.density = 1.0f;
-			fd.friction = 0.9f;
-
-			bd.position.Set(-1.0f, 0.35f);
-			m_wheel1 = m_world->CreateBody(&bd);
-			m_wheel1->CreateFixture(&fd);
-
-			bd.position.Set(1.0f, 0.4f);
-			m_wheel2 = m_world->CreateBody(&bd);
-			m_wheel2->CreateFixture(&fd);
-
-			b2WheelJointDef jd;
-			b2Vec2 axis(0.0f, 1.0f);
-
-			float mass1 = m_wheel1->GetMass();
-			float mass2 = m_wheel2->GetMass();
-
-			float hertz = 4.0f;
-			float dampingRatio = 0.7f;
-			float omega = 2.0f * b2_pi * hertz;
-
-			jd.Initialize(m_car, m_wheel1, m_wheel1->GetPosition(), axis);
-			jd.motorSpeed = 0.0f;
-			jd.maxMotorTorque = 20.0f;
-			jd.enableMotor = true;
-			jd.stiffness = mass1 * omega * omega;
-			jd.damping = 2.0f * mass1 * dampingRatio * omega;
-			jd.lowerTranslation = -0.25f;
-			jd.upperTranslation = 0.25f;
-			jd.enableLimit = true;
-			m_spring1 = (b2WheelJoint*)m_world->CreateJoint(&jd);
-
-			jd.Initialize(m_car, m_wheel2, m_wheel2->GetPosition(), axis);
-			jd.motorSpeed = 0.0f;
-			jd.maxMotorTorque = 10.0f;
-			jd.enableMotor = false;
-			jd.stiffness = mass2 * omega * omega;
-			jd.damping = 2.0f * mass2 * dampingRatio * omega;
-			jd.lowerTranslation = -0.25f;
-			jd.upperTranslation = 0.25f;
-			jd.enableLimit = true;
-			m_spring2 = (b2WheelJoint*)m_world->CreateJoint(&jd);
-		}
-	}
-
-	void Keyboard(int key) override
-	{
-		switch (key)
-		{
-		case GLFW_KEY_A:
-			m_spring1->SetMotorSpeed(m_speed);
-			break;
-
-		case GLFW_KEY_S:
-			m_spring1->SetMotorSpeed(0.0f);
-			break;
-
-		case GLFW_KEY_D:
-			m_spring1->SetMotorSpeed(-m_speed);
-			break;
-		}
-	}
-
-	void Step(Settings& settings) override
-	{
-		g_debugDraw.DrawString(5, m_textLine, "Keys: left = a, brake = s, right = d, hz down = q, hz up = e");
-		m_textLine += m_textIncrement;
-
-		g_camera.m_center.x = m_car->GetPosition().x;
-		Test::Step(settings);
-	}
-
-	static Test* Create()
-	{
-		return new Car;
-	}
-
-	b2Body* m_car;
-	b2Body* m_wheel1;
-	b2Body* m_wheel2;
-
-	float m_speed;
-	b2WheelJoint* m_spring1;
-	b2WheelJoint* m_spring2;
-};
-
-static int testIndex = RegisterTest("Examples", "Car", Car::Create);
+    b2Vec2 position = this->chassis->GetPosition();
+    float angle = this->chassis->GetAngle();
+    if (position.y < -SCENARIO_HEIGHT + 1.5f) {
+        this->orientation = this->orientationShow = cos(angle) >= 0 ? RIGHT : LEFT;
+        this->chassis->SetTransform(position, 0);
+    }
+}
