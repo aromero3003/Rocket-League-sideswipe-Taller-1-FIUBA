@@ -73,7 +73,7 @@ Car::Car(b2World &world, const b2Vec2 &position) {
         joint_def.motorSpeed = 0.0f;
         joint_def.maxMotorTorque = 20.0f;
         joint_def.enableMotor = true;
-        joint_def.stiffness = mass1 * omega * omega;
+        joint_def.stiffness = 0.1f;//mass1 * omega * omega;
         joint_def.damping = 2.0f * mass1 * damping_ratio * omega;
         joint_def.lowerTranslation = -TRANSLATION;
         joint_def.upperTranslation = TRANSLATION;
@@ -84,8 +84,8 @@ Car::Car(b2World &world, const b2Vec2 &position) {
         joint_def.motorSpeed = 0.0f;
         joint_def.maxMotorTorque = 20.0f;
         joint_def.enableMotor = true;
-        joint_def.stiffness = mass2 * omega * omega;
-        joint_def.damping = 2.0f * mass1 * damping_ratio * omega;
+        joint_def.stiffness = 0.1f;//mass2 * omega * omega;
+        joint_def.damping = 2.0f * mass2 * damping_ratio * omega;
         joint_def.lowerTranslation = -TRANSLATION;
         joint_def.upperTranslation = TRANSLATION;
         joint_def.enableLimit = true;
@@ -152,13 +152,14 @@ void Car::boost() {
     float angle = this->chassis->GetAngle();
     b2Vec2 boost_vec(200 * cos(angle) , 500 * sin(angle));
     if (this->orientation == LEFT) boost_vec.x *= -1;
+    if (std::cos(angle) < 0) boost_vec.x *= -1;
     this->chassis->ApplyForceToCenter(boost_vec ,true);
 }
 
 void Car::update() {
     b2Vec2 position(this->getPosition());
     float angle = this->getAngle();
-    if (position.y < -SCENARIO_HEIGHT + 1.0f) {
+    if (position.y < -SCENARIO_HEIGHT + 1.5f) {
         if (not this->onSurface(false) and this->chassis->GetLinearVelocity().y < 0.0f)
             if (std::cos(angle) < 0) {
                 this->orientation = not this->orientation;
