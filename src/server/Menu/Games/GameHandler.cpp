@@ -2,9 +2,9 @@
 
 GameHandler::GameHandler() : mutexgames(), games(){}
 
-void GameHandler::addGame(const std::string& name, const int capacity) {
+void GameHandler::addGame(const std::string& name, const int capacity,Socket& o_skt,size_t o_id) {
   std::lock_guard<std::mutex> lock(mutexgames);
-  games.addGame(name, capacity);
+  games.addGame(name, capacity,o_skt,o_id);
 
 }
 
@@ -14,7 +14,7 @@ void GameHandler::listAllWithOcupation(std::string& list) {
 
 }
 
-void GameHandler::addPlayerToGame(const std::string& name,Socket&& o_skt,size_t o_id, int cantPlayers) {
+void GameHandler::addPlayerToGame(const std::string& name,Socket& o_skt,size_t o_id) {
   std::lock_guard<std::mutex> lock(mutexgames);
-  games.addPlayerToGame(name,std::move(o_skt),o_id,cantPlayers);
+  games.addPlayerToGame(name,o_skt,o_id);
 }

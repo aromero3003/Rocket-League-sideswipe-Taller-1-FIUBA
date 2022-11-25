@@ -26,6 +26,7 @@
 #include "RightReleaseCommand.h"
 #include "SpaceReleaseCommand.h"
 #include "NitroReleaseCommand.h"
+#include "BadCommand.h"
 #include "../Games/GameLogic.h"
 class GameCommandHandler {
 

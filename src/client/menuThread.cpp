@@ -21,23 +21,20 @@ std::stringstream  MenuThread::reciveResponse(){
   return ssresp;
 }
 
+
 void MenuThread::run() {
     try{
         //while(!this->was_closed){
             std::string s1("LISTAR");
             sendCommand(std::move(s1));
-            std::cout << reciveResponse().str() << std::endl;
-            std::string s2("CREAR 2 tomako");
-            sendCommand(std::move(s2));
-            std::cout << reciveResponse().str() << std::endl;
+            if (reciveResponse().str() == "OK\n"){
+              std::string s2("CREAR 4 tomako");
+              sendCommand(std::move(s2));
+            } else {
+              std::string s2("UNIR tomako");
+              sendCommand(std::move(s2)); 
+            }
 
-            std::string s3("LISTAR");
-            sendCommand(std::move(s3));
-            std::cout << reciveResponse().str() << std::endl;
-
-            std::string s4("UNIR tomako");
-            sendCommand(std::move(s4));
-            std::cout <<"hata aca llega" << std::endl;
 
         //}
     }

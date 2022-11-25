@@ -1,10 +1,10 @@
 #include "CommandHandler.h"
 
-CommandHandler::CommandHandler():isAddFlag(false) {}
+CommandHandler::CommandHandler(){}
 
 CommandHandler::~CommandHandler() {}
 
-std::unique_ptr<Command> CommandHandler::createCommand(std::istream &&parameters) {
+std::unique_ptr<Command> CommandHandler::createCommand(std::istream &&parameters, Socket& skt, size_t id) {
     std::string type;
     parameters >> type >> std::ws;
 
@@ -12,17 +12,13 @@ std::unique_ptr<Command> CommandHandler::createCommand(std::istream &&parameters
         std::unique_ptr<Command>  command(new CommandList());
         return command;
     } else if (type == "CREAR") {
-        std::unique_ptr<Command>  command(new CommandCreate(parameters));
+        std::unique_ptr<Command>  command(new CommandCreate(parameters,skt,id));
         return command;
     } else if (type == "UNIR") {
-        std::unique_ptr<Command>  command(new IncompleteCommandAdd(parameters));
-        this->isAddFlag=true;
+        std::unique_ptr<Command>  command(new CommandAdd(parameters,skt,id));
         return command;
     }   else {
         std::unique_ptr<Command>  command(new BadCommand());
         return command; 
     }
-    
 }
-
-bool CommandHandler::isAdd() { return this->isAddFlag;}

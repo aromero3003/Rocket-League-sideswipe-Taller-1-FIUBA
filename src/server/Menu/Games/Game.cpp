@@ -2,11 +2,10 @@
 
 Game::Game(const int capacity) : capacity(capacity), occupation(0),clients() {}
 
-void Game::addPlayer(Socket&& skt,size_t id,int cantPlayers) {
+void Game::addPlayer(Socket&& skt,size_t id) {
   
   if (occupation < capacity){
     occupation++;
-    cantPlayers=capacity;
     std::unique_ptr<StandbyClient> client (new StandbyClient (std::move(skt),id));
     clients.push_back(std::move(client));
   } 
@@ -14,9 +13,10 @@ void Game::addPlayer(Socket&& skt,size_t id,int cantPlayers) {
 }
 
 std::unique_ptr<RunGame> Game::getRunGame(){
-  std::unique_ptr<RunGame> runGame(new RunGame());
+  std::unique_ptr<RunGame> runGame(new RunGame(clients.size()));
   for (auto && client : clients)
-    runGame->addPlayer(std::move(client->getGamingClient(runGame->getRefGamingQueue())));
+   //getGamingClient(runGame->getRefGamingQueue(),clients.size()) <-- crea gaming client (mandas queue y cant playrs)
+    runGame->addPlayer(std::move(client->getGamingClient(runGame->getRefGamingQueue(),clients.size())));
   return runGame;
 }
 bool Game::isComplete() { return occupation == capacity; }

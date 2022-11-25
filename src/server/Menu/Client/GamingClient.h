@@ -28,7 +28,7 @@ private:
     ProtocolRecv protocolRecv;
 
 public:
-    GamingClient(Socket&& skt,size_t id,ProtectedQueue<GameCommandHandler>& eventQueue);
+    GamingClient(Socket&& skt,size_t id,ProtectedQueue<GameCommandHandler>& eventQueue,std::size_t cant_players);
     bool isDisconect();
     void addSnap(std::shared_ptr<SnapShot> snap);
     void start();

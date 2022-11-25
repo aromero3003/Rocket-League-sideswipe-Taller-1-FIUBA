@@ -7,7 +7,7 @@
 #include <utility>
 
 #include "Command.h"
-#include "IncompleteCommandAdd.h"
+#include "CommandAdd.h"
 #include "BadCommand.h"
 #include "CommandCreate.h"
 #include "CommandList.h"
@@ -17,11 +17,9 @@
 // error
 class CommandHandler {
  private:
-  bool isAddFlag;
  public:
   CommandHandler();
-  std::unique_ptr<Command> createCommand(std::istream &&parameters) ;
-  bool isAdd();
+  std::unique_ptr<Command> createCommand(std::istream &&parameters, Socket& skt, size_t id)  ;
   
   ~CommandHandler();
 };

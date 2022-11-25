@@ -21,7 +21,7 @@ private:
 public:
     StandbyClient(Socket&& skt,size_t id);
     
-    std::unique_ptr<GamingClient> getGamingClient(ProtectedQueue<GameCommandHandler>& eventQueue);
+    std::unique_ptr<GamingClient> getGamingClient(ProtectedQueue<GameCommandHandler>& eventQueue,std::size_t cant_players);
     ~StandbyClient();
 };
 #endif

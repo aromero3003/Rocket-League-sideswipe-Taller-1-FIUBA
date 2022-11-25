@@ -3,8 +3,8 @@
 #include <unistd.h>
 
 
-RunGame::RunGame():
-gameLogic(2),gammingEventQueue(),players(){}
+RunGame::RunGame(std::size_t cant_players):
+gameLogic(cant_players),gammingEventQueue(),players(){}
 void RunGame::addPlayer(std::unique_ptr<GamingClient>&& player) {
     this->players.push_back(std::move(player));
 }

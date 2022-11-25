@@ -19,7 +19,7 @@ class RunGame : public Thread {
   std::vector<std::unique_ptr<GamingClient>> players;
  public:
  
-  RunGame();
+  RunGame(std::size_t cantplayers);
   ProtectedQueue<GameCommandHandler> & getRefGamingQueue();
   void addPlayer(std::unique_ptr<GamingClient>&& player);
   virtual void run() override;
