@@ -10,6 +10,7 @@ void AcceptThread::run() {
     while (serverIsOpen ) {
       Socket sktAccepted = soktRef.accept();
       if (serverIsOpen) menu.conectNewClient(std::move(sktAccepted),a);
+      a++;
     
     }
   } catch (const LibError& err) {
