@@ -51,6 +51,7 @@ void World::draw(std::vector<Texture>& car_textures,
                  Mixer& mixer){
     std::lock_guard<std::mutex> lock(mutex);
     int flip;
+    int nitro_phase = (SDL_GetTicks()/100)%5;
 
     //Show court, always the same
     renderer.Copy(court,NullOpt,Rect(0,0,renderer.GetOutputWidth(),renderer.GetOutputHeight()));
@@ -69,25 +70,22 @@ void World::draw(std::vector<Texture>& car_textures,
         
         //show nitro if needed
         if (this->cars[i].nitro){
-        int nitro_x_position;
-        nitro_x_position = this->cars[i].pointing_right ? -20 : 75;
         renderer.Copy(nitro,
-                    Rect(0,0,800/5,150),
-                    Rect(20*this->cars[i].x_position - 40 + nitro_x_position,(-20)*this->cars[i].y_position - 20,20,40), 
-                    this->cars[i].angle - 90,
-                    Point(0,20),
-                    flip = (this->cars[i].pointing_right == true) ? SDL_FLIP_NONE : SDL_FLIP_VERTICAL);
-        if(!mixer.IsChannelPlaying(5)){
-            mixer.PlayChannel(5,nitro_sound,0);
+                    Rect(0,83*nitro_phase,335,83),
+                    Rect(20*this->cars[i].x_position - 67,(-20)*this->cars[i].y_position - 20,134,40), 
+                    this->cars[i].angle,
+                    NullOpt,
+                    flip = (this->cars[i].pointing_right == true) ? SDL_FLIP_NONE : SDL_FLIP_HORIZONTAL);
+        if(!mixer.IsChannelPlaying(i)){
+            mixer.PlayChannel(i,nitro_sound,0);
         }
-        }
-   }
-
+        } else {mixer.HaltChannel(i);}
+    }
     //Show ball
     renderer.Copy(ball, NullOpt, Rect(20*this->ball.x_position -20,(-20)*this->ball.y_position-20, 40, 40));
 
-    if(this->ball.collision && !mixer.IsChannelPlaying(1)){
-        mixer.PlayChannel(1, ball_sound,0);
+    if(this->ball.collision && !mixer.IsChannelPlaying(7)){
+        mixer.PlayChannel(7, ball_sound,0);
         this->ball.collision = false;
     }
 

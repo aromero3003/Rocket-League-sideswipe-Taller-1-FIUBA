@@ -34,11 +34,11 @@ void Client_interface::run_client(){
 	//load textures and sounds
 	Texture ball(renderer, "../data/ball.png");
 	Texture court(renderer, "../data/court.png");
-	Texture nitro(renderer, "../data/nitro.png");
+	Texture nitro(renderer, "../data/complete_nitro.png");
 
 	Chunk ingition_sound("../data/car_ignition.wav");
 	Chunk ball_sound("../data/ball_bounce.wav");
-	Chunk nitro_sound("../data/nitro.wav");
+	Chunk nitro_sound("../data/nitro2.wav");
 
 	mixer.PlayChannel(-1,ingition_sound,0);
 
