@@ -107,6 +107,8 @@ void GameLogic::step() {
     for (Car &player : this->players) {
         if (player.nitro == true)
             player.boost();
+
+        player.update();
     }
     if(ball.getPosition().x < 6.0f - BALL_RADIUS){
         goal = 2;
