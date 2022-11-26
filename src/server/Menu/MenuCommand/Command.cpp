@@ -9,6 +9,6 @@ void Command::execut(GameHandler &games) {
         this->run(games);
     } catch(const MenuCommandEx &e) {
         this->response.clear();
-        this->response.append("FailRquest");
+        this->response.append("FailRequest");
     }
 }

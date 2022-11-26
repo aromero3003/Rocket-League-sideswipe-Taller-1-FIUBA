@@ -24,6 +24,8 @@ void GameCommandHandler::createCommand(int8_t parameter) {
         this->command = new SpaceReleaseCommand(id);
     } else     if (parameter == RELEASE_SHIFT) {
         this->command = new NitroReleaseCommand(id);
+    } else {
+        this->command =new BadGameCommand(id);
     }
 }
 

@@ -21,7 +21,7 @@ Client_interface::Client_interface(const char *serv, const char *port):
 }
 
 void Client_interface::run_client(){
-	int n_cars = 2;
+	int n_cars = 4;
 
 	MenuThread menuThread(this->socket, n_cars);
 	menuThread.start();

@@ -27,7 +27,7 @@ class Car {
     bool onSurface(bool touching);
 
  public:
-    Car(b2World &world, const b2Vec2 &position);
+    Car(b2World &world, const b2Vec2 &position, bool orientation);
     void moveLeft();
     void moveRight();
     void brake();

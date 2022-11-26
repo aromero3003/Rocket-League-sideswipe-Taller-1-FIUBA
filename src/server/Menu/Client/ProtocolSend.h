@@ -13,15 +13,17 @@
 #include "liberror.h"
 #include "../GameCommand/GameCommandHandler.h"
 #include "Snap.h"
+#include <arpa/inet.h>
 class ProtocolSend: public Thread
 {
 private:
     Socket& skt;
     BlockingQueue<std::shared_ptr<SnapShot>>& snapEventQueue;
     bool was_closed;
+    void sendCantPlayers( std::size_t cant_players);
     void sendResponse(std::vector<uint8_t>& response);
 public:
-   ProtocolSend(Socket& skt,BlockingQueue<std::shared_ptr<SnapShot>>& snapEventQueue);
+   ProtocolSend(Socket& skt,BlockingQueue<std::shared_ptr<SnapShot>>& snapEventQueue, std::size_t cant_players);
 
   virtual void run() override;
     virtual ~ProtocolSend()= default;

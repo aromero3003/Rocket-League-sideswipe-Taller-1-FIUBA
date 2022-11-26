@@ -64,8 +64,16 @@ GameLogic::GameLogic(size_t cant_players) :
         this->players.emplace_back(this->world, b2Vec2((float)i * delta_x, 1.0f));
         */
     // creo solo dos jugadores
+    /*
     this->players.emplace_back(this->world, b2Vec2(SCENARIO_HALF_WIDTH /2.0f + 6.0f, -SCENARIO_HEIGHT + 2.0f));
-    this->players.emplace_back(this->world, b2Vec2(SCENARIO_HALF_WIDTH * 3.0f / 2.0f, -SCENARIO_HEIGHT + 2.0f));
+    this->players.emplace_back(this->world, b2Vec2(SCENARIO_HALF_WIDTH * 3.0f / 2.0f, -SCENARIO_HEIGHT + 2.0f));*/
+    float delta_x = (SCENARIO_WIDTH - 6.0f) / (float)cant_players;
+    for(size_t i=1;i<=cant_players ;i++){
+          this->players.emplace_back(
+                  this->world,
+                  b2Vec2(3.0f + delta_x * i, -SCENARIO_HEIGHT + 2.0f),
+                  i <= cant_players / 2);
+    }
 }
 
 void GameLogic::jump_player(size_t id) {

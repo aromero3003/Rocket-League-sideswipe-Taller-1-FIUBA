@@ -13,8 +13,6 @@
 #include "liberror.h"
 #include "../MenuCommand/CommandHandler.h"
 #include "../MenuCommand/Command.h"
-#include "../MenuCommand/CommandAdd.h"
-#include "../MenuCommand/IncompleteCommandAdd.h"
 class MenuProtocol: public Thread 
 {
 private:

@@ -30,18 +30,15 @@ void MenuProtocol::run() {
   try{
     while(!was_closed){
       CommandHandler commandHandler;
-      std::unique_ptr<Command> command(commandHandler.createCommand(reciveCommand()));
-      if (commandHandler.isAdd()){
-        std::unique_ptr<IncompleteCommandAdd> incompleteCommandAdd(dynamic_cast<IncompleteCommandAdd*>(command.get()));
-        if(incompleteCommandAdd)
-            command.release();
-        std::unique_ptr<CommandAdd> commandAdd(new CommandAdd(incompleteCommandAdd->getParameters(),std::move(this->skt),this->id));
-        commandAdd->execut(games);
-        
-      } else{
-        command->execut(games);
-        sendResponse(std::move(command->getResponse()));
+      std::unique_ptr<Command> command(commandHandler.createCommand(reciveCommand(),skt,id));
+      command->execut(games);
+      if (command->getResponse()=="Added In Game"){
+        this->was_closed=true;
+      } else {
+         sendResponse(std::move(command->getResponse()));
+
       }
+
     }
   } catch (const LibError& err) {
       

@@ -11,6 +11,7 @@
 #include "thread.h"
 #include "socket.h"
 #include "liberror.h"
+#include <arpa/inet.h>
 class MenuThread: public Thread 
 {
 private:

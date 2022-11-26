@@ -3,7 +3,8 @@
 #include <box2d/b2_math.h>
 #include <cmath>
 
-Car::Car(b2World &world, const b2Vec2 &position) {
+Car::Car(b2World &world, const b2Vec2 &position, bool orientation) :
+    orientation(orientation) {
     float x = position.x, y = position.y;
     {
         b2BodyDef chassis_def;

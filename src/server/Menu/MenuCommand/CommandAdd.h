@@ -12,12 +12,10 @@
 ////ADD
 class CommandAdd : public CommandWithParameters {
  private:
-     Socket skt;
-     size_t id;
+
  public:
-  CommandAdd(std::istream& paramenters,Socket&& o_skt,size_t o_id);
+  CommandAdd(std::istream& paramenters,Socket& o_skt,size_t o_id);
   void run(GameHandler &games) override;
-  void setup(Socket&& o_skt,size_t o_id);
   virtual ~CommandAdd() {}
 };
 
