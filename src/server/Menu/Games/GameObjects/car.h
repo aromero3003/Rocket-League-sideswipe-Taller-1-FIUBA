@@ -22,6 +22,7 @@ class Car {
     b2WheelJoint *damper1;
     b2WheelJoint *damper2;
     bool orientation;
+    int8_t direction_pressed;
     uint8_t nitro_cant;
 
     bool onSurface(bool touching);

@@ -101,6 +101,7 @@ void Car::jump() {
 }
 
 void Car::moveLeft() {
+    this->direction_pressed = 1;
     this->damper1->SetMotorSpeed(50000.0f);
     this->damper2->SetMotorSpeed(50000.0f);
     if (this->onSurface(true))
@@ -108,6 +109,7 @@ void Car::moveLeft() {
 }
 
 void Car::moveRight() {
+    this->direction_pressed = -1;
     this->damper1->SetMotorSpeed(-50000.0f);
     this->damper2->SetMotorSpeed(-50000.0f);
     if (this->onSurface(true))
@@ -115,6 +117,7 @@ void Car::moveRight() {
 }
 
 void Car::brake() {
+    this->direction_pressed = 0;
     this->damper1->SetMotorSpeed(0.0f);
     this->damper2->SetMotorSpeed(0.0f);
     if(this->has_jumped)
@@ -159,13 +162,20 @@ void Car::boost() {
 void Car::update() {
     b2Vec2 position(this->getPosition());
     float angle = this->getAngle();
+    bool is_near_surface = this->onSurface(false);
     if (position.y < -SCENARIO_HEIGHT + 1.5f) {
-        if (not this->onSurface(false) and this->chassis->GetLinearVelocity().y < 0.0f)
+        if (not is_near_surface and this->chassis->GetLinearVelocity().y < 0.0f)
             if (std::cos(angle) < 0) {
                 this->orientation = not this->orientation;
                 this->chassis->SetTransform(position, angle + b2_pi);
             }
     }
+    //if (not is_near_surface and this->direction_pressed != 0) {
+    if (not is_near_surface) {
+        this->chassis->ApplyAngularImpulse(10.0f * this->direction_pressed, true); // debe depender del angulo
+        // this->chassis->ApplyTorque(10.0f, true); debe depender del ángulo
+    }
+
 }
 const uint8_t Car::getOrientation() {
     return this->orientation;
