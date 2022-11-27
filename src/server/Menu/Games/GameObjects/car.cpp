@@ -154,8 +154,7 @@ void Car::boost() {
     //if (current_vel.x * current_vel.x + current_vel.y * current_vel.y > 100.0f) return;
     float angle = this->chassis->GetAngle();
     b2Vec2 boost_vec(200 * cos(angle) , 500 * sin(angle));
-    if (this->orientation == LEFT) boost_vec.x *= -1;
-    if (std::cos(angle) < 0) boost_vec.x *= -1;
+    if (this->orientation == LEFT) boost_vec *= -1;
     this->chassis->ApplyForceToCenter(boost_vec ,true);
 }
 
