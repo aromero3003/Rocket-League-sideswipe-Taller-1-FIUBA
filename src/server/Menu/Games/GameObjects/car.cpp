@@ -1,5 +1,6 @@
 #include "Constants.h"
 #include "car.h"
+#include <box2d/b2_common.h>
 #include <box2d/b2_math.h>
 #include <cmath>
 
@@ -134,6 +135,7 @@ void Car::deactivate_nitro() {
     this->nitro = false;
 }
 
+<<<<<<< HEAD
 bool Car::onSurface(bool touching) {
     b2ContactEdge *ce1 = this->wheel1->GetContactList();
     b2ContactEdge *ce2 = this->wheel2->GetContactList();
@@ -145,18 +147,27 @@ bool Car::onSurface(bool touching) {
     else
     return ce1 != nullptr
         and ce2 != nullptr;
+=======
+bool Car::onSurface(bool strictly_touching) {
+    b2ContactEdge *ce1 = this->wheel1->GetContactList();
+    b2ContactEdge *ce2 = this->wheel2->GetContactList();
+    bool is_near = ce1 != nullptr and ce2 != nullptr;
+    return is_near and (strictly_touching ? ce1->contact->IsTouching()
+        and ce2->contact->IsTouching() : true);
+>>>>>>> b9b0fb20b202e37818bc9403ba9c60c47c67e898
 }
 
 void Car::boost() {
     //b2Vec2 current_vel(this->chassis->GetLinearVelocity());
     //if (current_vel.x * current_vel.x + current_vel.y * current_vel.y > 100.0f) return;
     float angle = this->chassis->GetAngle();
-    b2Vec2 boost_vec(200 * cos(angle) , 200 * sin(angle));
-    if (this->orientation == LEFT) boost_vec.x *= -1;
+    b2Vec2 boost_vec(200 * cos(angle) , 500 * sin(angle));
+    if (this->orientation == LEFT) boost_vec *= -1;
     this->chassis->ApplyForceToCenter(boost_vec ,true);
 }
 
 void Car::update() {
+<<<<<<< HEAD
     b2Vec2 position(this->getPosition());
     float angle = this->getAngle();
     if (position.y < -SCENARIO_HEIGHT + 1.0f) {
@@ -167,6 +178,19 @@ void Car::update() {
             }
     }
 }
+=======
+    b2Vec2 position(this->chassis->GetPosition());
+    float angle = this->chassis->GetAngle();
+    if (position.y < -SCENARIO_HEIGHT + 1.4f) {
+        if (not this->onSurface(false) and this->chassis->GetLinearVelocity().y < 0.0f)
+            if (std::cos(angle) < 0.0f) {
+                this->orientation = not this->orientation;
+                this->chassis->SetTransform(position, angle - b2_pi);
+            }
+    }
+}
+
+>>>>>>> b9b0fb20b202e37818bc9403ba9c60c47c67e898
 const uint8_t Car::getOrientation() {
     return this->orientation;
 }
