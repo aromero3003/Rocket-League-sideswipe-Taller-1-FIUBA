@@ -12,10 +12,10 @@ ReceiverThread::ReceiverThread(Socket* s, World* world, int n) {
 void ReceiverThread::run(){
     char data[39];
     bool closed = false;
-    while(!closed){
+    while(!closed) {
         this->socket->recvall(data, BALL_AND_FLAGS + n_cars*BYTES_PER_CAR, &closed);
         this->world->update(data);
-        //this->world->print();
+        this->world->print(data);
     }
 
 }

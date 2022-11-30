@@ -1,19 +1,13 @@
 #include "client_interface.h"
+
+
 #include <iostream>
 #include <vector>
 #include <exception>
 #include <chrono>
 #include <string>
 
-Client_interface::Client_interface(const char *serv, const char *port): 
-            sdl(SDL_INIT_VIDEO), 
-            window("Rocket League 2D",
-                    SDL_WINDOWPOS_UNDEFINED,
-                    SDL_WINDOWPOS_UNDEFINED,
-                    1040, 600,
-                    0),
-            renderer(window, -1, SDL_RENDERER_ACCELERATED),
-			mixer(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 4096){
+Client_interface::Client_interface(const char *serv, const char *port){
 
 	this->world = new World();
 	this->socket = new Socket(serv, port);
@@ -21,31 +15,24 @@ Client_interface::Client_interface(const char *serv, const char *port):
 }
 
 void Client_interface::run_client(){
-	int n_cars = 4;
+	int n_cars = 2;
 
-	MenuThread menuThread(this->socket, n_cars);
-	menuThread.start();
-	menuThread.join();
-
-
+	//MenuThread menuThread(this->socket, n_cars);
+	//menuThread.start();
+	//menuThread.join();
 
 	//create N cars and car_textures
 	this->world->create_cars(n_cars);
-	std::vector<Texture> car_textures;
-	for(int i = 0; i < n_cars; i++){
-		car_textures.emplace_back(renderer, "../data/cars.png");
-	}
 
-	//load textures and sounds
-	Texture ball(renderer, "../data/ball.png");
-	Texture court(renderer, "../data/court.png");
-	Texture nitro(renderer, "../data/complete_nitro.png");
+	//initialize SDL
+	SDL sdl(SDL_INIT_VIDEO);
+    Window window("Rocket League 2D",SDL_WINDOWPOS_UNDEFINED,SDL_WINDOWPOS_UNDEFINED,1040, 600,0);
+
+	TextureManager textureManager(window);
+	SoundManager soundManager;
 
 	Chunk ingition_sound("../data/car_ignition.wav");
-	Chunk ball_sound("../data/ball_bounce.wav");
-	Chunk nitro_sound("../data/nitro2.wav");
-
-	mixer.PlayChannel(-1,ingition_sound,0);
+	soundManager.mixer.PlayChannel(-1,ingition_sound,0);
 
 	//launch threads
 	ReceiverThread receiver(this->socket,this->world, n_cars);
@@ -62,8 +49,8 @@ void Client_interface::run_client(){
 	while (running) {
 
         running = handle_events(pq, going_right, going_left, nitroing, jumping);
-		render_screen_and_sounds(car_textures, ball, court,nitro, ball_sound, nitro_sound);
-
+		render_screen_and_sounds(textureManager, soundManager);
+		
         //Constant Rate Loop
         int32_t t2 = SDL_GetTicks();
         int32_t rest = FRAME_RATE - (t2-t1);
@@ -78,18 +65,13 @@ void Client_interface::run_client(){
         t1 += FRAME_RATE;
         //Constant Rate Loop
 	}
-	mixer.HaltChannel(-1);
+	soundManager.mixer.HaltChannel(-1);
 }
 
-
-void Client_interface::render_screen_and_sounds(std::vector<Texture>& car_textures,
-												Texture& ball, Texture& court, 
-												Texture& nitro, 
-												Chunk& ball_sound, 
-												Chunk& nitro_sound){
-		renderer.Clear();
-		this->world->draw(car_textures, ball, court, nitro, renderer, ball_sound,nitro_sound, mixer);	
-		renderer.Present();
+void Client_interface::render_screen_and_sounds(TextureManager& textureManager, SoundManager& soundManager){
+		textureManager.renderer.Clear();
+		this->world->draw(textureManager, soundManager);
+		textureManager.renderer.Present();
 }
 
 bool Client_interface::handle_events(BlockingQueue<int>* pq, bool& going_right, bool& going_left, bool& nitroing, bool& jumping) {

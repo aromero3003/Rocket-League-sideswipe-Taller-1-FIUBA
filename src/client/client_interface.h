@@ -8,6 +8,8 @@
 #include "blockingQueue.h"
 #include "world.h"
 #include "menuThread.h"
+#include "texture_manager.h"
+#include "sound_manager.h"
 
 #define PRESS_RIGHT 65
 #define PRESS_LEFT 66
@@ -27,10 +29,6 @@ using namespace SDL2pp;
 class Client_interface{
 
     private:
-    SDL2pp::SDL sdl;
-	SDL2pp::Window window;
-	SDL2pp::Renderer renderer;
-    SDL2pp::Mixer mixer;
     World* world;
     Socket* socket;
     BlockingQueue<int>* pq;
@@ -42,7 +40,9 @@ class Client_interface{
 
         bool handle_events(BlockingQueue<int>* pq, bool& going_right, bool& going_left, bool& nitroing, bool& jumping);
 
-        void render_screen_and_sounds(std::vector<Texture>& car_textures, Texture& ball, Texture& court, Texture& nitro, Chunk& nitro_sound, Chunk& ball_sound);
+        //void render_screen_and_sounds(std::vector<Texture>& car_textures, Texture& ball, Texture& court, Texture& nitro, Chunk& nitro_sound, Chunk& ball_sound);
+
+        void render_screen_and_sounds(TextureManager& textureManager, SoundManager& soundManager);
 
         ~Client_interface();
 

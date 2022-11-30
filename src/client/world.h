@@ -7,6 +7,10 @@
 #include "car.h"
 #include "ball.h"
 
+#include "texture_manager.h"
+#include "sound_manager.h"
+
+
 #define RED_GOAL_FLAG 0x01
 #define BLUE_GOAL_FLAG 0x02
 #define BALL_COLLISION 0x04
@@ -21,8 +25,6 @@ class World{
         std::vector<Car> cars;
         bool goal;
         bool ball_collision;
-        //bool car_terrain_collision;
-        //bool ball_terrain_collision;
 
         World();
 
@@ -32,15 +34,9 @@ class World{
         void create_cars(int n_cars);
 
         //thread-safe
-        void draw(std::vector<SDL2pp::Texture>& car_textures,
-                 SDL2pp::Texture& ball, 
-                 SDL2pp::Texture& court, 
-                 SDL2pp::Texture& nitro,
-                 SDL2pp::Renderer& renderer,
-                 SDL2pp::Chunk& ball_sound, 
-                 SDL2pp::Chunk& nitro_sound,
-                 SDL2pp::Mixer& mixer);
+        void draw(TextureManager& textureManager, SoundManager& soundManager);
 
+        void print(char* data);
 
         ~World();
 };
