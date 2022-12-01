@@ -22,9 +22,13 @@ class Car {
     b2WheelJoint *damper1;
     b2WheelJoint *damper2;
     bool orientation;
+    int8_t direction_pointing;
     uint8_t nitro_cant;
+    uint8_t jump_ammount;
 
+    bool isWheelOnSurface(bool left, bool touching);
     bool onSurface(bool touching);
+    void double_jump();
 
  public:
     Car(b2World &world, const b2Vec2 &position);
@@ -40,6 +44,7 @@ class Car {
     const float getAngle();
     const uint8_t getOrientation();
     void update();
+    void rotate();
 
     void up();
 
