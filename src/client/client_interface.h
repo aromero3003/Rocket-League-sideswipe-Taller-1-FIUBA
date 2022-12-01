@@ -7,7 +7,7 @@
 #include "socket.h"
 #include "blockingQueue.h"
 #include "world.h"
-#include "menu.h"
+#include "menuProtocol.h"
 #include "texture_manager.h"
 #include "sound_manager.h"
 

@@ -1,16 +1,18 @@
+#include "menuProtocol.h"
 #include "menu.h"
+#include <QApplication>
 
-Menu::Menu(Socket* s, int &n):n_cars(n){
+MenuProtocol::MenuProtocol(Socket* s, int &n):n_cars(n){
  this->skt = s;
  this->was_closed=false;
 }
-void Menu::sendCommand(std::string&& response) {
+void MenuProtocol::sendCommand(std::string&& response) {
   int8_t lenght=response.size();
   skt->sendall(&lenght,1, &was_closed);
   skt->sendall(response.data(),lenght, &was_closed);
 }
 
-std::stringstream  Menu::reciveResponse(){
+std::stringstream  MenuProtocol::reciveResponse(){
   uint8_t lenght = 0;
   skt->recvall(&lenght, sizeof(lenght), &this->was_closed);
   std::vector<char> buff;
@@ -22,8 +24,8 @@ std::stringstream  Menu::reciveResponse(){
 }
 
 
-void Menu::run() {
-
+void MenuProtocol::run() {
+    
     std::string s1("LISTAR");
     sendCommand(std::move(s1));
     if (reciveResponse().str() == "OK\n"){

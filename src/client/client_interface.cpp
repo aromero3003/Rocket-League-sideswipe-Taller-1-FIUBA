@@ -16,8 +16,8 @@ Client_interface::Client_interface(const char *serv, const char *port){
 void Client_interface::run_client(){
 	int n_cars = 3;
 
-	Menu menu(this->socket, n_cars);
-	menu.run();
+	MenuProtocol menuProtocol(this->socket, n_cars);
+	menuProtocol.run();
 	
 
 	//create N cars and car_textures

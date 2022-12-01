@@ -1,5 +1,5 @@
-#ifndef __MENUTHREAD_H__
-#define __MENUTHREAD_H__
+#ifndef __MENUPROTOCOL_H__
+#define __MENUPROTOCOL_H__
 
 #include <istream>
 #include <list>
@@ -12,7 +12,10 @@
 #include "socket.h"
 #include "liberror.h"
 #include <arpa/inet.h>
-class Menu
+
+
+
+class MenuProtocol
 {
 private:
     Socket* skt;
@@ -22,7 +25,7 @@ private:
     std::stringstream reciveResponse();
     void sendCommand(std::string&& response);
 public:
-    Menu(Socket* s,  int& n);
+    MenuProtocol(Socket* s,  int& n);
     void run();
 
 };

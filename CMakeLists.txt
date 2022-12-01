@@ -1,10 +1,16 @@
-cmake_minimum_required(VERSION 2.4)
+cmake_minimum_required(VERSION 3.5)
 project(Rocket-league)
 
+set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
+set(CMAKE_AUTOUIC ON)
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTORCC ON)
 
 set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package(Threads REQUIRED)
+find_package(Qt5 COMPONENTS Widgets REQUIRED)
+
 #standard c++
 set(CMAKE_CXX_STANDARD 17)
 
@@ -59,16 +65,22 @@ SET(SDL2PP_WITH_IMAGE YES)
 SET(SDL2PP_WITH_TTF YES)
 set(SDL2PP_WITH_MIXER YES)
 add_subdirectory(libs/libSDL2pp)
+add_subdirectory(src/Menu)
 
 # Agrego la carpeta con los headers autogenerados a los includes
 message("Agregando '${PROJECT_SOURCE_DIR}/libs' como directorio de includes")
 include_directories(${PROJECT_SOURCE_DIR}/libs)
 include_directories(${PROJECT_SOURCE_DIR}/src/common)
+include_directories(${PROJECT_SOURCE_DIR}/src/Menu)
 include_directories(${SDL2PP_INCLUDE_DIRS})
+
+
 
 file(GLOB client_SRC
      "src/client/*.cpp"
      "src/common/*.cpp"
+     "src/menu/*.cpp"
+     "src/Menu/menu.ui"
 )
 
 add_executable(client ${client_SRC})
@@ -83,7 +95,5 @@ add_executable(client_debug test_client.cpp
 
 
 
-target_link_libraries(client PRIVATE Threads::Threads)
+target_link_libraries(client ${Qt5Widgets_LIBRARIES})
 target_link_libraries(client ${SDL2PP_LIBRARIES})
-
-
