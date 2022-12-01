@@ -24,6 +24,7 @@ class Car {
     bool orientation;
     int8_t direction_pressed;
     uint8_t nitro_cant;
+    uint8_t jump_ammount;
 
     bool onSurface(bool touching);
 
@@ -41,8 +42,8 @@ class Car {
     const uint8_t getOrientation();
     void update();
 
-    bool has_jumped;
     double time_elapsed;
+    bool has_jumped;
     bool nitro;
     bool go_up;
 };

@@ -9,6 +9,7 @@ Car::Car(b2World &world, const b2Vec2 &position) {
         b2BodyDef chassis_def;
         chassis_def.type = b2_dynamicBody;
         chassis_def.position.Set(x, y + 1.0f);
+        chassis_def.angularDamping = 1.0f;
         //chassis_def.fixedRotation = false;
 
         b2PolygonShape chassis_shape;
@@ -96,8 +97,12 @@ Car::Car(b2World &world, const b2Vec2 &position) {
 }
 
 void Car::jump() {
+    if (this->jump_ammount >= 2)
+        return;
+
     this->wheel1->ApplyLinearImpulseToCenter(b2Vec2(0.0f,100.0f), true);
     this->wheel2->ApplyLinearImpulseToCenter(b2Vec2(0.0f,100.0f), true);
+    (this->jump_ammount)++;
 }
 
 void Car::moveLeft() {
@@ -169,9 +174,13 @@ void Car::update() {
                 this->chassis->SetTransform(position, angle + b2_pi);
             }
     }
+    if (this->onSurface(true))
+        jump_ammount = 0;
     //if (not is_near_surface and this->direction_pressed != 0) {
-    if (not is_near_surface) {
-        this->chassis->ApplyAngularImpulse(10.0f * this->direction_pressed, true); // debe depender del angulo
+    if (not is_near_surface and this->direction_pressed != 0) {
+        if ((this->orientation == RIGHT and this->direction_pressed == 1) or
+                (this->orientation == LEFT and this->direction_pressed == -1))
+            this->chassis->ApplyAngularImpulse(50.0f * std::sin(angle) - this->chassis->GetAngularVelocity() , true); // debe depender del angulo
         // this->chassis->ApplyTorque(10.0f, true); debe depender del ángulo
     }
 
