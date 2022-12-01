@@ -12,7 +12,7 @@
 #include "socket.h"
 #include "liberror.h"
 #include <arpa/inet.h>
-class MenuThread: public Thread 
+class Menu
 {
 private:
     Socket* skt;
@@ -22,8 +22,8 @@ private:
     std::stringstream reciveResponse();
     void sendCommand(std::string&& response);
 public:
-    MenuThread(Socket* s,  int& n);
-    virtual void run() override;
-    virtual ~MenuThread()= default;
+    Menu(Socket* s,  int& n);
+    void run();
+
 };
 #endif

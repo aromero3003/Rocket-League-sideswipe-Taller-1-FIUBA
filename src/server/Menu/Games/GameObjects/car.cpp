@@ -135,26 +135,12 @@ void Car::deactivate_nitro() {
     this->nitro = false;
 }
 
-<<<<<<< HEAD
-bool Car::onSurface(bool touching) {
-    b2ContactEdge *ce1 = this->wheel1->GetContactList();
-    b2ContactEdge *ce2 = this->wheel2->GetContactList();
-    if (touching)
-    return ce1 != nullptr
-        and ce2 != nullptr
-        and ce1->contact->IsTouching()
-        and ce2->contact->IsTouching();
-    else
-    return ce1 != nullptr
-        and ce2 != nullptr;
-=======
 bool Car::onSurface(bool strictly_touching) {
     b2ContactEdge *ce1 = this->wheel1->GetContactList();
     b2ContactEdge *ce2 = this->wheel2->GetContactList();
     bool is_near = ce1 != nullptr and ce2 != nullptr;
     return is_near and (strictly_touching ? ce1->contact->IsTouching()
         and ce2->contact->IsTouching() : true);
->>>>>>> b9b0fb20b202e37818bc9403ba9c60c47c67e898
 }
 
 void Car::boost() {
@@ -167,18 +153,6 @@ void Car::boost() {
 }
 
 void Car::update() {
-<<<<<<< HEAD
-    b2Vec2 position(this->getPosition());
-    float angle = this->getAngle();
-    if (position.y < -SCENARIO_HEIGHT + 1.0f) {
-        if (not this->onSurface(false) and this->chassis->GetLinearVelocity().y < 0.0f)
-            if (std::cos(angle) < 0) {
-                this->orientation = not this->orientation;
-                this->chassis->SetTransform(position, angle + b2_pi);
-            }
-    }
-}
-=======
     b2Vec2 position(this->chassis->GetPosition());
     float angle = this->chassis->GetAngle();
     if (position.y < -SCENARIO_HEIGHT + 1.4f) {
@@ -190,7 +164,6 @@ void Car::update() {
     }
 }
 
->>>>>>> b9b0fb20b202e37818bc9403ba9c60c47c67e898
 const uint8_t Car::getOrientation() {
     return this->orientation;
 }

@@ -25,6 +25,7 @@ private:
 public:
     MenuProtocol(Socket&& skt, size_t id,GameHandler& game);
     Socket& getSocketRef();
+    bool isClosed();
     virtual void run() override;
     virtual ~MenuProtocol()= default;
 };

@@ -26,6 +26,8 @@ std::stringstream  MenuProtocol::reciveCommand(){
   return ssresp;
 }
 
+bool MenuProtocol::isClosed() { return was_closed;}
+
 void MenuProtocol::run() {
   try{
     while(!was_closed){

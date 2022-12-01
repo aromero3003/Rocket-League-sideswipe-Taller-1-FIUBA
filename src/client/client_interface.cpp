@@ -1,6 +1,5 @@
 #include "client_interface.h"
 
-
 #include <iostream>
 #include <vector>
 #include <exception>
@@ -15,11 +14,11 @@ Client_interface::Client_interface(const char *serv, const char *port){
 }
 
 void Client_interface::run_client(){
-	int n_cars = 2;
+	int n_cars = 3;
 
-	//MenuThread menuThread(this->socket, n_cars);
-	//menuThread.start();
-	//menuThread.join();
+	Menu menu(this->socket, n_cars);
+	menu.run();
+	
 
 	//create N cars and car_textures
 	this->world->create_cars(n_cars);

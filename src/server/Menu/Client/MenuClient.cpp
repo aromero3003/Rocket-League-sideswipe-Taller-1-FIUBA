@@ -7,13 +7,9 @@ MenuClient::MenuClient(Socket&& otherSkt,size_t o_id, GameHandler& game):
 }
 
 bool MenuClient::isDisconect(){
-    return false;// refactor
+    return menuProtocol.isClosed();// refactor
 }
-/*
-size_t MenuClient::getId(){
-    return this->id;
-}
-*/
+
 MenuClient::~MenuClient(){
     this->menuProtocol.join();
  
