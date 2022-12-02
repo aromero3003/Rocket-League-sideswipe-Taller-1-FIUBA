@@ -17,7 +17,7 @@ class Menu {
 
  public:
   Menu();
-  void conectNewClient(Socket&& sktAccepted,size_t id);
+  void conectNewClient(Socket&& sktAccepted);
    ~Menu();
 };
 #endif

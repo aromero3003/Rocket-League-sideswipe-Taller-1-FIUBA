@@ -18,12 +18,11 @@ class MenuProtocol: public Thread
 private:
     Socket skt;
     bool was_closed;
-    size_t id;
     GameHandler& games;
     std::stringstream reciveCommand();
     void sendResponse(std::string&& response);
 public:
-    MenuProtocol(Socket&& skt, size_t id,GameHandler& game);
+    MenuProtocol(Socket&& skt, GameHandler& game);
     Socket& getSocketRef();
     bool isClosed();
     virtual void run() override;

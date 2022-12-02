@@ -6,14 +6,15 @@ AcceptThread::AcceptThread(Socket& soktRef, bool& serverStatus)
 void AcceptThread::run() {
   try {
     Menu menu;
-    size_t a=0;
     while (serverIsOpen ) {
       Socket sktAccepted = soktRef.accept();
-      if (serverIsOpen) menu.conectNewClient(std::move(sktAccepted),a);
-      a++;
-    
+      if (serverIsOpen) menu.conectNewClient(std::move(sktAccepted));
+  
     }
   } catch (const LibError& err) {
    
   }
 }
+  void AcceptThread::disconect(){
+    this->soktRef.shutdown(2);
+  }

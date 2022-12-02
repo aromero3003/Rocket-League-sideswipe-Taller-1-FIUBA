@@ -1,9 +1,8 @@
 #include "MenuProtocol.h"
 
-MenuProtocol::MenuProtocol(Socket&& o_skt, size_t o_id,GameHandler& gameRef):
+MenuProtocol::MenuProtocol(Socket&& o_skt,GameHandler& gameRef):
     skt(std::move(o_skt)),
      was_closed(false),
-     id(o_id),
      games(gameRef){}
 
 Socket& MenuProtocol::getSocketRef(){
@@ -32,15 +31,9 @@ void MenuProtocol::run() {
   try{
     while(!was_closed){
       CommandHandler commandHandler;
-      std::unique_ptr<Command> command(commandHandler.createCommand(reciveCommand(),skt,id));
+      std::unique_ptr<Command> command(commandHandler.createCommand(reciveCommand(),skt));
       command->execut(games);
-      if (command->getResponse()=="Added In Game"){
-        this->was_closed=true;
-      } else {
-         sendResponse(std::move(command->getResponse()));
-
-      }
-
+      sendResponse(std::move(command->getResponse()));
     }
   } catch (const LibError& err) {
       

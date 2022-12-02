@@ -6,8 +6,8 @@ ClientsHandler::ClientsHandler(BlockingQueue<std::unique_ptr<MenuEvent>>& queue)
 ClientsHandler::ClientsHandler(GameHandler& games):
   menuclients(), gamesRef(games){}
   
-void ClientsHandler::conectNewClient(Socket &&skt,size_t id){
-  std::shared_ptr<MenuClient> client(new MenuClient(std::move(skt),id,gamesRef));
+void ClientsHandler::conectNewClient(Socket &&skt){
+  std::shared_ptr<MenuClient> client(new MenuClient(std::move(skt),gamesRef));
   menuclients.push_back(client);
 }
 

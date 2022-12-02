@@ -18,13 +18,12 @@
 class MenuClient
 {
 private:
-    size_t id;
     MenuProtocol menuProtocol;
     Socket& skt;
 
 
 public:
-    MenuClient(Socket&& skt, size_t id,GameHandler& game);
+    MenuClient(Socket&& skt,GameHandler& game);
 
     bool isDisconect();
 

@@ -19,7 +19,7 @@ class CommandHandler {
  private:
  public:
   CommandHandler();
-  std::unique_ptr<Command> createCommand(std::istream &&parameters, Socket& skt, size_t id)  ;
+  std::unique_ptr<Command> createCommand(std::istream &&parameters, Socket& skt)  ;
   
   ~CommandHandler();
 };

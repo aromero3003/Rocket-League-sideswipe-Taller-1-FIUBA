@@ -15,13 +15,12 @@
 class StandbyClient
 {
 private:
-    size_t id;
     Socket skt;
 
 public:
-    StandbyClient(Socket&& skt,size_t id);
+    StandbyClient(Socket&& skt);
     
-    std::unique_ptr<GamingClient> getGamingClient(ProtectedQueue<GameCommandHandler>& eventQueue,std::size_t cant_players);
+    std::unique_ptr<GamingClient> getGamingClient(ProtectedQueue<GameCommandHandler>& eventQueue,size_t a,std::size_t cant_players);
     ~StandbyClient();
 };
 #endif

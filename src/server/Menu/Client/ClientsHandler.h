@@ -18,7 +18,7 @@ class ClientsHandler {
  public:
   ClientsHandler(GameHandler& games);
 
-  void conectNewClient(Socket &&skt,size_t id);
+  void conectNewClient(Socket &&skt);
   
   void cleanDisconectClients();
 

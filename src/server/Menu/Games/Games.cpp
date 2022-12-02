@@ -1,10 +1,10 @@
 #include "Games.h"
 
-void Games::addGame(const std::string& name, int capacity,Socket& o_skt,size_t o_id) {
+void Games::addGame(const std::string& name, int capacity,Socket& o_skt) {
   std::map<std::string, Game>::iterator i;
   if (!exists(name, i)) {
     allGames.insert({name, Game(capacity)});
-    allGames.at(name).addPlayer(std::move(o_skt),o_id);
+    allGames.at(name).addPlayer(std::move(o_skt));
   } else {
     throw MenuCommandEx();
   }
@@ -25,11 +25,11 @@ void Games::startRungame(std::map<std::string, Game>::iterator gameNoStart){
     allRunGames.back()->start();
 } 
 
-void Games::addPlayerToGame(const std::string& name,Socket& o_skt,size_t o_id) {
+void Games::addPlayerToGame(const std::string& name,Socket& o_skt) {
   std::map<std::string, Game>::iterator i;
   if (exists(name, i)) {
     if (!i->second.isComplete()) {
-      i->second.addPlayer(std::move(o_skt),o_id);
+      i->second.addPlayer(std::move(o_skt));
       if (i->second.isComplete())
         startRungame(i);
     }

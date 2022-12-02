@@ -2,8 +2,8 @@
 
 Menu::Menu():  gameHandler(),clientsHandler(gameHandler){}
 
-void Menu::conectNewClient(Socket&& sktAccepted,size_t id){
-    clientsHandler.conectNewClient(std::move(sktAccepted),id);
+void Menu::conectNewClient(Socket&& sktAccepted){
+    clientsHandler.conectNewClient(std::move(sktAccepted));
 }
 
 Menu::~Menu(){

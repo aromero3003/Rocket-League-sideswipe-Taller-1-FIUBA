@@ -14,9 +14,8 @@ class CommandWithParameters : public Command {
  protected:
   std::string gameName;
   Socket& skt;
-  size_t id;
  public:
-  CommandWithParameters(  Socket& oskt,  size_t oid) : Command(), gameName(),skt(oskt),id(oid) {}
+  CommandWithParameters(  Socket& oskt) : Command(), gameName(),skt(oskt) {}
   virtual void run(GameHandler &games) override{};
   virtual ~CommandWithParameters() {}
 };
