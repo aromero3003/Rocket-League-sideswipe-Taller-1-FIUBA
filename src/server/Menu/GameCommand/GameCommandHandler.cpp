@@ -29,8 +29,6 @@ void GameCommandHandler::createCommand(int8_t parameter) {
     }
 }
 
-bool GameCommandHandler::isEnd() { return isEndGame;}
-
 GameCommand* GameCommandHandler::getCommand() {
         return this->command;
 }

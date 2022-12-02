@@ -23,6 +23,7 @@ void RunGame::run() {
         while (! gammingEventQueue.is_empty()) {
             GameCommand *command = gammingEventQueue.pop().getCommand();
             command->run(gameLogic);
+            delete(command);
 #ifdef ALAN_DEBUG
             uint8_t debug_data = command->num;
             bool was_closed = false;

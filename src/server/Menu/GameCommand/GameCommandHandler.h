@@ -39,7 +39,6 @@ class GameCommandHandler {
   GameCommandHandler(size_t id);
   void createCommand(int8_t parameters);
   GameCommand* getCommand();
-  bool isEnd();
 };
 
 #endif

@@ -15,11 +15,7 @@ void ProtocolRecv::run() {
     while(!was_closed){
       GameCommandHandler gameCommandHandler(id);
       gameCommandHandler.createCommand(reciveCommand());
-      if (!gameCommandHandler.isEnd()){
       eventQueueRef.push(gameCommandHandler);
-      } else {
-        was_closed= true;
-      }
     }
   } catch (const LibError& err) {
 
