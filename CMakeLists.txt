@@ -16,7 +16,7 @@ set(CMAKE_CXX_STANDARD 17)
 
 add_subdirectory(libs/box2d)
 # compilation flags
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Werror")
+#set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Werror")
 
 # debugging flags
 set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -ggdb -DDEBUG -fno-inline ")
@@ -65,7 +65,6 @@ SET(SDL2PP_WITH_IMAGE YES)
 SET(SDL2PP_WITH_TTF YES)
 set(SDL2PP_WITH_MIXER YES)
 add_subdirectory(libs/libSDL2pp)
-add_subdirectory(src/Menu)
 
 # Agrego la carpeta con los headers autogenerados a los includes
 message("Agregando '${PROJECT_SOURCE_DIR}/libs' como directorio de includes")
@@ -74,13 +73,14 @@ include_directories(${PROJECT_SOURCE_DIR}/src/common)
 include_directories(${PROJECT_SOURCE_DIR}/src/Menu)
 include_directories(${SDL2PP_INCLUDE_DIRS})
 
-
+qt5_wrap_ui(UIS_HEADERS
+  src/client/menu.ui
+)
 
 file(GLOB client_SRC
      "src/client/*.cpp"
      "src/common/*.cpp"
-     "src/menu/*.cpp"
-     "src/Menu/menu.ui"
+     "src/client/menu.ui"
 )
 
 add_executable(client ${client_SRC})
