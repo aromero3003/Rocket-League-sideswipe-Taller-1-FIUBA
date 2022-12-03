@@ -11,7 +11,7 @@
 #include "ProtectedQueue.h"
 #include "thread.h"
 #include "liberror.h"
-
+#include "QueueEx.h"
 class RunGame : public Thread {
  private:
   GameLogic gameLogic;
@@ -22,6 +22,7 @@ class RunGame : public Thread {
   RunGame(std::size_t cantplayers);
   ProtectedQueue<GameCommandHandler> & getRefGamingQueue();
   void addPlayer(std::unique_ptr<GamingClient>&& player);
+  void close();
   virtual void run() override;
   virtual ~RunGame() = default;
 };

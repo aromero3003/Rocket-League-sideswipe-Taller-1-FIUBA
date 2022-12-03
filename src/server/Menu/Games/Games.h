@@ -24,6 +24,6 @@ class Games {
   void addGame(const std::string& name, const int capacity,Socket& o_skt);
   void addPlayerToGame(const std::string& name,Socket& o_skt);
   void listAllWithOcupation(std::string& list);
-  ~Games() = default;
+  ~Games();
 };
 #endif

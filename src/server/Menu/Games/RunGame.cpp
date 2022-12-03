@@ -13,7 +13,9 @@ void RunGame::addPlayer(std::unique_ptr<GamingClient>&& player) {
     return gammingEventQueue;
   }
 
-
+  void RunGame::close(){
+    this->gammingEventQueue.close();
+  }
 void RunGame::run() {
   try {
       for(auto &&player : players)
@@ -40,7 +42,10 @@ void RunGame::run() {
 
 
     }
-    } catch (const std::exception& err) {
+    }  catch (const QueueEx) {
+        std::cerr << "Cerramos La Cola" << "\n";
+
+    }catch (const std::exception& err) {
         std::cerr << "Something went wrong and an exception was caught: "
                   << err.what() << "\n";
 

@@ -46,3 +46,9 @@ void Games::listAllWithOcupation(std::string& list) {
     list.append("\n");
   }
 }
+Games::~Games(){
+  for (auto && runGame: allRunGames) {
+    runGame->close();
+    runGame->join();
+  }
+}

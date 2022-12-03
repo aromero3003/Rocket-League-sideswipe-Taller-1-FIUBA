@@ -3,11 +3,13 @@
 
 #include <queue>
 #include <mutex>
+#include "QueueEx.h"
 
 template <class T> class ProtectedQueue {
  private:
     std::mutex mutex;
     std::queue<T> queue;
+    bool isClosed = false;
 
  public:
     void push(T& item) {
@@ -24,9 +26,14 @@ template <class T> class ProtectedQueue {
         std::lock_guard<std::mutex> lock(this->mutex);
         return this->queue.size() == 0;
     }
+    void close() {
+        std::lock_guard<std::mutex> lock(this->mutex);
+        this->isClosed = true; 
+    }
 
     T pop() {
         std::lock_guard<std::mutex> lock(this->mutex);
+        if (isClosed) throw QueueEx();
         T item = this->queue.front();
         this->queue.pop();
         return item;
