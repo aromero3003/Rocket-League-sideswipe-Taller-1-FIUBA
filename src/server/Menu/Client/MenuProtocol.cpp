@@ -29,12 +29,13 @@ void MenuProtocol::run() {
       CommandHandler commandHandler;
       std::unique_ptr<Command> command(
           commandHandler.createCommand(reciveCommand(), skt));
-      was_closed = skt.isClosed();
+      this->was_closed=this->skt.isClosed();
       if (!was_closed) {
         command->execut(games);
         sendResponse(std::move(command->getResponse()));
       }
     }
   } catch (const LibError& err) {
+      this->was_closed=true;
   }
 }

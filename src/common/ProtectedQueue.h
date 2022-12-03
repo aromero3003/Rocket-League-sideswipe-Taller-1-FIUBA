@@ -14,7 +14,7 @@ template <class T> class ProtectedQueue {
  public:
     void push(T& item) {
         std::lock_guard<std::mutex> lock(this->mutex);
-        this->queue.push(item);
+        if(!isClosed)this->queue.push(item);
     }
 
     size_t size() {
@@ -37,6 +37,10 @@ template <class T> class ProtectedQueue {
         T item = this->queue.front();
         this->queue.pop();
         return item;
+    }
+    void clean() {
+        std::lock_guard<std::mutex> lock(this->mutex);
+        if (this->queue.size() != 0) this->queue.pop();
     }
 };
 

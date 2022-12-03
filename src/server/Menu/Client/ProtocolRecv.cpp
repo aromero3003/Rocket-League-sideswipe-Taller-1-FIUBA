@@ -11,10 +11,10 @@ int8_t ProtocolRecv::reciveCommand() {
 }
 void ProtocolRecv::run() {
   try {
-    while (!was_closed) {
+    while (!skt.isClosed()) {
       GameCommandHandler gameCommandHandler(id);
       gameCommandHandler.createCommand(reciveCommand());
-      eventQueueRef.push(gameCommandHandler);
+      if(!skt.isClosed())eventQueueRef.push(gameCommandHandler);
     }
   } catch (const LibError& err) {
   }

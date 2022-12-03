@@ -22,6 +22,9 @@ void ClientsHandler::cleanDisconectClients() {
       menuclients.end());
 }
 
-void ClientsHandler::disconectAll() { menuclients.clear(); }
+void ClientsHandler::disconectAll() { 
+  for (auto && menuclient :menuclients) menuclient->disconect();
+  menuclients.erase(menuclients.begin(), menuclients.end()); 
+}
 
-ClientsHandler::~ClientsHandler() { disconectAll(); }
+ClientsHandler::~ClientsHandler() { if (!menuclients.empty()) disconectAll(); }

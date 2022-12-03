@@ -21,11 +21,16 @@ void GamingClient::start() {
 }
 
 bool GamingClient::isDisconect() {
+
   return skt.isClosed();  // refactor
 }
 void GamingClient::disconect() {
   this->skt.shutdown(2);
-  protocolSend.join();
-  protocolRecv.join();
+  if (this->snapEventQueue.size()!=0) snapEventQueue.pop();
 }
-GamingClient::~GamingClient() { disconect(); }
+GamingClient::~GamingClient() { 
+  if (!isDisconect()) disconect(); 
+  protocolSend.join();
+  protocolRecv.join(); 
+
+  }

@@ -26,6 +26,6 @@ class ProtocolRecv : public Thread {
   ProtocolRecv(Socket& skt, size_t id,
                ProtectedQueue<GameCommandHandler>& eventQueue);
   virtual void run() override;
-  virtual ~ProtocolRecv() = default;
+  virtual ~ProtocolRecv(){};
 };
 #endif

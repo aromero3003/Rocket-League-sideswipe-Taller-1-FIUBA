@@ -30,6 +30,6 @@ class ProtocolSend : public Thread {
                std::size_t cant_players);
 
   virtual void run() override;
-  virtual ~ProtocolSend() = default;
+  virtual ~ProtocolSend();
 };
 #endif
