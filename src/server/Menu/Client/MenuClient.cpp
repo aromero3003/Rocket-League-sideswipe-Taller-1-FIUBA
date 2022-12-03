@@ -7,9 +7,13 @@ MenuClient::MenuClient(Socket&& otherSkt,GameHandler& game):
 }
 
 bool MenuClient::isDisconect(){
-    return menuProtocol.isClosed();// refactor
+    return menuProtocol.isClosed();
+}
+void MenuClient::disconect(){
+    this->skt.shutdown(SHUT_RDWR);
+    this->menuProtocol.join();
 }
 
 MenuClient::~MenuClient(){
-    this->menuProtocol.join();
+    disconect();
 }

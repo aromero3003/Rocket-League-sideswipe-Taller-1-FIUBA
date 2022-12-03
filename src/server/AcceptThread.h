@@ -14,16 +14,16 @@
 #include "thread.h"
 #include "BlockingQueue.h"
 #include <memory.h>
-
+#include <atomic>
 class AcceptThread : public Thread {
  private:
-  bool& serverIsOpen;
+  std::atomic<bool> &serverIsOpen;
   Socket soktRef;
-  
+  Menu menu;
  public:
-  AcceptThread(Socket& soktRef, bool& serverStatus);
+  AcceptThread(Socket& soktRef, std::atomic<bool>& serverStatus);
   virtual void run() override;
   void disconect();
-  virtual ~AcceptThread() = default;
+  virtual ~AcceptThread() {};
 };
 #endif

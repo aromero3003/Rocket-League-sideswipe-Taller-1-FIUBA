@@ -15,12 +15,16 @@ void GamingClient::start(){
 }
 
 bool GamingClient::isDisconect(){
-    return false;// refactor
+    return skt.isClosed();// refactor
 }
-
-GamingClient::~GamingClient(){
-    protocolSend.join();
+void GamingClient::disconect(){
+    this->skt.shutdown(2);
+      protocolSend.join();
     protocolRecv.join();
+}
+GamingClient::~GamingClient(){
+    disconect();
+  
 }
 
     

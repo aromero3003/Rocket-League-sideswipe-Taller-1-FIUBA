@@ -1,14 +1,13 @@
 #include "AcceptThread.h"
-AcceptThread::AcceptThread(Socket& soktRef, bool& serverStatus)
-    : serverIsOpen(serverStatus), soktRef(std::move(soktRef)) {}
+AcceptThread::AcceptThread(Socket& soktRef, std::atomic<bool>& serverStatus)
+    : serverIsOpen(serverStatus), soktRef(std::move(soktRef)),menu() {}
 
 
 void AcceptThread::run() {
   try {
-    Menu menu;
-    while (serverIsOpen ) {
+    while (this->serverIsOpen.load(std::memory_order_acquire)) {
       Socket sktAccepted = soktRef.accept();
-      if (serverIsOpen) menu.conectNewClient(std::move(sktAccepted));
+      if (this->serverIsOpen.load(std::memory_order_acquire)) this->menu.conectNewClient(std::move(sktAccepted));
   
     }
   } catch (const LibError& err) {
@@ -16,5 +15,5 @@ void AcceptThread::run() {
   }
 }
   void AcceptThread::disconect(){
-    this->soktRef.shutdown(2);
+    this->soktRef.shutdown(SHUT_RDWR);
   }

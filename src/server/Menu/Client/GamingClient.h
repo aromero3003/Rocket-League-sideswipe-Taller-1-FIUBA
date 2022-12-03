@@ -32,6 +32,7 @@ public:
     bool isDisconect();
     void addSnap(std::shared_ptr<SnapShot> snap);
     void start();
+    void disconect();
     ~GamingClient();
 };
 #endif

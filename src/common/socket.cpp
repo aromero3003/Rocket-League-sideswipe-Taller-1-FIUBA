@@ -407,7 +407,9 @@ int Socket::close() {
     this->closed = true;
     return ::close(this->skt);
 }
-
+bool Socket::isClosed() {
+    return this->closed;
+}
 Socket::~Socket() {
     if (not this->closed) {
         ::shutdown(this->skt, 2);

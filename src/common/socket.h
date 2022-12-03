@@ -148,6 +148,7 @@ void shutdown(int how);
  * */
 int close();
 
+bool isClosed();
 /*
  * Destruye el socket. Si aun esta conectado,
  * se llamara a `Socket::shutdown` y `Socket::close`

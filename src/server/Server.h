@@ -7,12 +7,13 @@
 #include <sstream>
 #include <string>
 #include <utility>
-
+#include <atomic>
 #include "socket.h"
 #include "AcceptThread.h"
+#include <atomic>
 class Server {
  private:
-  bool serverStatus;
+  std::atomic<bool> serverStatus;
   AcceptThread acceptThread;
 
   void shutdown();

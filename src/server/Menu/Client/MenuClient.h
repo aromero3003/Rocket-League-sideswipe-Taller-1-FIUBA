@@ -27,6 +27,7 @@ public:
 
     bool isDisconect();
 
+    void disconect();
     ~MenuClient();
 };
 #endif
