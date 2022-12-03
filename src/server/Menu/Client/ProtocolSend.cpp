@@ -8,10 +8,8 @@ skt(o_skt),snapEventQueue(snapEventQueuePtr),was_closed(false){
 
 
 void ProtocolSend::sendCantPlayers( std::size_t cant_players) {
-    uint8_t lenght =1;
-    uint8_t cant_players_trans = static_cast<uint8_t>(cant_players);
 
-    skt.sendall(&lenght, 1, &was_closed);
+    uint8_t cant_players_trans = static_cast<uint8_t>(cant_players);
     skt.sendall(&cant_players_trans, sizeof(cant_players_trans), &was_closed);
 }
 

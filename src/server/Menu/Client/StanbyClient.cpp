@@ -1,6 +1,13 @@
 #include "StandbyClient.h"
 
-StandbyClient::StandbyClient(Socket&& otherSkt):skt(std::move(otherSkt)){}
+StandbyClient::StandbyClient(Socket&& otherSkt):skt(std::move(otherSkt)){
+    //send ok in add Game
+    bool was_closed=false;
+    std::string response("OK");
+    int8_t lenght=response.size();
+    skt.sendall(&lenght,1, &was_closed);
+    skt.sendall(response.data(),response.size(), &was_closed);
+}
 
 std::unique_ptr<GamingClient> StandbyClient::getGamingClient(
     ProtectedQueue<GameCommandHandler>& eventQueue,
