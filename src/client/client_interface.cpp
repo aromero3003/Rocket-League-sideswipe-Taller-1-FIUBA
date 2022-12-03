@@ -14,12 +14,12 @@ Client_interface::Client_interface(const char *serv, const char *port){
 }
 
 void Client_interface::run_client(){
-	int n_cars = 3;
+	MenuProtocol menuProtocol(this->socket, n_cars);
+	menuProtocol.run();
 
-	Menu menu(this->socket, n_cars);
-	menu.run();
-	
-
+	uint8_t n_cars = 0;
+	bool closed = false;
+	this->socket->recvall(&n_cars, 1, &closed);
 	//create N cars and car_textures
 	this->world->create_cars(n_cars);
 

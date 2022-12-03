@@ -1,29 +1,38 @@
-#ifndef __MENUTHREAD_H__
-#define __MENUTHREAD_H__
+#ifndef MENU_H
+#define MENU_H
 
+#include <QMainWindow>
+#include <QString>
+#include <iostream>
 #include <istream>
-#include <list>
 #include <ostream>
+#include <sstream>
 #include <string>
 #include <utility>
-#include <sstream>
 #include <vector>
-#include "thread.h"
+
 #include "socket.h"
-#include "liberror.h"
-#include <arpa/inet.h>
-class Menu
+QT_BEGIN_NAMESPACE
+namespace Ui { class Menu; }
+QT_END_NAMESPACE
+
+class Menu : public QMainWindow
 {
-private:
-    Socket* skt;
-    bool was_closed;
-    int& n_cars;
+    Q_OBJECT
 
-    std::stringstream reciveResponse();
-    void sendCommand(std::string&& response);
 public:
-    Menu(Socket* s,  int& n);
-    void run();
+    Menu(Socket* s, QWidget *parent = nullptr);
+    ~Menu();
 
+private slots:
+    void on_joinMatchButton_clicked();
+
+    void on_createButton_clicked();
+
+    void on_refreshButton_clicked();
+
+private:
+    Ui::Menu *ui;
+    Socket* socket;
 };
-#endif
+#endif // MENU_H
