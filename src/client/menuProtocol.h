@@ -20,12 +20,11 @@ class MenuProtocol
 private:
     Socket* skt;
     bool was_closed;
-    int& n_cars;
 
     std::stringstream reciveResponse();
     void sendCommand(std::string&& response);
 public:
-    MenuProtocol(Socket* s,  int& n);
+    MenuProtocol(Socket* s);
     void run();
 
 };

@@ -4,6 +4,8 @@
 
 ProtocolSend::ProtocolSend(Socket& o_skt,BlockingQueue<std::shared_ptr<SnapShot>>& snapEventQueuePtr,std::size_t cant_players):
 skt(o_skt),snapEventQueue(snapEventQueuePtr),was_closed(false){  
+
+    sendCantPlayers(cant_players);
 }
 
 

@@ -2,7 +2,7 @@
 #include "menu.h"
 #include <QApplication>
 
-MenuProtocol::MenuProtocol(Socket* s, int &n):n_cars(n){
+MenuProtocol::MenuProtocol(Socket* s){
  this->skt = s;
  this->was_closed=false;
 }
