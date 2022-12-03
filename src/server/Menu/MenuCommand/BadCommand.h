@@ -5,13 +5,14 @@
 #include <list>
 #include <ostream>
 #include <string>
+
 #include "Command.h"
 
 ////Bad
-class BadCommand : public Command{
+class BadCommand : public Command {
  public:
   BadCommand();
-  void run(GameHandler &games) {};
+  void run(GameHandler &games){};
   virtual ~BadCommand() {}
 };
 

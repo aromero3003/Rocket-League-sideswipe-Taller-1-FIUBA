@@ -12,9 +12,10 @@
 class CommandCreate : public CommandWithParameters {
  private:
   int capacity;
+
  public:
-  CommandCreate(std::istream& paramenters,Socket& skt);
-  void run(GameHandler &games) override;
+  CommandCreate(std::istream& paramenters, Socket& skt);
+  void run(GameHandler& games) override;
   virtual ~CommandCreate() {}
 };
 

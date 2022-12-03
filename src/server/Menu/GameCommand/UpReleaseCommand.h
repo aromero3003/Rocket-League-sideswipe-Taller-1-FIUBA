@@ -7,13 +7,11 @@
 #include <string>
 
 #include "GameCommand.h"
-class UpReleaseCommand: public GameCommand
-{
-private:
-   
-public:
-    UpReleaseCommand(size_t id);
+class UpReleaseCommand : public GameCommand {
+ private:
+ public:
+  UpReleaseCommand(size_t id);
   void run(GameLogic& gameLogic) override;
-  virtual ~UpReleaseCommand(){}
+  virtual ~UpReleaseCommand() {}
 };
 #endif

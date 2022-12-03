@@ -9,14 +9,14 @@
 #include "../Games/GameHandler.h"
 #include "Command.h"
 
-
 class CommandWithParameters : public Command {
  protected:
   std::string gameName;
   Socket& skt;
+
  public:
-  CommandWithParameters(  Socket& oskt) : Command(), gameName(),skt(oskt) {}
-  virtual void run(GameHandler &games) override{};
+  CommandWithParameters(Socket& oskt) : Command(), gameName(), skt(oskt) {}
+  virtual void run(GameHandler& games) override{};
   virtual ~CommandWithParameters() {}
 };
 

@@ -2,15 +2,15 @@
 #define __SERVER_H__
 
 #include <algorithm>
+#include <atomic>
 #include <iostream>
 #include <list>
 #include <sstream>
 #include <string>
 #include <utility>
-#include <atomic>
-#include "socket.h"
+
 #include "AcceptThread.h"
-#include <atomic>
+#include "socket.h"
 class Server {
  private:
   std::atomic<bool> serverStatus;

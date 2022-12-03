@@ -12,24 +12,23 @@
 #include <cstddef>
 #include <exception>
 #include <list>
+#include <memory>
 #include <string>
 #include <utility>
-#include <memory>
 
-#include "UpCommand.h"
-#include "LeftCommand.h"
-#include "RightCommand.h"
-#include "SpaceCommand.h"
-#include "NitroCommand.h"
-#include "UpReleaseCommand.h"
-#include "LeftReleaseCommand.h"
-#include "RightReleaseCommand.h"
-#include "SpaceReleaseCommand.h"
-#include "NitroReleaseCommand.h"
-#include "BadCommand.h"
 #include "../Games/GameLogic.h"
+#include "BadCommand.h"
+#include "LeftCommand.h"
+#include "LeftReleaseCommand.h"
+#include "NitroCommand.h"
+#include "NitroReleaseCommand.h"
+#include "RightCommand.h"
+#include "RightReleaseCommand.h"
+#include "SpaceCommand.h"
+#include "SpaceReleaseCommand.h"
+#include "UpCommand.h"
+#include "UpReleaseCommand.h"
 class GameCommandHandler {
-
  private:
   bool isEndGame;
   size_t id;

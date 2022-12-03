@@ -5,11 +5,8 @@
 #include <string>
 
 class MenuCommandEx : public std::exception {
-
-    public:
-    MenuCommandEx() {}
-    char * what () {
-        return nullptr;
-    }
+ public:
+  MenuCommandEx() {}
+  char* what() { return nullptr; }
 };
 #endif

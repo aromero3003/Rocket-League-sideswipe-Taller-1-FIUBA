@@ -9,11 +9,11 @@
 #include <string>
 
 #include "GameCommand.h"
-class NitroReleaseCommand: public GameCommand {
-public:
+class NitroReleaseCommand : public GameCommand {
+ public:
   NitroReleaseCommand(size_t id);
   void run(GameLogic& gameLogic) override;
-  virtual ~NitroReleaseCommand(){}
+  virtual ~NitroReleaseCommand() {}
 };
 
 #endif

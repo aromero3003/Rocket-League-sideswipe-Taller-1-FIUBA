@@ -17,12 +17,12 @@ class Games {
   std::vector<std::unique_ptr<RunGame>> allRunGames;
   bool exists(const std::string& name,
               std::map<std::string, Game>::iterator& i);
- void startRungame(std::map<std::string, Game>::iterator i);
- 
+  void startRungame(std::map<std::string, Game>::iterator i);
+
  public:
   Games() : allGames() {}
-  void addGame(const std::string& name, const int capacity,Socket& o_skt);
-  void addPlayerToGame(const std::string& name,Socket& o_skt);
+  void addGame(const std::string& name, const int capacity, Socket& o_skt);
+  void addPlayerToGame(const std::string& name, Socket& o_skt);
   void listAllWithOcupation(std::string& list);
   ~Games();
 };

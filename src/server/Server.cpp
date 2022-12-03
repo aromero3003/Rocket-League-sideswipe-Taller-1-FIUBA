@@ -1,8 +1,7 @@
 #include "Server.h"
 
-
 Server::Server(Socket& skt)
-    : serverStatus(true), acceptThread(skt,serverStatus) {}
+    : serverStatus(true), acceptThread(skt, serverStatus) {}
 
 void Server::run() { acceptThread.start(); }
 
@@ -18,5 +17,4 @@ void Server::waitToClose() {
     std::cin >> serverStdin;
   } while (serverStdin.compare("q"));
   shutdown();
-
 }

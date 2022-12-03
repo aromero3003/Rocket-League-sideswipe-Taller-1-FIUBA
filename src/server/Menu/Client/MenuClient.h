@@ -6,28 +6,24 @@
 #include <ostream>
 #include <string>
 
-#include "socket.h"
-#include "liberror.h"
-
-#include "BlockingQueue.h"
-#include "../MenuCommand/Command.h"
-#include "MenuProtocol.h"
-#include <memory>
 #include "../Games/GameHandler.h"
+#include "../MenuCommand/Command.h"
+#include "BlockingQueue.h"
+#include "MenuProtocol.h"
+#include "liberror.h"
+#include "socket.h"
 
-class MenuClient
-{
-private:
-    MenuProtocol menuProtocol;
-    Socket& skt;
+class MenuClient {
+ private:
+  MenuProtocol menuProtocol;
+  Socket& skt;
 
+ public:
+  MenuClient(Socket&& skt, GameHandler& game);
 
-public:
-    MenuClient(Socket&& skt,GameHandler& game);
+  bool isDisconect();
 
-    bool isDisconect();
-
-    void disconect();
-    ~MenuClient();
+  void disconect();
+  ~MenuClient();
 };
 #endif

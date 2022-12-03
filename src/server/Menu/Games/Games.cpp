@@ -1,6 +1,6 @@
 #include "Games.h"
 
-void Games::addGame(const std::string& name, int capacity,Socket& o_skt) {
+void Games::addGame(const std::string& name, int capacity, Socket& o_skt) {
   std::map<std::string, Game>::iterator i;
   if (!exists(name, i)) {
     allGames.insert({name, Game(capacity)});
@@ -19,22 +19,21 @@ bool Games::exists(const std::string& name,
     return true;
   }
 }
-void Games::startRungame(std::map<std::string, Game>::iterator gameNoStart){
-    allRunGames.push_back(gameNoStart->second.getRunGame());
-    allGames.extract(gameNoStart);
-    allRunGames.back()->start();
-} 
+void Games::startRungame(std::map<std::string, Game>::iterator gameNoStart) {
+  allRunGames.push_back(gameNoStart->second.getRunGame());
+  allGames.extract(gameNoStart);
+  allRunGames.back()->start();
+}
 
-void Games::addPlayerToGame(const std::string& name,Socket& o_skt) {
+void Games::addPlayerToGame(const std::string& name, Socket& o_skt) {
   std::map<std::string, Game>::iterator i;
   if (exists(name, i)) {
     if (!i->second.isComplete()) {
       i->second.addPlayer(std::move(o_skt));
-      if (i->second.isComplete())
-        startRungame(i);
+      if (i->second.isComplete()) startRungame(i);
     }
   } else {
-    throw  MenuCommandEx();
+    throw MenuCommandEx();
   }
 }
 
@@ -46,8 +45,8 @@ void Games::listAllWithOcupation(std::string& list) {
     list.append("\n");
   }
 }
-Games::~Games(){
-  for (auto && runGame: allRunGames) {
+Games::~Games() {
+  for (auto&& runGame : allRunGames) {
     runGame->close();
     runGame->join();
   }

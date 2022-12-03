@@ -8,10 +8,7 @@
 #define VELOCITY_ITERATIONS 8
 #define POSITION_ITERATIONS 3
 
-#define TIME_STEP 1.0f/120.f
-
-
-
+#define TIME_STEP 1.0f / 120.f
 
 // Scenario
 #define SCENARIO_HEIGHT 30

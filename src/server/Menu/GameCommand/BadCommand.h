@@ -8,11 +8,11 @@
 #include <string>
 
 #include "GameCommand.h"
-class BadGameCommand: public GameCommand {
-public:
+class BadGameCommand : public GameCommand {
+ public:
   BadGameCommand(size_t id);
   void run(GameLogic& gameLogic) override;
-  virtual ~BadGameCommand(){}
+  virtual ~BadGameCommand() {}
 };
 
 #endif

@@ -1,24 +1,25 @@
 #include "Game.h"
 
-Game::Game(const int capacity) : capacity(capacity), occupation(0),clients() {}
+Game::Game(const int capacity) : capacity(capacity), occupation(0), clients() {}
 
 void Game::addPlayer(Socket&& skt) {
-  
-  if (occupation < capacity){
+  if (occupation < capacity) {
     occupation++;
-    std::unique_ptr<StandbyClient> client (new StandbyClient (std::move(skt)));
+    std::unique_ptr<StandbyClient> client(new StandbyClient(std::move(skt)));
     clients.push_back(std::move(client));
-  } 
-  ///trhow ex
+  }
+  /// trhow ex
 }
 
-std::unique_ptr<RunGame> Game::getRunGame(){
+std::unique_ptr<RunGame> Game::getRunGame() {
   std::unique_ptr<RunGame> runGame(new RunGame(clients.size()));
 
-  size_t a=0;
-  for (auto && client : clients){
-   //getGamingClient(runGame->getRefGamingQueue(),clients.size()) <-- crea gaming client (mandas queue y cant playrs)
-    runGame->addPlayer(std::move(client->getGamingClient(runGame->getRefGamingQueue(),a,clients.size())));
+  size_t a = 0;
+  for (auto&& client : clients) {
+    // getGamingClient(runGame->getRefGamingQueue(),clients.size()) <-- crea
+    // gaming client (mandas queue y cant playrs)
+    runGame->addPlayer(std::move(client->getGamingClient(
+        runGame->getRefGamingQueue(), a, clients.size())));
     a++;
   }
   return runGame;

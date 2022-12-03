@@ -1,13 +1,13 @@
 #include "ClientsHandler.h"
 /*
-ClientsHandler::ClientsHandler(BlockingQueue<std::unique_ptr<MenuEvent>>& queue):
-  gameclients(),menuclients(),menuEventQueueRef(queue) {}
+ClientsHandler::ClientsHandler(BlockingQueue<std::unique_ptr<MenuEvent>>&
+queue): gameclients(),menuclients(),menuEventQueueRef(queue) {}
 */
-ClientsHandler::ClientsHandler(GameHandler& games):
-  menuclients(), gamesRef(games){}
-  
-void ClientsHandler::conectNewClient(Socket &&skt){
-  std::unique_ptr<MenuClient> client(new MenuClient(std::move(skt),gamesRef));
+ClientsHandler::ClientsHandler(GameHandler& games)
+    : menuclients(), gamesRef(games) {}
+
+void ClientsHandler::conectNewClient(Socket&& skt) {
+  std::unique_ptr<MenuClient> client(new MenuClient(std::move(skt), gamesRef));
   menuclients.push_back(std::move(client));
 }
 
@@ -16,14 +16,12 @@ void ClientsHandler::conectNewClient(Socket &&skt){
 void ClientsHandler::cleanDisconectClients() {
   menuclients.erase(
       std::remove_if(menuclients.begin(), menuclients.end(),
-                     [&](const std::unique_ptr<MenuClient> & client) { return client.get()->isDisconect(); }),
+                     [&](const std::unique_ptr<MenuClient>& client) {
+                       return client.get()->isDisconect();
+                     }),
       menuclients.end());
-
 }
 
-void ClientsHandler::disconectAll() {
-
-  menuclients.clear();
-}
+void ClientsHandler::disconectAll() { menuclients.clear(); }
 
 ClientsHandler::~ClientsHandler() { disconectAll(); }

@@ -1,2 +1,2 @@
 #include "BadCommand.h"
-BadCommand::BadCommand(): Command(){}
+BadCommand::BadCommand() : Command() {}
