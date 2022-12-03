@@ -13,7 +13,7 @@
 class ClientsHandler {
 
  private:
-  std::vector<std::shared_ptr<MenuClient>> menuclients;
+  std::vector<std::unique_ptr<MenuClient>> menuclients;
   GameHandler& gamesRef;
  public:
   ClientsHandler(GameHandler& games);

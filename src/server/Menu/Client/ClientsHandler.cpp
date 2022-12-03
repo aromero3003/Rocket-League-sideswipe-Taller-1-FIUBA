@@ -7,8 +7,8 @@ ClientsHandler::ClientsHandler(GameHandler& games):
   menuclients(), gamesRef(games){}
   
 void ClientsHandler::conectNewClient(Socket &&skt){
-  std::shared_ptr<MenuClient> client(new MenuClient(std::move(skt),gamesRef));
-  menuclients.push_back(client);
+  std::unique_ptr<MenuClient> client(new MenuClient(std::move(skt),gamesRef));
+  menuclients.push_back(std::move(client));
 }
 
 // si se deconecta algun cliente lo joineo -esto no esta explicito...- y borro
@@ -16,15 +16,13 @@ void ClientsHandler::conectNewClient(Socket &&skt){
 void ClientsHandler::cleanDisconectClients() {
   menuclients.erase(
       std::remove_if(menuclients.begin(), menuclients.end(),
-                     [&](const std::shared_ptr<MenuClient> & client) { return client.get()->isDisconect(); }),
+                     [&](const std::unique_ptr<MenuClient> & client) { return client.get()->isDisconect(); }),
       menuclients.end());
 
 }
 
 void ClientsHandler::disconectAll() {
-  for (auto client: menuclients){
-    client->disconect();
-  }
+
   menuclients.clear();
 }
 

@@ -15,5 +15,5 @@ void MenuClient::disconect(){
 }
 
 MenuClient::~MenuClient(){
-    disconect();
+    if(!menuProtocol.isClosed())    disconect();
 }

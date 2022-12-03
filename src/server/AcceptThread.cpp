@@ -15,5 +15,8 @@ void AcceptThread::run() {
   }
 }
   void AcceptThread::disconect(){
+    this->menu.disconect();
+    this->serverIsOpen.store(false,std::memory_order_acquire);
     this->soktRef.shutdown(SHUT_RDWR);
+
   }

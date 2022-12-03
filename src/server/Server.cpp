@@ -7,7 +7,6 @@ Server::Server(Socket& skt)
 void Server::run() { acceptThread.start(); }
 
 void Server::shutdown() {
-  serverStatus.store(false,std::memory_order_relaxed);
   acceptThread.disconect();
 
   acceptThread.join();

@@ -398,9 +398,12 @@ Socket Socket::accept() {
 }
 
 void Socket::shutdown(int how) {
+
+    this->closed = true;
     if (::shutdown(this->skt, how) == -1) {
         throw LibError(errno, "socket shutdown failed");
     }
+
 }
 
 int Socket::close() {
