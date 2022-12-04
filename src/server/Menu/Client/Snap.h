@@ -12,7 +12,7 @@ class SnapShot {
  public:
   SnapShot();
   void add(uint8_t x);
-  void add(uint32_t x);
+  void add(float x);
   std::vector<uint8_t> &getMsg();
 };
 

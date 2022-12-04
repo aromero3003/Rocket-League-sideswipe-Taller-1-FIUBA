@@ -121,6 +121,7 @@ void GameLogic::step() {
 std::shared_ptr<SnapShot> GameLogic::getSnap() {
 
     std::shared_ptr<SnapShot> snap(new SnapShot);
+
     snap->add((uint8_t)this->time_left);                      // 1 byte
     snap->add(this->red_score);                               // 2 byte
     snap->add(this->blue_score);                              // 3 byte
@@ -128,21 +129,22 @@ std::shared_ptr<SnapShot> GameLogic::getSnap() {
     snap->add((uint8_t)this->ball.isColliding());
     snap->add((uint8_t)false);
 
-    snap->add((uint32_t)this->ball.getPosition().x);
-    snap->add((uint32_t)this->ball.getPosition().y);
-    snap->add((uint32_t)ball.getAngle() );
+    snap->add(this->ball.getPosition().x);
+    snap->add(this->ball.getPosition().y);
+    snap->add(this->ball.getAngle());
     snap->add((uint8_t)0);
 
+    std::vector<uint8_t> &values = snap->getMsg();
     //for (Car &player : this->players) {
     for (int id = 0; id < this->players.size(); id++) {
         Car &player = this->players[id];
         snap->add((uint8_t)id);
-        snap->add((uint32_t)player.getPosition().x);
-        snap->add((uint32_t)player.getPosition().y);
-        snap->add((uint32_t)player.getAngle() );
+        snap->add(player.getPosition().x);
+        snap->add(player.getPosition().y);
+        snap->add(player.getAngle() );
         snap->add(player.getOrientation());
         snap->add((uint8_t)player.nitro);// isNitroOn());
-        snap->add(player.getNitroAmmount());
+        snap->add((uint8_t)player.getNitroAmmount());
     }
     return snap;
 }

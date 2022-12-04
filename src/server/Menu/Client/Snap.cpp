@@ -9,9 +9,9 @@
 
 SnapShot::SnapShot() {}
 
-void SnapShot::add(uint32_t f) {
+void SnapShot::add(float f) {
   unsigned char const *p = reinterpret_cast<unsigned char const *>(&f);
-  for (std::size_t i = 0; i != sizeof(uint32_t); ++i) {
+  for (std::size_t i = 0; i != sizeof(float); ++i) {
     this->data.push_back(p[i]);
   }
 }
