@@ -16,7 +16,7 @@ void ReceiverThread::run(){
     while(!closed) {
         this->socket->recvall(&(buff[0]), vec_size, &closed);
         this->world->update(buff);
-        this->world->print(buff);
+        //this->world->print(buff);
     }
 }
 

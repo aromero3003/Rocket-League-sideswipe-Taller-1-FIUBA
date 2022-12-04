@@ -1,7 +1,7 @@
 #include "ProtocolRecv.h"
 
 ProtocolRecv::ProtocolRecv(Socket& o_skt, size_t o_id,
-                           ProtectedQueue<GameCommandHandler>& eventQueue)
+                           ProtectedQueue<std::shared_ptr<GameCommand> >& eventQueue)
     : skt(o_skt), was_closed(false), eventQueueRef(eventQueue), id(o_id) {}
 
 int8_t ProtocolRecv::reciveCommand() {
@@ -12,11 +12,11 @@ int8_t ProtocolRecv::reciveCommand() {
 
 void ProtocolRecv::run() {
   try {
+
+    GameCommandHandler gameCommandHandler(id);
     while (!skt.isClosed()) {
-      GameCommandHandler gameCommandHandler(id);
-      gameCommandHandler.createCommand(reciveCommand());
-      eventQueueRef.push(gameCommandHandler);
-      std::cerr<< "recv dont closed";
+      std::shared_ptr<GameCommand>  command=gameCommandHandler.createCommand(reciveCommand());
+     eventQueueRef.push(command);
     }
   } catch (const LibError& err) {
 

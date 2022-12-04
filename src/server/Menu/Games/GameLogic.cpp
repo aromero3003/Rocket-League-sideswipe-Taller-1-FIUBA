@@ -133,13 +133,17 @@ std::shared_ptr<SnapShot> GameLogic::getSnap() {
     snap->add((uint8_t)this->ball.getAngle());
     snap->add((uint8_t)0);
 
+    uint8 a=0;
     for (Car &player : this->players) {
+
+        snap->add(a);
         snap->add((uint32_t)player.getPosition().y);
         snap->add((uint32_t)player.getPosition().x);
-        snap->add((int32_t)(player.getAngle() * -180 / b2_pi));
+        snap->add((uint32_t)(player.getAngle() * -180 / b2_pi));
         snap->add(player.getOrientation());
         snap->add((uint8_t)player.nitro);// isNitroOn());
         snap->add(player.getNitroAmmount());
+        a++;
     }
     return snap;
 }

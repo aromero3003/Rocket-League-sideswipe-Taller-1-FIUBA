@@ -36,8 +36,8 @@ class GameCommandHandler {
 
  public:
   GameCommandHandler(size_t id);
-  void createCommand(int8_t parameters);
-  std::shared_ptr<GameCommand> getCommand();
+  std::shared_ptr<GameCommand> createCommand(int8_t parameters);
+ 
 
   ~GameCommandHandler()=default;
 };

@@ -20,7 +20,7 @@ void RunGame::close() {
   this->gammingEventQueue.close(); 
   for (auto&& player : players) player->disconect();
 }
-ProtectedQueue<GameCommandHandler>& RunGame::getRefGamingQueue() {
+ProtectedQueue<std::shared_ptr<GameCommand> >& RunGame::getRefGamingQueue() {
   return gammingEventQueue;
 }
 
@@ -31,7 +31,7 @@ void RunGame::run() {
     while (1) {
     
       while (!gammingEventQueue.is_empty()) {
-         gammingEventQueue.pop().getCommand()->run(gameLogic);
+         gammingEventQueue.pop()->run(gameLogic);
         /*std::unique_ptr<GameCommand> command = gammingEventQueue.pop().getCommand();
         command->run(gameLogic);*/
 #ifdef ALAN_DEBUG
@@ -47,8 +47,6 @@ void RunGame::run() {
         player->addSnap(snap);
       }
       usleep(1000000 / 120);
-          std::cerr << " sigue corriendo juego"
-              << "\n";
 
       if(gammingEventQueue.isClose()) throw QueueEx();
     }

@@ -20,7 +20,7 @@ class StandbyClient {
   StandbyClient(Socket&& skt);
 
   std::unique_ptr<GamingClient> getGamingClient(
-      ProtectedQueue<GameCommandHandler>& eventQueue, size_t a,
+      ProtectedQueue<std::shared_ptr<GameCommand> >& eventQueue, size_t a,
       std::size_t cant_players);
   ~StandbyClient();
 };

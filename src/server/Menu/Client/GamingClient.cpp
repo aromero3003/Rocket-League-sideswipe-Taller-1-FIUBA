@@ -3,7 +3,7 @@
 #include "Snap.h"
 
 GamingClient::GamingClient(Socket&& otherSkt, size_t o_id,
-                           ProtectedQueue<GameCommandHandler>& eventQueue,
+                           ProtectedQueue<std::shared_ptr<GameCommand> >& eventQueue,
                            std::size_t cant_players)
     : id(o_id),
       skt(std::move(otherSkt)),

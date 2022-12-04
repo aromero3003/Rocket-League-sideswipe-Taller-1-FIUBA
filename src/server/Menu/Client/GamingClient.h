@@ -25,7 +25,7 @@ class GamingClient {
 
  public:
   GamingClient(Socket&& skt, size_t id,
-               ProtectedQueue<GameCommandHandler>& eventQueue,
+               ProtectedQueue<std::shared_ptr<GameCommand> >& eventQueue,
                std::size_t cant_players);
   bool isDisconect();
   void addSnap(std::shared_ptr<SnapShot> snap);

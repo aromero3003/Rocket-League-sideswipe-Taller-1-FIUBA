@@ -16,12 +16,12 @@
 class RunGame : public Thread {
  private:
   GameLogic gameLogic;
-  ProtectedQueue<GameCommandHandler> gammingEventQueue;
+  ProtectedQueue<std::shared_ptr<GameCommand> > gammingEventQueue;
   std::vector<std::unique_ptr<GamingClient>> players;
 
  public:
   RunGame(std::size_t cantplayers);
-  ProtectedQueue<GameCommandHandler>& getRefGamingQueue();
+  ProtectedQueue<std::shared_ptr<GameCommand> >& getRefGamingQueue();
   void addPlayer(std::unique_ptr<GamingClient>&& player);
   void close();
   virtual void run() override;
