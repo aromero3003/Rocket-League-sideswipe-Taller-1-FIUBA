@@ -6,30 +6,27 @@
 #include <SDL2pp/SDL2pp.hh>
 #include "car.h"
 #include "ball.h"
-
 #include "texture_manager.h"
 #include "sound_manager.h"
-
-
-#define RED_GOAL_FLAG 0x01
-#define BLUE_GOAL_FLAG 0x02
-#define BALL_COLLISION 0x04
-
-#define POINTING_RIGHT 0x01
-#define NITRO 0x02
 
 class World{
     public:
         Ball ball;
         std::mutex mutex;
         std::vector<Car> cars;
+        uint8_t remaining_time;
+        uint8_t red_team_score;
+        uint8_t blue_team_score;
         bool goal;
         bool ball_collision;
+        bool car_collision;
 
         World();
 
+        uint32_t bytesToInt(std::vector<char>& data, int pos);
+
         //thread-safe
-        void update(char* data);
+        void update(std::vector<char>& data);
 
         void create_cars(int n_cars);
 

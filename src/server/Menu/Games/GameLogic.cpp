@@ -13,7 +13,8 @@
 GameLogic::GameLogic(size_t cant_players)
     : world(b2Vec2(0.0f, -GRAVITY)),
       ball(this->world, SCENARIO_HALF_WIDTH + 6.0f, -SCENARIO_HEIGHT / 2.0f),
-      goal(0) {
+      goal(0),
+      time_left(180.0f){
   // WORLD
 
   b2Vec2 scenario_borders[SCENARIO_BORDERS];
@@ -96,45 +97,51 @@ void GameLogic::deactivate_nitro_player(size_t id) {
 }
 
 void GameLogic::step() {
-  for (Car &player : this->players) {
-    if (player.nitro == true) player.boost();
-    player.update();
-  }
-  if (ball.getPosition().x < 6.0f - BALL_RADIUS) {
-    goal = 2;
-  } else if (ball.getPosition().x > SCENARIO_WIDTH + 6.0f + BALL_RADIUS) {
-    goal = 1;
-  } else {
-    goal = 0;
-  }
-  // std::cout << std::cos(this->players[0].getAngle()) << "      " <<
-  // cos(this->players[1].getAngle()) << std::endl; std::cout <<
-  // this->players[0].getPosition().y << "      " <<
-  // this->players[1].getPosition().y  << '\n'<< std::endl;
-  this->world.Step(TIME_STEP, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
-  // setSnap();
+
+    for (Car &player : this->players) {
+        if (player.nitro == true) player.boost();
+            player.update();
+    }
+
+    if (ball.getPosition().x < 6.0f - BALL_RADIUS) {
+        goal = 2;
+    } else if (ball.getPosition().x > SCENARIO_WIDTH + 6.0f + BALL_RADIUS) {
+        goal = 1;
+    } else {
+        goal = 0;
+    }
+    // std::cout << std::cos(this->players[0].getAngle()) << "      " <<
+    // cos(this->players[1].getAngle()) << std::endl; std::cout <<
+    // this->players[0].getPosition().y << "      " <<
+    // this->players[1].getPosition().y  << '\n'<< std::endl;
+    this->world.Step(TIME_STEP, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
+    this->time_left -= TIME_STEP;
 }
 
 std::shared_ptr<SnapShot> GameLogic::getSnap() {
-  std::shared_ptr<SnapShot> snap(new SnapShot);
-  uint8_t match_flags = this->goal;  // 2 BITS // 0 NONE | 1 RED | 2 BLUE
-  match_flags |= this->ball.isColliding() << 2;  // 0 FALSE | 1 TRUE  xxxx x1xx
-  snap->add(match_flags);
 
-  snap->add(this->ball.getPosition().x);
-  snap->add(this->ball.getPosition().y);
-  snap->add(this->ball.getAngle());
+    std::shared_ptr<SnapShot> snap(new SnapShot);
+    snap->add((uint8_t)this->time_left);                      // 1 byte
+    snap->add(this->red_score);                               // 2 byte
+    snap->add(this->blue_score);                              // 3 byte
+    snap->add(this->goal);
+    snap->add((uint8_t)this->ball.isColliding());
+    snap->add((uint8_t)false);
 
-  for (Car &player : this->players) {
-    snap->add(player.getPosition().y);
-    snap->add(player.getPosition().x);
-    snap->add(player.getAngle());
-    uint8_t flags = player.getOrientation();  // 0 LEFT | 1 RIGHT   xxxx xxx1
-    flags |= player.nitro << 1;               // 0 OFF | 1 ON       xxxx xx1x
-    // flags |= player.nitro << 2;  IMPACT     // 0 FALSE | 1 TRUE   xxxx x1xx
-    snap->add(flags);
-  }
-  return snap;
+    snap->add((uint8_t)this->ball.getPosition().x);
+    snap->add((uint8_t)this->ball.getPosition().y);
+    snap->add((uint8_t)this->ball.getAngle());
+    snap->add((uint8_t)0);
+
+    for (Car &player : this->players) {
+        snap->add((uint32_t)player.getPosition().y);
+        snap->add((uint32_t)player.getPosition().x);
+        snap->add((uint32_t)(player.getAngle() * -180 / b2_pi));
+        snap->add(player.getOrientation());
+        snap->add((uint8_t)player.nitro);// isNitroOn());
+        snap->add(player.getNitroAmmount());
+    }
+    return snap;
 }
 /*
 void GameLogic::setSnap(){

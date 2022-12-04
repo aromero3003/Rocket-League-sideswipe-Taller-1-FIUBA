@@ -2,7 +2,7 @@
 #include <iostream>
 #include <string>
 
-#define FC *(float*)
+#define FC *(uint32_t*)
 #define PI 3.14159265
 using namespace SDL2pp;
 
@@ -15,28 +15,63 @@ void World::create_cars(int n_cars){
     }
 }
 
-void World::update(char* data){
+uint32_t World::bytesToInt(std::vector<char>& data, int pos){
+    uint32_t value = 0;
+    for (size_t i = 0; i < 4; ++i) {
+        value |= static_cast<int>(data[i + pos]) << (i * 8);
+    }
+    return value;
+}
+
+void World::update(std::vector<char>& data){
     std::lock_guard<std::mutex> lock(mutex);
     
     //UPDATE FLAGS
-    char flags = data[0];
-    this->goal = (flags & (RED_GOAL_FLAG | BLUE_GOAL_FLAG)) > 0;
+    this->remaining_time = data[0];
+    this->blue_team_score = data[1];
+    this->red_team_score = data[2];
+    this->goal = data[3];
+    this->ball_collision = data[4];
+    this->car_collision = data[5];
+
+    std::cout << "          FLAGS:" << std::endl;
+    std::cout << "remaining time: " << (int)this->remaining_time << std::endl;
+    std::cout << "blue score: " << (int)this->blue_team_score << std::endl;
+    std::cout << "red score: " << (int)this->red_team_score << std::endl;
+    std::cout << "goal: " << (int)this->goal << std::endl;
+    std::cout << "ball collision: " << (int)this->ball_collision << std::endl;
+    std::cout << "rcar collision: " << (int)this->car_collision << std::endl << std::endl;
 
     //UPDATE BALL
-    this->ball.x_position = FC(data+1);
-    this->ball.y_position = FC(data+5);
-    this->ball.angle = (-180/PI)*FC(data+9);
+    this->ball.x_position = bytesToInt(data, 6);
+    this->ball.y_position = bytesToInt(data, 10);
+    this->ball.angle = bytesToInt(data, 14);
+    this->ball.color = bytesToInt(data, 18);
 
-    this->ball.collision = (flags & BALL_COLLISION);
+    std::cout << "          BALL:" << std::endl;
+    std::cout << "x: " << (int)this->ball.x_position << std::endl;
+    std::cout << "y: " << (int)this->ball.y_position << std::endl;
+    std::cout << "angle: " << (int)this->ball.angle << std::endl;
+    std::cout << "color: " << (int)this->ball.color << std::endl << std::endl;
+
 
     //UPDATE ALL CARS
     for(size_t i=0; i < this->cars.size(); i++){
-        this->cars[i].y_position = FC(data+((i+1)*13));
-        this->cars[i].x_position = FC(data+((i+1)*13 + 4));
-        this->cars[i].angle = (-180/PI)*FC(data+((i+1)*13 + 8));
+        this->cars[i].id = data[((i+1)*19)];
+        this->cars[i].x_position = bytesToInt(data, (i+1)*19 + 1);
+        this->cars[i].y_position = bytesToInt(data, (i+1)*19 + 5);
+        this->cars[i].angle = bytesToInt(data, (i+1)*19 + 9);
+        this->cars[i].pointing_right = data[(i+1)*19 + 14];
+        this->cars[i].nitro_flag = data[(i+1)*19 + 15];
+        this->cars[i].nitro_quantity = bytesToInt(data, (i+1)*19 + 16);
 
-        this->cars[i].pointing_right = (data[(i+1)*13 + 12] & POINTING_RIGHT);
-        this->cars[i].nitro = (data[(i+1)*13 + 12] & NITRO);
+    std::cout << "          CAR " << i << ":" << std::endl;
+    std::cout << "x: " << (int)this->cars[i].x_position << std::endl;
+    std::cout << "y: " << (int)this->cars[i].y_position << std::endl;
+    std::cout << "angle: " << (int)this->cars[i].angle << std::endl;
+    std::cout << "orientation: " << (int)this->cars[i].pointing_right << std::endl;
+    std::cout << "nitroing: " << (int)this->cars[i].nitro_flag << std::endl;
+    std::cout << "nitro restante: " << (int)this->cars[i].nitro_quantity << std::endl << std::endl;
     }
 }
 
@@ -45,7 +80,6 @@ void World::draw(TextureManager& textureManager, SoundManager& soundManager){
     std::lock_guard<std::mutex> lock(mutex);
     int flip;
     int nitro_phase = (SDL_GetTicks()/100)%5;
-
     //Show court, always the same
     textureManager.renderer.Copy(textureManager.court, NullOpt, Rect(0,0,textureManager.renderer.GetOutputWidth(), textureManager.renderer.GetOutputHeight()));
 
@@ -62,7 +96,7 @@ void World::draw(TextureManager& textureManager, SoundManager& soundManager){
                     flip = (this->cars[i].pointing_right == true) ? SDL_FLIP_NONE : SDL_FLIP_HORIZONTAL);
         
         //show nitro if needed
-        if (this->cars[i].nitro){
+        if (this->cars[i].nitro_flag){
         textureManager.renderer.Copy(textureManager.nitro,
                     Rect(0,83*nitro_phase,335,83),
                     Rect(20*this->cars[i].x_position - 67,(-20)*this->cars[i].y_position - 20,134,40), 
@@ -77,9 +111,9 @@ void World::draw(TextureManager& textureManager, SoundManager& soundManager){
     //Show ball
     textureManager.renderer.Copy(textureManager.ball, NullOpt, Rect(20*this->ball.x_position -20,(-20)*this->ball.y_position-20, 40, 40),this->ball.angle);
 
-    if(this->ball.collision && !soundManager.mixer.IsChannelPlaying(7)){
+    if(this->ball_collision && !soundManager.mixer.IsChannelPlaying(7)){
         soundManager.mixer.PlayChannel(7, soundManager.ball_sound,0);
-        this->ball.collision = false;
+        this->ball_collision = false;
     }
 
     if(this->goal){

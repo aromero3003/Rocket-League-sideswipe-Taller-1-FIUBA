@@ -11,6 +11,7 @@ class TextureManager {
     SDL2pp::Texture ball;
     SDL2pp::Texture court; 
     SDL2pp::Texture nitro;
+    SDL2pp::Texture goal;
     TextureManager(SDL2pp::Window& window);
 
     ~TextureManager();

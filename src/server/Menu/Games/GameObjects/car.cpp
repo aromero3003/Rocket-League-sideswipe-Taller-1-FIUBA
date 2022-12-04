@@ -170,3 +170,5 @@ const uint8_t Car::getOrientation() { return this->orientation; }
 const b2Vec2 Car::getPosition() { return chassis->GetPosition(); }
 
 const float Car::getAngle() { return chassis->GetAngle(); }
+
+const uint8_t Car::getNitroAmmount() { return this->nitro_cant; }
