@@ -40,6 +40,7 @@ class Car {
   const b2Vec2 getPosition();
   const float getAngle();
   const uint8_t getOrientation();
+  const uint8_t getNitroAmmount();
 
   bool has_jumped;
   double time_elapsed;
