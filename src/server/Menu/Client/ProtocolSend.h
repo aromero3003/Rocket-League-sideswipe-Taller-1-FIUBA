@@ -22,13 +22,14 @@ class ProtocolSend : public Thread {
   Socket& skt;
   BlockingQueue<std::shared_ptr<SnapShot>>& snapEventQueue;
   bool was_closed;
-  void sendCantPlayers(std::size_t cant_players);
   void sendResponse(std::vector<uint8_t>& response);
-
+  void sendInfo(std::size_t id);
  public:
   ProtocolSend(Socket& skt,
                BlockingQueue<std::shared_ptr<SnapShot>>& snapEventQueue,
-               std::size_t cant_players);
+               std::size_t cant_players
+               ,size_t o_id
+              );
 
   virtual void run() override;
   virtual ~ProtocolSend();

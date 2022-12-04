@@ -8,7 +8,7 @@ GamingClient::GamingClient(Socket&& otherSkt, size_t o_id,
     : id(o_id),
       skt(std::move(otherSkt)),
       snapEventQueue(),
-      protocolSend(skt, snapEventQueue, cant_players),
+      protocolSend(skt, snapEventQueue, cant_players,id),
       protocolRecv(skt, id, eventQueue) {}
 
 void GamingClient::addSnap(std::shared_ptr<SnapShot> snap) {
