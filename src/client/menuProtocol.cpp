@@ -26,7 +26,7 @@ std::stringstream  MenuProtocol::reciveResponse(){
 
 void MenuProtocol::run() {
     int argc = 0;
-    char** argv;
+    char** argv = nullptr;
     QApplication a(argc,argv);
     Menu menu(this->skt);
     menu.show();
