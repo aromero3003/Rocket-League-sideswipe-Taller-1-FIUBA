@@ -31,6 +31,10 @@ class BlockingQueue {
         std::unique_lock<std::mutex> lock(this->mutex);
         return this->queue.size();
     }
+    void clean() {
+        std::unique_lock<std::mutex> lock(this->mutex);
+        while (this->queue.size() > 0)  this->queue.pop();;
+    }
 
     T pop() {
         std::unique_lock<std::mutex> lock(this->mutex);

@@ -32,12 +32,14 @@ class GameCommandHandler {
  private:
   bool isEndGame;
   size_t id;
-  GameCommand* command;
+  std::shared_ptr<GameCommand> command;
 
  public:
   GameCommandHandler(size_t id);
   void createCommand(int8_t parameters);
-  GameCommand* getCommand();
+  std::shared_ptr<GameCommand> getCommand();
+
+  ~GameCommandHandler()=default;
 };
 
 #endif
