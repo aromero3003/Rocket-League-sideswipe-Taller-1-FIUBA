@@ -16,6 +16,7 @@
 #include "liberror.h"
 #include "socket.h"
 #include "thread.h"
+#include "QueueEx.h"
 class ProtocolSend : public Thread {
  private:
   Socket& skt;

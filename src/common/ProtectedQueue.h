@@ -30,10 +30,13 @@ template <class T> class ProtectedQueue {
         std::lock_guard<std::mutex> lock(this->mutex);
         this->isClosed = true; 
     }
+        bool isClose() {
+        std::lock_guard<std::mutex> lock(this->mutex);
+        return this->isClosed; 
+    }
 
     T pop() {
         std::lock_guard<std::mutex> lock(this->mutex);
-        if (isClosed) throw QueueEx();
         T item = this->queue.front();
         this->queue.pop();
         return item;

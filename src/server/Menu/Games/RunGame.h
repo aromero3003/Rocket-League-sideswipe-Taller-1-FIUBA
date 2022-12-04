@@ -25,6 +25,6 @@ class RunGame : public Thread {
   void addPlayer(std::unique_ptr<GamingClient>&& player);
   void close();
   virtual void run() override;
-  virtual ~RunGame() = default;
+  virtual ~RunGame() ;
 };
 #endif

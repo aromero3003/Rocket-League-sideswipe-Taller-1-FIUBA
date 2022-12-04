@@ -9,13 +9,18 @@ int8_t ProtocolRecv::reciveCommand() {
   skt.recvall(&oneRequest, 1, &was_closed);
   return oneRequest;
 }
+
 void ProtocolRecv::run() {
   try {
     while (!skt.isClosed()) {
       GameCommandHandler gameCommandHandler(id);
       gameCommandHandler.createCommand(reciveCommand());
-      if(!skt.isClosed())eventQueueRef.push(gameCommandHandler);
+      eventQueueRef.push(gameCommandHandler);
+      std::cerr<< "recv dont closed";
     }
   } catch (const LibError& err) {
+
+      std::cerr<< "recv closed"<<this->id<<"\n";
+     
   }
 }

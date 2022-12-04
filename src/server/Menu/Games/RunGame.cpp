@@ -6,23 +6,34 @@
 
 RunGame::RunGame(std::size_t cant_players)
     : gameLogic(cant_players), gammingEventQueue(), players() {}
+
 void RunGame::addPlayer(std::unique_ptr<GamingClient>&& player) {
   this->players.push_back(std::move(player));
 }
 
+RunGame::~RunGame() {
+  this->gammingEventQueue.clean();
+  std::cerr<<"evetQueue clean";
+  players.erase(players.begin(),players.end());
+}
+void RunGame::close() { 
+  this->gammingEventQueue.close(); 
+  for (auto&& player : players) player->disconect();
+}
 ProtectedQueue<GameCommandHandler>& RunGame::getRefGamingQueue() {
   return gammingEventQueue;
 }
 
-void RunGame::close() { this->gammingEventQueue.close(); }
+
 void RunGame::run() {
   try {
     for (auto&& player : players) player->start();
     while (1) {
+    
       while (!gammingEventQueue.is_empty()) {
-        GameCommand* command = gammingEventQueue.pop().getCommand();
-        command->run(gameLogic);
-        delete (command);
+         gammingEventQueue.pop().getCommand()->run(gameLogic);
+        /*std::unique_ptr<GameCommand> command = gammingEventQueue.pop().getCommand();
+        command->run(gameLogic);*/
 #ifdef ALAN_DEBUG
         uint8_t debug_data = command->num;
         bool was_closed = false;
@@ -36,10 +47,18 @@ void RunGame::run() {
         player->addSnap(snap);
       }
       usleep(1000000 / 120);
+          std::cerr << " sigue corriendo juego"
+              << "\n";
+
+      if(gammingEventQueue.isClose()) throw QueueEx();
     }
   } catch (const QueueEx) {
     std::cerr << "Cerramos La Cola"
               << "\n";
+      //creo snap vacios para que lanze exc los hilos de send
+      for (auto&& player : players) {
+        player->addSnap( std::shared_ptr<SnapShot> (new SnapShot));
+      }
 
   } catch (const std::exception& err) {
     std::cerr << "Something went wrong and an exception was caught: "
