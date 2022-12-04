@@ -24,6 +24,9 @@ class GameLogic {
   Ball ball;
   std::vector<Car> players;
   uint8_t goal;
+  float time_left;
+  uint8_t red_score;
+  uint8_t blue_score;
   /*
   SnapShot* snap;
   void setPlayer(Car& player);
