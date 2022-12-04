@@ -40,7 +40,6 @@ void RunGame::run() {
         alan.sendall(&debug_data, 1, &was_closed);
 #endif  // ALAN_DEBUG
       }
-      if(gammingEventQueue.isClose()) throw QueueEx();
       this->gameLogic.step();
 
       std::shared_ptr<SnapShot> snap = this->gameLogic.getSnap();
@@ -50,6 +49,8 @@ void RunGame::run() {
       usleep(1000000 / 120);
           std::cerr << " sigue corriendo juego"
               << "\n";
+
+      if(gammingEventQueue.isClose()) throw QueueEx();
     }
   } catch (const QueueEx) {
     std::cerr << "Cerramos La Cola"

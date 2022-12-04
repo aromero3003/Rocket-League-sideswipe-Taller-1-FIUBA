@@ -23,7 +23,7 @@ void ProtocolSend::sendCantPlayers(std::size_t cant_players) {
 
 void ProtocolSend::sendResponse(std::vector<uint8_t>& response) {
   
-  if (response.size() != 0) {
+  if (response.empty()) {
     skt.sendall(response.data(), response.size(), &was_closed);
   } else {throw QueueEx();}
 }
