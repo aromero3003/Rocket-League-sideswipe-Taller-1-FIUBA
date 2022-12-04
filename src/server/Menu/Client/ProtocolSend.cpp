@@ -23,7 +23,8 @@ void ProtocolSend::sendInfo(size_t id) {
 
 //en el caso de snap vacio cierro el bucle run
 void ProtocolSend::sendResponse(std::vector<uint8_t>& response) {
-  if (response.empty()) {
+  std::cerr<<response.data();
+  if (response.size()>0) {
     skt.sendall(response.data(), response.size(), &was_closed);
   } else {throw QueueEx();}
 }
