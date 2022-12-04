@@ -54,6 +54,7 @@ void RunGame::run() {
   } catch (const QueueEx) {
     std::cerr << "Cerramos La Cola"
               << "\n";
+      //creo snap vacios para que lanze exc los hilos de send
       for (auto&& player : players) {
         player->addSnap( std::shared_ptr<SnapShot> (new SnapShot));
       }
