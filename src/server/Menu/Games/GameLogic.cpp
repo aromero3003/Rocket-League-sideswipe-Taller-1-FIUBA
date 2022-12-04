@@ -136,7 +136,7 @@ std::shared_ptr<SnapShot> GameLogic::getSnap() {
     for (Car &player : this->players) {
         snap->add((uint32_t)player.getPosition().y);
         snap->add((uint32_t)player.getPosition().x);
-        snap->add((uint32_t)(player.getAngle() * -180 / b2_pi));
+        snap->add((int32_t)(player.getAngle() * -180 / b2_pi));
         snap->add(player.getOrientation());
         snap->add((uint8_t)player.nitro);// isNitroOn());
         snap->add(player.getNitroAmmount());
