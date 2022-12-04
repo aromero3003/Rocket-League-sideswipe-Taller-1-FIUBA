@@ -20,7 +20,7 @@
 #define RELEASE_SPACE 70
 #define RELEASE_SHIFT 72
 
-#define FRAME_RATE 1000/120
+#define FRAME_RATE 1000/120.0f
 
 #define QUIT 99
 
