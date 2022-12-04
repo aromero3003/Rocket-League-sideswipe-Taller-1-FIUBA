@@ -17,14 +17,14 @@ void World::create_cars(int n_cars){
 }
 
 uint32_t World::bytesToInt(std::vector<char>& data, int pos){
-    /*
+    
     uint32_t value = 0;
     for (size_t i = 0; i < 4; ++i) {
         value |= static_cast<int>(data[i + pos]) << (i * 8);
     }
     return value;
-    */
-    return *(int32_t *)(data.data() + pos);
+    
+    //return *(int32_t *)(data.data() + pos);
 }
 
 void World::update(std::vector<char>& data){
@@ -49,9 +49,9 @@ void World::update(std::vector<char>& data){
     //UPDATE BALL
     this->ball.x_position = bytesToInt(data, 6);
     this->ball.y_position = bytesToInt(data, 10);
-    //this->ball.angle = bytesToInt(data, 14);
-    uint32_t aux_angle = bytesToInt(data, 14);
-    this->ball.angle = *(float *)&aux_angle / PI * 180;
+    this->ball.angle =- bytesToInt(data, 14);
+    //uint32_t aux_angle = bytesToInt(data, 14);
+    //this->ball.angle = *(float *)&aux_angle / PI * 180;
     this->ball.color = data[18];//bytesToInt(data, 18);
 
     std::cout << "          BALL:" << std::endl;
@@ -63,15 +63,15 @@ void World::update(std::vector<char>& data){
 
     //UPDATE ALL CARS
     for(size_t i=0; i < this->cars.size(); i++){
-        this->cars[i].id = data[((i+1) * 16 + 19)];
-        this->cars[i].x_position = bytesToInt(data, (i+1) * 16 + 19 + 1);
-        this->cars[i].y_position = bytesToInt(data, (i+1) * 16 + 19 + 5);
-        float aux_angle2 = bytesToInt(data, (i+1) * 16 + 19 + 9);
-        // this->cars[i].angle = bytesToInt(data, (i+1) * 16 + 19 + 9);
-        this->cars[i].angle = *(float *)&aux_angle2 * 180 / PI;
-        this->cars[i].pointing_right = data[(i+1) * 16 + 19 + 13];
-        this->cars[i].nitro_flag = data[(i+1) * 16 + 19 + 14];
-        this->cars[i].nitro_quantity = data[(i+1) * 16 + 19+15];//bytesToInt(data, (i+1)*19 + 16);
+        this->cars[i].id = (uint8_t) data[((i) * 16 + 19)];
+        this->cars[i].x_position = bytesToInt(data, (i) * 16 + 19 + 1);
+        this->cars[i].y_position = bytesToInt(data, (i) * 16 + 19 + 5);
+        float aux_angle2 = - bytesToInt(data, (i) * 16 + 19 + 9);
+        this->cars[i].angle = bytesToInt(data, (i) * 16 + 19 + 9);
+        //this->cars[i].angle = *(float *)&aux_angle2 * 180 / PI;
+        this->cars[i].pointing_right = (uint8_t) data[(i) * 16 + 19 + 13];
+        this->cars[i].nitro_flag = (uint8_t) data[(i) * 16 + 19 + 14];
+        this->cars[i].nitro_quantity = (uint8_t) data[(i) * 16 + 19+15];//bytesToInt(data, (i+1)*19 + 16);
 
         std::cout << "          CAR " << i << ":" << std::endl;
         std::cout << "x: " << (int)this->cars[i].x_position << std::endl;

@@ -47,8 +47,6 @@ void RunGame::run() {
         player->addSnap(snap);
       }
       usleep(1000000 / 120);
-
-      if(gammingEventQueue.isClose()) throw QueueEx();
     }
   } catch (const QueueEx) {
     std::cerr << "Cerramos La Cola"

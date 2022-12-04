@@ -7,7 +7,7 @@
 GameCommandHandler::GameCommandHandler(size_t id) : isEndGame(false), id(id) {}
 
 std::shared_ptr<GameCommand> GameCommandHandler::createCommand(int8_t parameter) {
-  std::cerr << "Commando: " << (int)parameter << std::endl;
+  //std::cerr << "Commando: " << (int)parameter << std::endl;
   if (parameter == PRESS_LEFT) {
     return std::shared_ptr<GameCommand> (new LeftCommand(id));
   } else if (parameter == PRESS_RIGHT) {
