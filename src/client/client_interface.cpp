@@ -44,13 +44,13 @@ void Client_interface::run_client(){
 
     bool running = true;
     bool going_right, going_left, jumping, nitroing = false;
-
+	bool goal = true;
     uint32_t t1 = SDL_GetTicks();
 	while (running) {
 
         running = handle_events(pq, going_right, going_left, nitroing, jumping);
 		render_screen_and_sounds(textureManager, soundManager);
-		
+
         //Constant Rate Loop
         int32_t t2 = SDL_GetTicks();
         int32_t rest = FRAME_RATE - (t2-t1);

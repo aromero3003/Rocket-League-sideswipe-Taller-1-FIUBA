@@ -2,7 +2,7 @@
 
 Car::Car(){
     pointing_right = false;
-    nitro = false;
+    nitro_flag = false;
 }
 
 Car::~Car(){}

@@ -41,7 +41,6 @@ void Menu::on_joinMatchButton_clicked(){
          QApplication::exit();
     } else {
         ui->textBrowser->setText("LA PARTIDA YA ESTA LLENA");
-        // LA PARTIDA ESTA LLENA
     }
 
 }
@@ -69,7 +68,6 @@ void Menu::on_createButton_clicked()
          QApplication::exit();
     } else {
         ui->textBrowser->setText("UNA PARTIDA YA ESTA EXISTE CON ESE NOMBRE");
-        // YA EXISTE PARTIDA CON ESE NOMBRE
     }
 }
 

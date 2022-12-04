@@ -6,7 +6,8 @@ TextureManager::TextureManager(Window& window):renderer(window, -1, SDL_RENDERER
                                 car_texture(renderer, "../data/cars.png"),
                                 ball(renderer, "../data/ball.png"),
                                 court(renderer, "../data/court.png"),
-                                nitro(renderer, "../data/complete_nitro.png"){
+                                nitro(renderer, "../data/complete_nitro.png"),
+                                goal(renderer,"../data/goal-tiktok.gif"){
 
 }
 
