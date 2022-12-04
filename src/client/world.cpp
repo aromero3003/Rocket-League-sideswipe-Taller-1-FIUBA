@@ -46,7 +46,7 @@ void World::update(std::vector<char>& data){
     this->ball.x_position = bytesToInt(data, 6);
     this->ball.y_position = bytesToInt(data, 10);
     this->ball.angle = bytesToInt(data, 14);
-    this->ball.color = bytesToInt(data, 18);
+    this->ball.color = data[18];//bytesToInt(data, 18);
 
     std::cout << "          BALL:" << std::endl;
     std::cout << "x: " << (int)this->ball.x_position << std::endl;
@@ -61,17 +61,17 @@ void World::update(std::vector<char>& data){
         this->cars[i].x_position = bytesToInt(data, (i+1)*19 + 1);
         this->cars[i].y_position = bytesToInt(data, (i+1)*19 + 5);
         this->cars[i].angle = bytesToInt(data, (i+1)*19 + 9);
-        this->cars[i].pointing_right = data[(i+1)*19 + 14];
-        this->cars[i].nitro_flag = data[(i+1)*19 + 15];
-        this->cars[i].nitro_quantity = bytesToInt(data, (i+1)*19 + 16);
+        this->cars[i].pointing_right = data[(i+1)*19 + 13];
+        this->cars[i].nitro_flag = data[(i+1)*19 + 14];
+        this->cars[i].nitro_quantity = data[(i+1)*19+15];//bytesToInt(data, (i+1)*19 + 16);
 
-    std::cout << "          CAR " << i << ":" << std::endl;
-    std::cout << "x: " << (int)this->cars[i].x_position << std::endl;
-    std::cout << "y: " << (int)this->cars[i].y_position << std::endl;
-    std::cout << "angle: " << (int)this->cars[i].angle << std::endl;
-    std::cout << "orientation: " << (int)this->cars[i].pointing_right << std::endl;
-    std::cout << "nitroing: " << (int)this->cars[i].nitro_flag << std::endl;
-    std::cout << "nitro restante: " << (int)this->cars[i].nitro_quantity << std::endl << std::endl;
+        std::cout << "          CAR " << i << ":" << std::endl;
+        std::cout << "x: " << (int)this->cars[i].x_position << std::endl;
+        std::cout << "y: " << (int)this->cars[i].y_position << std::endl;
+        std::cout << "angle: " << (int)this->cars[i].angle << std::endl;
+        std::cout << "orientation: " << (int)this->cars[i].pointing_right << std::endl;
+        std::cout << "nitroing: " << (int)this->cars[i].nitro_flag << std::endl;
+        std::cout << "nitro restante: " << (int)this->cars[i].nitro_quantity << std::endl << std::endl;
     }
 }
 
