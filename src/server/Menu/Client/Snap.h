@@ -11,8 +11,8 @@ class SnapShot {
 
  public:
   SnapShot();
-  void add(const uint8_t &x);
-  void add(const float &x);
+  void add(uint8_t x);
+  void add(uint32_t x);
   std::vector<uint8_t> &getMsg();
 };
 
