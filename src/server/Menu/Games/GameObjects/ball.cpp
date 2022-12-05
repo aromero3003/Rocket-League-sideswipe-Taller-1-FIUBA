@@ -2,6 +2,7 @@
 
 #include <box2d/b2_contact.h>
 
+#include <box2d/b2_math.h>
 #include <iostream>
 
 #include "Constants.h"
@@ -49,4 +50,20 @@ const bool Ball::isColliding() {
     ;
   // std::cout << (this->current_collisions > prev_collitions) << std::endl;
   return this->current_collisions > prev_collitions;
+}
+
+void Ball::applyRedShot(b2Vec2 hitDirection) {
+    this->ball->ApplyLinearImpulseToCenter(hitDirection, true);
+}
+
+void Ball::applyPurpleShot(b2Vec2 hitDirection) {
+    this->ball->ApplyLinearImpulseToCenter(hitDirection, true);
+}
+
+void Ball::applyGoldShot(b2Vec2 hitDirection) {
+    this->ball->ApplyLinearImpulseToCenter(hitDirection, true);
+}
+
+void Ball::transform(b2Vec2 position, float angle) {
+    this->ball->SetTransform(position, angle);
 }
