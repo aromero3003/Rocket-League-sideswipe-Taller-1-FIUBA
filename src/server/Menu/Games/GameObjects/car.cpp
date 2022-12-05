@@ -247,3 +247,7 @@ const b2Vec2 Car::getPosition() { return chassis->GetPosition(); }
 const float Car::getAngle() { return chassis->GetAngle(); }
 
 const uint16_t Car::getNitroAmmount() { return this->nitro_cant; }
+
+void Car::setActiveSensor(sensor_t active) { this->active_sensor = active; }
+
+sensor_t Car::getActiveSensor() { return this->active_sensor; }
