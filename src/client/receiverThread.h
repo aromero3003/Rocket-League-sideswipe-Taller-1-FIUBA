@@ -24,7 +24,7 @@ class ReceiverThread : public Thread {
     void run() override;
 
     public:
-    ReceiverThread(Socket& s, World& w, int n);
+    ReceiverThread(Socket& s, World& w);
 
     bool is_alive();
 

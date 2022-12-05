@@ -2,8 +2,16 @@
 
 #define FC *(int*)
 
-ReceiverThread::ReceiverThread(Socket& s, World& w, int n): socket(s), world(w) {
- this->n_cars = n;
+ReceiverThread::ReceiverThread(Socket& s, World& w): socket(s), world(w) {
+    uint8_t cars;
+    bool closed = false;
+    s.recvall(&cars,1,&closed);
+    this->n_cars = cars;
+    this->world.create_cars(cars);
+
+    uint8_t my_id;
+    s.recvall(&my_id,1,&closed);
+    this->world.set_id(my_id);
 }
 
 void ReceiverThread::run(){

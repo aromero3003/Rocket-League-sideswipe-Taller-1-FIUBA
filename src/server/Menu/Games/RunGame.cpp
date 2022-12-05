@@ -94,7 +94,7 @@ void RunGame::sendReplay(){
 }
 void RunGame::endGame(){
     //send info()
-    std::cerr<"Time Out";
+    std::cerr << "Time Out";
     this->close();
 }
 

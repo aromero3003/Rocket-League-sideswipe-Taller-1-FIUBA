@@ -11,6 +11,8 @@
 
 class World{
     private:
+        uint8_t my_id;
+
         Ball ball;
         std::mutex mutex;
         std::vector<Car> cars;
@@ -32,11 +34,11 @@ class World{
         void sounds(SoundManager& soundManager);
 
         void replay(TextureManager& textureManager, SoundManager& soundManager);
-        
+
     public:
         World();
 
-        //float bytesToInt(std::vector<char>& data, int pos);
+        void set_id(uint8_t id);
 
         //thread-safe
         void update(std::vector<char>& data);

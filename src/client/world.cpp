@@ -16,6 +16,10 @@ void World::create_cars(int n_cars){
     }
 }
 
+void World::set_id(uint8_t id){
+    this->my_id = id;
+}
+
 void World::update(std::vector<char>& data){
     std::lock_guard<std::mutex> lock(mutex);
     

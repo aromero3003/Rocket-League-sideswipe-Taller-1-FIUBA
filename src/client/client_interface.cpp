@@ -16,11 +16,9 @@ void Client_interface::run_client(){
 	MenuProtocol menuProtocol(this->socket);
 	menuProtocol.run();
 
-	uint8_t n_cars;
-	bool closed = false;
-	this->socket.recvall(&n_cars, 1, &closed);
+	//this->socket.recvall(&n_cars, 1, &closed);
 	//create N cars and car_textures
-	this->world.create_cars(n_cars);
+	//this->world.create_cars(n_cars);
 
 	//initialize SDL
 	SDL sdl(SDL_INIT_VIDEO);
@@ -34,7 +32,7 @@ void Client_interface::run_client(){
 	soundManager.mixer.PlayChannel(-1,ingition_sound,0);
 
 	//launch threads
-	ReceiverThread receiver(this->socket,this->world, n_cars);
+	ReceiverThread receiver(this->socket,this->world);
 	SenderThread sender(this->socket, this->pq);
 	receiver.start();
 	sender.start();
