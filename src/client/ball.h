@@ -5,9 +5,9 @@
 
 class Ball{
     private:
-        uint32_t x_position;
-        uint32_t y_position;
-        uint32_t angle;
+        float x_position;
+        float y_position;
+        float angle;
         uint8_t color;
 
         friend class World;

@@ -3,7 +3,7 @@
 #include <iostream>
 #include <string>
 
-#define FC *(uint32_t*)
+#define FC *(float*)
 #define PI 3.14159265
 using namespace SDL2pp;
 
@@ -16,20 +16,12 @@ void World::create_cars(int n_cars){
     }
 }
 
-uint32_t World::bytesToInt(std::vector<char>& data, int pos){
-    
-    uint32_t value = 0;
-    for (size_t i = 0; i < 4; ++i) {
-        value |= static_cast<int>(data[i + pos]) << (i * 8);
-    }
-    return value;
-    
-    //return *(int32_t *)(data.data() + pos);
-}
 
 void World::update(std::vector<char>& data){
     std::lock_guard<std::mutex> lock(mutex);
     
+    char* buf = reinterpret_cast<char*>(data.data());
+
     //UPDATE FLAGS
     this->remaining_time = data[0];
     this->blue_team_score = data[1];
@@ -47,39 +39,35 @@ void World::update(std::vector<char>& data){
     std::cout << "rcar collision: " << (int)this->car_collision << std::endl << std::endl;
 
     //UPDATE BALL
-    this->ball.x_position = bytesToInt(data, 6);
-    this->ball.y_position = bytesToInt(data, 10);
-    this->ball.angle =- bytesToInt(data, 14);
-    //uint32_t aux_angle = bytesToInt(data, 14);
-    //this->ball.angle = *(float *)&aux_angle / PI * 180;
+    this->ball.x_position = FC(buf+6);
+    this->ball.y_position = FC(buf+10);
+    this->ball.angle = (-180/PI)*FC(buf+14);
     this->ball.color = data[18];//bytesToInt(data, 18);
 
     std::cout << "          BALL:" << std::endl;
-    std::cout << "x: " << (int)this->ball.x_position << std::endl;
-    std::cout << "y: " << (int)this->ball.y_position << std::endl;
-    std::cout << "angle: " << (int)this->ball.angle << std::endl;
-    std::cout << "color: " << (int)this->ball.color << std::endl << std::endl;
+    std::cout << "x: " << this->ball.x_position << std::endl;
+    std::cout << "y: " << this->ball.y_position << std::endl;
+    std::cout << "angle: " << this->ball.angle << std::endl;
+    std::cout << "color: " << this->ball.color << std::endl << std::endl;
 
 
     //UPDATE ALL CARS
     for(size_t i=0; i < this->cars.size(); i++){
         this->cars[i].id = (uint8_t) data[((i) * 16 + 19)];
-        this->cars[i].x_position = bytesToInt(data, (i) * 16 + 19 + 1);
-        this->cars[i].y_position = bytesToInt(data, (i) * 16 + 19 + 5);
-        float aux_angle2 = - bytesToInt(data, (i) * 16 + 19 + 9);
-        this->cars[i].angle = bytesToInt(data, (i) * 16 + 19 + 9);
-        //this->cars[i].angle = *(float *)&aux_angle2 * 180 / PI;
-        this->cars[i].pointing_right = (uint8_t) data[(i) * 16 + 19 + 13];
-        this->cars[i].nitro_flag = (uint8_t) data[(i) * 16 + 19 + 14];
-        this->cars[i].nitro_quantity = (uint8_t) data[(i) * 16 + 19+15];//bytesToInt(data, (i+1)*19 + 16);
+        this->cars[i].x_position = FC(buf + (i*16 + 20));
+        this->cars[i].y_position = FC(buf + (i*16 + 24));
+        this->cars[i].angle = (-180/PI)*FC(buf + (i*16 + 28));
+        this->cars[i].pointing_right = (uint8_t) data[i*16 + 32];
+        this->cars[i].nitro_flag = (uint8_t) data[i*16 + 33];
+        this->cars[i].nitro_quantity = FC(buf + (i*16 + 34));
 
         std::cout << "          CAR " << i << ":" << std::endl;
-        std::cout << "x: " << (int)this->cars[i].x_position << std::endl;
-        std::cout << "y: " << (int)this->cars[i].y_position << std::endl;
-        std::cout << "angle: " << (int)this->cars[i].angle << std::endl;
-        std::cout << "orientation: " << (int)this->cars[i].pointing_right << std::endl;
-        std::cout << "nitroing: " << (int)this->cars[i].nitro_flag << std::endl;
-        std::cout << "nitro restante: " << (int)this->cars[i].nitro_quantity << std::endl << std::endl;
+        std::cout << "x: " << this->cars[i].x_position << std::endl;
+        std::cout << "y: " << this->cars[i].y_position << std::endl;
+        std::cout << "angle: " << this->cars[i].angle << std::endl;
+        std::cout << "orientation: " << this->cars[i].pointing_right << std::endl;
+        std::cout << "nitroing: " << this->cars[i].nitro_flag << std::endl;
+        std::cout << "nitro restante: " << this->cars[i].nitro_quantity << std::endl << std::endl;
     }
 }
 

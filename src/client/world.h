@@ -23,7 +23,7 @@ class World{
 
         World();
 
-        uint32_t bytesToInt(std::vector<char>& data, int pos);
+        //float bytesToInt(std::vector<char>& data, int pos);
 
         //thread-safe
         void update(std::vector<char>& data);
