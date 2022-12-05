@@ -10,7 +10,7 @@
 #include "sound_manager.h"
 
 class World{
-    public:
+    private:
         Ball ball;
         std::mutex mutex;
         std::vector<Car> cars;
@@ -32,7 +32,8 @@ class World{
         void sounds(SoundManager& soundManager);
 
         void replay(TextureManager& textureManager, SoundManager& soundManager);
-
+        
+    public:
         World();
 
         //float bytesToInt(std::vector<char>& data, int pos);
@@ -45,7 +46,6 @@ class World{
         //thread-safe
         void draw(TextureManager& textureManager, SoundManager& soundManager);
 
-        void print(char* data);
 
         ~World();
 };

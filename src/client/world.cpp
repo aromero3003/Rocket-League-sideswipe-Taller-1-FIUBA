@@ -16,7 +16,6 @@ void World::create_cars(int n_cars){
     }
 }
 
-
 void World::update(std::vector<char>& data){
     std::lock_guard<std::mutex> lock(mutex);
     
@@ -29,7 +28,7 @@ void World::update(std::vector<char>& data){
     this->goal = data[3];
     this->ball_collision = data[4];
     this->car_collision = data[5];
-
+/*
     std::cout << "          FLAGS:" << std::endl;
     std::cout << "remaining time: " << (int)this->remaining_time << std::endl;
     std::cout << "blue score: " << (int)this->blue_team_score << std::endl;
@@ -37,20 +36,20 @@ void World::update(std::vector<char>& data){
     std::cout << "goal: " << (int)this->goal << std::endl;
     std::cout << "ball collision: " << (int)this->ball_collision << std::endl;
     std::cout << "rcar collision: " << (int)this->car_collision << std::endl << std::endl;
-
+*/
     //UPDATE BALL
     this->ball.x_position = FC(buf+6);
     this->ball.y_position = FC(buf+10);
     this->ball.angle = (-180/PI)*FC(buf+14);
     this->ball.color = data[18];//bytesToInt(data, 18);
-
+/*
     std::cout << "          BALL:" << std::endl;
     std::cout << "x: " << this->ball.x_position << std::endl;
     std::cout << "y: " << this->ball.y_position << std::endl;
     std::cout << "angle: " << this->ball.angle << std::endl;
     std::cout << "color: " << this->ball.color << std::endl << std::endl;
 
-
+*/
     //UPDATE ALL CARS
     for(size_t i=0; i < this->cars.size(); i++){
         this->cars[i].id = (uint8_t) data[((i) * 16 + 19)];
@@ -60,7 +59,7 @@ void World::update(std::vector<char>& data){
         this->cars[i].pointing_right = (uint8_t) data[i*16 + 32];
         this->cars[i].nitro_flag = (uint8_t) data[i*16 + 33];
         this->cars[i].nitro_quantity = FC(buf + (i*16 + 34));
-
+/*
         std::cout << "          CAR " << i << ":" << std::endl;
         std::cout << "x: " << this->cars[i].x_position << std::endl;
         std::cout << "y: " << this->cars[i].y_position << std::endl;
@@ -68,7 +67,33 @@ void World::update(std::vector<char>& data){
         std::cout << "orientation: " << this->cars[i].pointing_right << std::endl;
         std::cout << "nitroing: " << this->cars[i].nitro_flag << std::endl;
         std::cout << "nitro restante: " << this->cars[i].nitro_quantity << std::endl << std::endl;
+*/
     }
+}
+
+void World::draw(TextureManager& textureManager, SoundManager& soundManager){
+
+    std::lock_guard<std::mutex> lock(mutex);
+
+    //Show court, always the same
+    show_court(textureManager);
+
+    //Show scores and time
+    show_scores_and_time(textureManager);
+
+    //replay
+    if (this->goal)
+        replay(textureManager, soundManager);
+
+    //Show all cars
+    show_cars(textureManager, soundManager);
+    
+    //Show ball
+    show_ball(textureManager);
+
+    //sounds
+    sounds(soundManager);
+
 }
 
 void World::show_court(TextureManager& textureManager){
@@ -171,41 +196,6 @@ void World::show_scores_and_time(TextureManager& textureManager){
 
     
     std::cout << red_score << " " << blue_score << " " << time << std::endl;
-}
-
-void World::draw(TextureManager& textureManager, SoundManager& soundManager){
-
-    std::lock_guard<std::mutex> lock(mutex);
-
-    //Show court, always the same
-    show_court(textureManager);
-
-    //Show scores and time
-    show_scores_and_time(textureManager);
-
-    //replay
-    if (this->goal)
-        replay(textureManager, soundManager);
-
-    //Show all cars
-    show_cars(textureManager, soundManager);
-    
-    //Show ball
-    show_ball(textureManager);
-
-    //sounds
-    sounds(soundManager);
-
-}
-
-void World::print(char *data){
-
-    std::cout << "Flag: " << (int)data[0] << std::endl;
-    std::cout << "Ball: (x,y) = (" << FC(data + 1)  << " | " <<  FC(data + 5) << ") angle: " << FC (data+9) << std::endl;
-    std::cout << "car1: (x,y) = ("<< FC(data + 17) << " | " << FC(data + 13) << ") angle: " << FC (data+21) << " orientation: " << (int)data[25] << std::endl;
-    std::cout << "car2: (x,y) = ("<< FC(data + 30) << " | " << FC(data + 26) << ") angle: " << FC (data+34) << " orientation: " << (int)data[38] << std::endl;
-    std::cout << "Termina iteración\n" << std::endl;
-
 }
 
 World::~World(){}
