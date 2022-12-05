@@ -14,6 +14,7 @@ class SnapShot {
   void add(uint8_t x);
   void add(float x); 
   bool isGoal();
+  bool isTimeZero();
   void setGoalTrue();
   std::vector<uint8_t> &getMsg();
 };
