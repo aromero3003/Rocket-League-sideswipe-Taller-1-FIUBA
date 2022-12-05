@@ -34,7 +34,7 @@ void ProtocolSend::run() {
     while (!skt.isClosed()) {
       sendResponse(snapEventQueue.pop()->getMsg());
     }
-  }catch (const QueueEx) {
+  }catch (const QueueEx &e) {
 
       std::cerr<< "queue closed\n";
 

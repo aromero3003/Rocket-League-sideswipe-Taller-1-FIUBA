@@ -13,6 +13,8 @@ Ball::Ball(b2World& world, float x, float y) {
   b2BodyDef ball_def;
   ball_def.type = b2_dynamicBody;
   ball_def.position.Set(x, y);
+  initialPosition.x=x;
+  initialPosition.y=y;
 
   b2FixtureDef ball_fd;
   ball_fd.density = 1.0f;
@@ -30,6 +32,14 @@ Ball::Ball(b2World& world, float x, float y) {
 const b2Vec2 Ball::getPosition() { return this->ball->GetPosition(); }
 
 const float Ball::getAngle() { return this->ball->GetAngle(); }
+
+void Ball::setInitialPos(){ 
+  this->ball->SetTransform(initialPosition,0); 
+  this->ball->SetAngularVelocity(0);
+  b2Vec2 aux(0,0);
+  this->ball->SetLinearVelocity(aux);
+  
+}
 
 const bool Ball::isColliding() {
   uint8_t prev_collitions = this->current_collisions;

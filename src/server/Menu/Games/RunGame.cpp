@@ -63,7 +63,7 @@ void RunGame::run() {
       if(snap->isGoal()) this->sendReplay();
       usleep(1000000 / 120);
     }
-  } catch (const QueueEx) {
+  } catch (const QueueEx &e) {
     std::cerr << "Cerramos La Cola"
               << "\n";
       //creo snap vacio y se lo mando a los player para que lanze exc los hilos de send

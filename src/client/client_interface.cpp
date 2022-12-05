@@ -42,7 +42,7 @@ void Client_interface::run_client(){
 
     bool running = true;
     bool going_right, going_left, jumping, nitroing = false;
-	bool goal = true;
+	//bool goal = true;
     uint32_t t1 = SDL_GetTicks();
 	while (running) {
 

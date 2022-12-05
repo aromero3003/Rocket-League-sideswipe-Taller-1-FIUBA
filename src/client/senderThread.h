@@ -7,8 +7,8 @@
 
 class SenderThread : public Thread {
     private:
-    BlockingQueue<int>& pq;
     Socket& socket;
+    BlockingQueue<int>& pq;
     std::thread t;
     bool alive;
 

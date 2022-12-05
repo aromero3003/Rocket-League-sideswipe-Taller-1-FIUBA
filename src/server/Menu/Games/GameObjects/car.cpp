@@ -8,7 +8,7 @@
 #include "Constants.h"
 
 Car::Car(b2World &world, const b2Vec2 &position, bool orientation)
-    : orientation(orientation) {
+    : orientation(orientation) ,initialPosition(position){
   float x = position.x, y = position.y;
   {
     b2BodyDef chassis_def;
@@ -163,6 +163,12 @@ void Car::update() {
         this->chassis->SetTransform(position, angle - b2_pi);
       }
   }
+}
+void Car::setInitialPos(){ 
+  this->chassis->SetTransform(initialPosition,0);
+  this->chassis->SetAngularVelocity(0);
+  b2Vec2 aux(0,0);
+  this->chassis->SetLinearVelocity(aux); 
 }
 
 const uint8_t Car::getOrientation() { return this->orientation; }

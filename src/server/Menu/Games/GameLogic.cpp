@@ -46,15 +46,16 @@ GameLogic::GameLogic(size_t cant_players)
   b2Body *scenario = world.CreateBody(&scn_bd);
   scenario->CreateFixture(&scn_fd);
 
-  float delta_x = (SCENARIO_WIDTH - 6.0f) / (float)cant_players;
+  float delta_x = (SCENARIO_WIDTH ) / (float)(cant_players+1);
   for (size_t i = 1; i <= cant_players; i++) {
     this->players.emplace_back(
-        this->world, b2Vec2(3.0f + delta_x * i, -SCENARIO_HEIGHT + 2.0f),
+        this->world, b2Vec2(6.0f+delta_x * i, -SCENARIO_HEIGHT + 2.0f),
         i <= cant_players / 2);
   }
 }
 void GameLogic::setInitianPos(){
-  //for (auto car : this->players) car.setInitialPos();
+  for (auto car : this->players) car.setInitialPos();
+  ball.setInitialPos();
 }
 void GameLogic::jump_player(size_t id) { this->players[id].jump(); }
 
@@ -114,9 +115,9 @@ std::shared_ptr<SnapShot> GameLogic::getSnap() {
     snap->add(this->ball.getAngle());
     snap->add((uint8_t)0);
 
-    std::vector<uint8_t> &values = snap->getMsg();
+    //std::vector<uint8_t> &values = snap->getMsg();
     //for (Car &player : this->players) {
-    for (int id = 0; id < this->players.size(); id++) {
+    for (uint8_t id = 0; id < this->players.size(); id++) {
         Car &player = this->players[id];
         snap->add((uint8_t)id);
         snap->add(player.getPosition().x);
