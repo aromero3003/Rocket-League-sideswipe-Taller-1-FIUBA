@@ -62,7 +62,7 @@ void World::update(std::vector<char>& data){
         this->cars[i].angle = (-180/PI)*FC(buf + (i*16 + 28));
         this->cars[i].pointing_right = (uint8_t) data[i*16 + 32];
         this->cars[i].nitro_flag = (uint8_t) data[i*16 + 33];
-        this->cars[i].nitro_quantity = FC(buf + (i*16 + 34));
+        this->cars[i].nitro_quantity = data[i*16 + 34];
 /*
         std::cout << "          CAR " << i << ":" << std::endl;
         std::cout << "x: " << this->cars[i].x_position << std::endl;
