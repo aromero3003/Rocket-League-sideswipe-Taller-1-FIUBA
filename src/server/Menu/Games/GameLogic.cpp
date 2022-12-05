@@ -18,7 +18,7 @@ GameLogic::GameLogic(size_t cant_players)
       red_score(0),
       blue_score(0){
   // WORLD
-
+  this->world.SetContactListener(&(this->contact_listener));
   b2Vec2 scenario_borders[SCENARIO_BORDERS];
 
 
@@ -129,7 +129,7 @@ std::shared_ptr<SnapShot> GameLogic::getSnap() {
         snap->add(player.getAngle() );
         snap->add(player.getOrientation());
         snap->add((uint8_t)(player.nitro));// isNitroOn());
-        std::cerr<< "nitro :"<<(int) ((uint8)(player.getNitroAmmount()*100/MAXNITRO))<<"\n";
+        //std::cerr<< "nitro :"<<(int) ((uint8)(player.getNitroAmmount()*100/MAXNITRO))<<"\n";
         snap->add( (uint8)( (player.getNitroAmmount()*100)/MAXNITRO));
     }
     return snap;
