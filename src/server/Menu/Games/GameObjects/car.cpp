@@ -160,7 +160,7 @@ void Car::update() {
   if (nitro && nitro_cant>0) 
     nitro_cant--;
  
-  if (!nitro && nitro_cant<100)
+  if (!nitro && nitro_cant<MAXNITRO)
     nitro_cant++;
   if (nitro_cant==0) nitro=false;
   b2Vec2 position(this->chassis->GetPosition());

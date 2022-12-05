@@ -129,8 +129,8 @@ std::shared_ptr<SnapShot> GameLogic::getSnap() {
         snap->add(player.getAngle() );
         snap->add(player.getOrientation());
         snap->add((uint8_t)(player.nitro));// isNitroOn());
-        std::cerr<< "nitro :"<< static_cast<uint16_t>((player.getNitroAmmount()*MAXNITRO/100))<<"\n";
-        snap->add((uint8_t)((player.getNitroAmmount()*MAXNITRO)/100));
+        std::cerr<< "nitro :"<<(int) ((uint8)(player.getNitroAmmount()*100/MAXNITRO))<<"\n";
+        snap->add( (uint8)( (player.getNitroAmmount()*100)/MAXNITRO));
     }
     return snap;
 }
