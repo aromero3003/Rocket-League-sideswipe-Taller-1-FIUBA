@@ -29,6 +29,8 @@ class World{
 
         void sounds(SoundManager& soundManager);
 
+        void replay(TextureManager& textureManager, SoundManager& soundManager);
+
         World();
 
         //float bytesToInt(std::vector<char>& data, int pos);

@@ -124,12 +124,34 @@ void World::sounds(SoundManager& soundManager){
     }
 }
 
+void World::replay(TextureManager& textureManager, SoundManager& soundManager){
+    textureManager.renderer.Copy(textureManager.goal_sign,
+                                NullOpt,
+                                Rect(textureManager.renderer.GetOutputWidth()/2-200,
+                                    textureManager.renderer.GetOutputHeight()/4-100,
+                                    400,
+                                    200));
+    textureManager.renderer.Copy(textureManager.replay_sign,
+                                NullOpt,
+                                Rect(120,
+                                    textureManager.renderer.GetOutputHeight()-225,
+                                    150,
+                                    100));
+    if(!soundManager.mixer.IsChannelPlaying(6))
+        soundManager.mixer.PlayChannel(6,soundManager.goal_sound,0);
+}
+
+
 void World::draw(TextureManager& textureManager, SoundManager& soundManager){
 
     std::lock_guard<std::mutex> lock(mutex);
-    
+
     //Show court, always the same
     show_court(textureManager);
+
+    //replay
+    if (this->goal)
+        replay(textureManager, soundManager);
 
     //Show all cars
     show_cars(textureManager, soundManager);

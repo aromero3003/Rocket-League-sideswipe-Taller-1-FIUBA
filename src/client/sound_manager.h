@@ -9,6 +9,7 @@ class SoundManager {
     SDL2pp::Chunk ingition_sound;
 	SDL2pp::Chunk ball_sound;
 	SDL2pp::Chunk nitro_sound;
+    SDL2pp::Chunk goal_sound;
 
     SoundManager();
 
