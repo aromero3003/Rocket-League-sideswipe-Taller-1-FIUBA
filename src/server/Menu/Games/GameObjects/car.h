@@ -14,6 +14,8 @@
 #include "box2d/box2d.h"
 
 enum { LEFT, RIGHT };
+typedef enum {NO_SENSOR, BACK_SENSOR, DOWN_SENSOR, FRONT_SENSOR} sensor_t;
+
 
 class Car {
  private:
@@ -22,8 +24,12 @@ class Car {
   b2Body *wheel2;
   b2WheelJoint *damper1;
   b2WheelJoint *damper2;
+
   bool orientation;
+  sensor_t active_sensor;
   uint16_t nitro_cant;
+  
+
   b2Vec2 initialPosition;
   bool onSurface(bool strictly_touching);
 
