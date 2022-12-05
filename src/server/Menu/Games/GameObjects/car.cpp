@@ -187,4 +187,4 @@ const b2Vec2 Car::getPosition() { return chassis->GetPosition(); }
 
 const float Car::getAngle() { return chassis->GetAngle(); }
 
-const uint8_t Car::getNitroAmmount() { return this->nitro_cant; }
+const uint16_t Car::getNitroAmmount() { return this->nitro_cant; }
