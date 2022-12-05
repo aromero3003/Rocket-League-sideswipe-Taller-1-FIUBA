@@ -20,5 +20,6 @@ void ProtocolRecv::run() {
     }
   } catch (const LibError& err) {
       std::cerr<< "recv closed"<<this->id<<"\n";
+      eventQueueRef.close();
   }
 }

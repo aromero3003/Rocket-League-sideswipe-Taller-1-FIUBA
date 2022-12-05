@@ -13,8 +13,10 @@
 GameLogic::GameLogic(size_t cant_players)
     : world(b2Vec2(0.0f, -GRAVITY)),
       ball(this->world, SCENARIO_HALF_WIDTH + 6.0f, -SCENARIO_HEIGHT / 2.0f),
-      goal(0),
-      time_left(180.0f){
+      goal(false),
+      time_left(180.0f),
+      red_score(0),
+      blue_score(0){
   // WORLD
 
   b2Vec2 scenario_borders[SCENARIO_BORDERS];
@@ -85,11 +87,13 @@ void GameLogic::step() {
     }
 
     if (ball.getPosition().x < 6.0f - BALL_RADIUS) {
-        goal = 2;
+        goal = true;
+        red_score++;
     } else if (ball.getPosition().x > SCENARIO_WIDTH + 6.0f + BALL_RADIUS) {
-        goal = 1;
+        goal = true;
+        blue_score++;
     } else {
-        goal = 0;
+      goal = false;
     }
     // std::cout << std::cos(this->players[0].getAngle()) << "      " <<
     // cos(this->players[1].getAngle()) << std::endl; std::cout <<

@@ -23,10 +23,13 @@ void ProtocolSend::sendInfo(size_t id) {
 
 //en el caso de snap vacio cierro el bucle run
 void ProtocolSend::sendResponse(std::vector<uint8_t>& response) {
-
+  
   if (response.size()>0) {
     skt.sendall(response.data(), response.size(), &was_closed);
+    if(was_closed) throw LibError(errno, "socket cerrado" );
   } else {throw QueueEx();}
+
+
 }
 
 void ProtocolSend::run() {
@@ -34,13 +37,13 @@ void ProtocolSend::run() {
     while (!skt.isClosed()) {
       sendResponse(snapEventQueue.pop()->getMsg());
     }
+  }catch (const LibError& err) {
+
+      std::cerr<< "send closed\n";
+      
   }catch (const QueueEx &e) {
 
       std::cerr<< "queue closed\n";
 
-  } catch (const LibError& err) {
-
-      std::cerr<< "send closed\n";
-
-  }
+  } 
 }

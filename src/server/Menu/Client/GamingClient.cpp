@@ -25,7 +25,7 @@ bool GamingClient::isDisconect() {
   return skt.isClosed();  // refactor
 }
 void GamingClient::disconect() {
-  this->skt.shutdown(2);
+  if(!skt.isClosed())this->skt.shutdown(2);
 
 
 }
