@@ -9,7 +9,7 @@ ProtocolSend::ProtocolSend(
     std::size_t cant_players, size_t o_id)
     : skt(o_skt), snapEventQueue(snapEventQueuePtr), was_closed(false),id(o_id) {
   sendInfo(cant_players);
-  //sendInfo(o_id);
+  sendInfo(o_id);
 }
 
 ProtocolSend::~ProtocolSend(){
