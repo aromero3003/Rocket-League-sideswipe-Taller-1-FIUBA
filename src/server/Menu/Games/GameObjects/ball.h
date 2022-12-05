@@ -22,7 +22,7 @@ class Ball {
   const b2Vec2 getPosition();
   const float getAngle();
   const bool isColliding();
-  void setInitialPos();
+  void reset();
   // getSnapshotData
 
   void applyRedShot(b2Vec2 hitDirection);

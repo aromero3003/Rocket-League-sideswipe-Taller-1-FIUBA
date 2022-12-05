@@ -55,9 +55,9 @@ GameLogic::GameLogic(size_t cant_players)
         i <= cant_players / 2);
   }
 }
-void GameLogic::setInitianPos(){
-  for (auto car : this->players) car.setInitialPos();
-  ball.setInitialPos();
+void GameLogic::reset(){
+  for (auto car : this->players) car.reset();
+  ball.reset();
 }
 void GameLogic::jump_player(size_t id) { this->players[id].jump(); }
 

@@ -41,7 +41,7 @@ class Car {
   const float getAngle();
   const uint8_t getOrientation();
   const uint16_t getNitroAmmount();
-  void setInitialPos();
+  void reset();
   bool has_jumped;
   double time_elapsed;
   bool nitro;

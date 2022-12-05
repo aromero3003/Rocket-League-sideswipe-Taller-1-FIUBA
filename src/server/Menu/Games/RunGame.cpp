@@ -90,7 +90,7 @@ void RunGame::sendReplay(){
       replayQueue.pop();
       usleep(1000000 / 120);
     }
-    this->gameLogic.setInitianPos();
+    this->gameLogic.reset();
 }
 void RunGame::endGame(){
     //send info()

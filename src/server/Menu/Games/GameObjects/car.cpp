@@ -157,9 +157,9 @@ void Car::boost() {
 }
 
 void Car::update() {
-  if (nitro && nitro_cant>0) 
+  if (nitro && nitro_cant>0)
     nitro_cant--;
- 
+
   if (!nitro && nitro_cant<MAXNITRO)
     nitro_cant++;
   if (nitro_cant==0) nitro=false;
@@ -174,11 +174,10 @@ void Car::update() {
       }
   }
 }
-void Car::setInitialPos(){ 
+void Car::reset(){
   this->chassis->SetTransform(initialPosition,0);
   this->chassis->SetAngularVelocity(0);
-  b2Vec2 aux(0,0);
-  this->chassis->SetLinearVelocity(aux); 
+  this->chassis->SetLinearVelocity(b2Vec2(0,0));
 }
 
 const uint8_t Car::getOrientation() { return this->orientation; }

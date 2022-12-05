@@ -34,12 +34,11 @@ const b2Vec2 Ball::getPosition() { return this->ball->GetPosition(); }
 
 const float Ball::getAngle() { return this->ball->GetAngle(); }
 
-void Ball::setInitialPos(){ 
+void Ball::reset(){ 
   this->ball->SetTransform(initialPosition,0); 
   this->ball->SetAngularVelocity(0);
   b2Vec2 aux(0,0);
   this->ball->SetLinearVelocity(aux);
-  
 }
 
 const bool Ball::isColliding() {
@@ -64,6 +63,3 @@ void Ball::applyGoldShot(b2Vec2 hitDirection) {
     this->ball->ApplyLinearImpulseToCenter(hitDirection, true);
 }
 
-void Ball::transform(b2Vec2 position, float angle) {
-    this->ball->SetTransform(position, angle);
-}
