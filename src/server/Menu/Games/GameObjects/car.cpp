@@ -178,6 +178,8 @@ void Car::reset(){
   this->chassis->SetTransform(initialPosition,0);
   this->chassis->SetAngularVelocity(0);
   this->chassis->SetLinearVelocity(b2Vec2(0,0));
+  this->nitro_cant = 0xff;
+  this->nitro = false;
 }
 
 const uint8_t Car::getOrientation() { return this->orientation; }
