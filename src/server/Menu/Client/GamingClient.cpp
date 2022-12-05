@@ -21,14 +21,13 @@ void GamingClient::start() {
 }
 
 bool GamingClient::isDisconect() {
-
-  return skt.isClosed();  // refactor
+  return skt.isClosed();  
 }
+
 void GamingClient::disconect() {
   if(!skt.isClosed())this->skt.shutdown(2);
-
-
 }
+
 GamingClient::~GamingClient() { 
   if (!isDisconect()) disconect(); 
   protocolSend.join();

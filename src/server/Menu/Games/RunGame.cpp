@@ -61,6 +61,8 @@ void RunGame::run() {
       //revizo si la jugada termino en goal
       //si lo fue  mando la repe
       if(snap->isGoal()) this->sendReplay();
+
+      if (snap->isTimeZero()) this->endGame();
       usleep(1000000 / 120);
     }
   } catch (const QueueEx &e) {
@@ -89,5 +91,9 @@ void RunGame::sendReplay(){
       usleep(1000000 / 120);
     }
     this->gameLogic.setInitianPos();
+}
+void RunGame::endGame(){
+    //send info()
+    this->close();
 }
 

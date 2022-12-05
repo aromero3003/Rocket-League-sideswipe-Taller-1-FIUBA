@@ -83,7 +83,7 @@ void GameLogic::step() {
 
     for (Car &player : this->players) {
         if (player.nitro == true) player.boost();
-            player.update();
+        player.update();
     }
 
     if (ball.getPosition().x < 6.0f - BALL_RADIUS) {
@@ -129,6 +129,7 @@ std::shared_ptr<SnapShot> GameLogic::getSnap() {
         snap->add(player.getAngle() );
         snap->add(player.getOrientation());
         snap->add((uint8_t)player.nitro);// isNitroOn());
+        //std::cerr<< "nitro :"<< static_cast<uint16_t>(player.getNitroAmmount())<<"\n";
         snap->add((uint8_t)player.getNitroAmmount());
     }
     return snap;

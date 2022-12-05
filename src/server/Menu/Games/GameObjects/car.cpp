@@ -8,7 +8,7 @@
 #include "Constants.h"
 
 Car::Car(b2World &world, const b2Vec2 &position, bool orientation)
-    : orientation(orientation) ,initialPosition(position){
+    : orientation(orientation),nitro_cant(MAXNITRO) ,initialPosition(position){
   float x = position.x, y = position.y;
   {
     b2BodyDef chassis_def;
@@ -129,7 +129,11 @@ void Car::brake() {
   this->chassis->ApplyLinearImpulseToCenter(opossite_vector, true);
 }
 
-void Car::activate_nitro() { this->nitro = true; }
+void Car::activate_nitro() { 
+  if (nitro_cant>0){
+    this->nitro = true; 
+  }
+}
 
 void Car::deactivate_nitro() { this->nitro = false; }
 
@@ -153,6 +157,12 @@ void Car::boost() {
 }
 
 void Car::update() {
+  if (nitro && nitro_cant>0) 
+    nitro_cant--;
+ 
+  if (!nitro && nitro_cant<100)
+    nitro_cant++;
+  if (nitro_cant==0) nitro=false;
   b2Vec2 position(this->chassis->GetPosition());
   float angle = this->chassis->GetAngle();
   if (position.y < -SCENARIO_HEIGHT + 1.4f) {

@@ -28,6 +28,7 @@ class RunGame : public Thread {
   RunGame(std::size_t cantplayers);
   ProtectedQueue<std::shared_ptr<GameCommand> >& getRefGamingQueue();
   void addPlayer(std::unique_ptr<GamingClient>&& player);
+  void endGame();
   void close();
   virtual void run() override;
   virtual ~RunGame() ;

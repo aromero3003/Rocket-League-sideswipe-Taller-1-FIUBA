@@ -23,6 +23,7 @@
 
 // Car
 #define CAR_BITS 0x1
+#define MAXNITRO 200
 
 // Largo de Replay
 #define LREPLAY 1200
