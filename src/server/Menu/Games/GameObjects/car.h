@@ -23,7 +23,7 @@ class Car {
   b2WheelJoint *damper1;
   b2WheelJoint *damper2;
   bool orientation;
-  uint8_t nitro_cant;
+  uint16_t nitro_cant;
   b2Vec2 initialPosition;
   bool onSurface(bool strictly_touching);
 
@@ -40,7 +40,7 @@ class Car {
   const b2Vec2 getPosition();
   const float getAngle();
   const uint8_t getOrientation();
-  const uint8_t getNitroAmmount();
+  const uint16_t getNitroAmmount();
   void setInitialPos();
   bool has_jumped;
   double time_elapsed;
