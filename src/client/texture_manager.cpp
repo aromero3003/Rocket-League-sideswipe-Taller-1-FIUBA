@@ -8,7 +8,9 @@ TextureManager::TextureManager(Window& window):renderer(window, -1, SDL_RENDERER
                                 court(renderer, "../data/court.png"),
                                 nitro(renderer, "../data/complete_nitro.png"),
                                 goal_sign(renderer, "../data/goal_sign.png"),
-                                replay_sign(renderer, "../data/replay_sign.png"){
+                                replay_sign(renderer, "../data/replay_sign.png"),
+                                time_font("../data/Vera.ttf", 30),
+                                score_font("../data/Vera.ttf",80){
 
 }
 

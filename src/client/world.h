@@ -23,6 +23,8 @@ class World{
 
         void show_court(TextureManager& textureManager);
 
+        void show_scores_and_time(TextureManager& textureManager);
+
         void show_cars(TextureManager& textureManager, SoundManager& soundManager);
 
         void show_ball(TextureManager& textureManager);

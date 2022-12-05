@@ -25,6 +25,7 @@ void Client_interface::run_client(){
 	//initialize SDL
 	SDL sdl(SDL_INIT_VIDEO);
     Window window("Rocket League 2D",SDL_WINDOWPOS_UNDEFINED,SDL_WINDOWPOS_UNDEFINED,1040, 600,0);
+	SDLTTF ttf;
 
 	TextureManager textureManager(window);
 	SoundManager soundManager;

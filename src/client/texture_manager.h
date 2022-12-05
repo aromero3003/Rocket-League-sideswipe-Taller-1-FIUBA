@@ -13,6 +13,10 @@ class TextureManager {
     SDL2pp::Texture nitro;
     SDL2pp::Texture goal_sign;
     SDL2pp::Texture replay_sign;
+
+    SDL2pp::Font time_font;
+    SDL2pp::Font score_font;
+
     TextureManager(SDL2pp::Window& window);
 
     ~TextureManager();

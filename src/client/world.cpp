@@ -141,6 +141,37 @@ void World::replay(TextureManager& textureManager, SoundManager& soundManager){
         soundManager.mixer.PlayChannel(6,soundManager.goal_sound,0);
 }
 
+void World::show_scores_and_time(TextureManager& textureManager){
+    std::string red_score, blue_score, time;
+    red_score = std::to_string(this->red_team_score);
+    blue_score = std::to_string(this->blue_team_score);
+    time = std::to_string(this->remaining_time);
+
+
+    Texture red_text_sprite(
+            textureManager.renderer,
+            textureManager.score_font.RenderText_Blended(red_score, SDL_Color{255, 0, 0, 255})
+        );
+    Texture blue_text_sprite(
+            textureManager.renderer,
+            textureManager.score_font.RenderText_Blended(blue_score, SDL_Color{0, 0, 255, 255})
+        );
+    Texture time_text_sprite(
+            textureManager.renderer,
+            textureManager.time_font.RenderText_Blended(time, SDL_Color{255, 255, 255, 255})
+        );
+
+    //show scores
+    textureManager.renderer.Copy(red_text_sprite, NullOpt, Rect(375, 120, red_text_sprite.GetWidth(), red_text_sprite.GetHeight()));
+    textureManager.renderer.Copy(blue_text_sprite, NullOpt, Rect(585, 120, blue_text_sprite.GetWidth(), blue_text_sprite.GetHeight()));
+    
+    //show time
+    textureManager.renderer.Copy(time_text_sprite, NullOpt, Rect(475, 150, time_text_sprite.GetWidth(), time_text_sprite.GetHeight()));
+
+
+    
+    std::cout << red_score << " " << blue_score << " " << time << std::endl;
+}
 
 void World::draw(TextureManager& textureManager, SoundManager& soundManager){
 
@@ -148,6 +179,9 @@ void World::draw(TextureManager& textureManager, SoundManager& soundManager){
 
     //Show court, always the same
     show_court(textureManager);
+
+    //Show scores and time
+    show_scores_and_time(textureManager);
 
     //replay
     if (this->goal)
