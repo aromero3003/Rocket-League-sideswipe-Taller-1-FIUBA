@@ -23,7 +23,7 @@ Ball::Ball(b2World& world, float x, float y) {
   ball_fd.restitution = 0.9f;
   ball_fd.restitutionThreshold = 1.0f;
   ball_fd.filter.categoryBits = BALL_BITS;
-  ball_fd.filter.maskBits = SCENARIO_BITS | CAR_BITS;
+  ball_fd.filter.maskBits = SCENARIO_BITS | CAR_BITS | BACK_SENSOR_BITS | FRONT_SENSOR_BITS | DOWN_SENSOR_BITS; 
   ball_fd.shape = &circle;
 
   this->ball = world.CreateBody(&ball_def);
