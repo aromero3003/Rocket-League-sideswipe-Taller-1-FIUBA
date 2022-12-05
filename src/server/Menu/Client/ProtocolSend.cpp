@@ -26,7 +26,7 @@ void ProtocolSend::sendResponse(std::vector<uint8_t>& response) {
   
   if (response.size()>0) {
     skt.sendall(response.data(), response.size(), &was_closed);
-    if(was_closed) throw LibError(errno, "socket cerrado" );
+    if(was_closed) skt.shutdown(2);
   } else {throw QueueEx();}
 
 
@@ -40,7 +40,7 @@ void ProtocolSend::run() {
   }catch (const LibError& err) {
 
       std::cerr<< "send closed\n";
-      
+
   }catch (const QueueEx &e) {
 
       std::cerr<< "queue closed\n";

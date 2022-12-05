@@ -21,7 +21,7 @@ bool Games::exists(const std::string& name,
 }
 void Games::startRungame(std::map<std::string, Game>::iterator gameNoStart) {
   allRunGames.push_back(gameNoStart->second.getRunGame());
-  allGames.extract(gameNoStart);
+  //allGames.extract(gameNoStart);
   allRunGames.back()->start();
 }
 
