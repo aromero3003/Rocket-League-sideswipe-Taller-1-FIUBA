@@ -13,6 +13,8 @@ class TextureManager {
     SDL2pp::Texture nitro;
     SDL2pp::Texture goal_sign;
     SDL2pp::Texture replay_sign;
+    SDL2pp::Texture blue_triangle;
+    SDL2pp::Texture red_triangle;
 
     SDL2pp::Font time_font;
     SDL2pp::Font score_font;
