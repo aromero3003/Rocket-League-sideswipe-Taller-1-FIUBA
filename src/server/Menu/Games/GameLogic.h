@@ -52,7 +52,7 @@ class GameLogic {
   // void move_release_player_down (size_t id);
   // void move_release_player_left (size_t id);
   // void move_release_player_right (size_t id);
-
+  void setInitianPos();
   void step();
   std::shared_ptr<SnapShot> getSnap();
 };

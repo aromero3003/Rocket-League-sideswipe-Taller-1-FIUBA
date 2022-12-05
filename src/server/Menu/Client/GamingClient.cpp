@@ -27,12 +27,12 @@ bool GamingClient::isDisconect() {
 void GamingClient::disconect() {
   this->skt.shutdown(2);
 
-  protocolSend.join();
-  protocolRecv.join(); 
-  std::cerr<< "se limpio los hilos\n";
+
 }
 GamingClient::~GamingClient() { 
   if (!isDisconect()) disconect(); 
-
+  protocolSend.join();
+  protocolRecv.join(); 
+  std::cerr<< "se limpio los hilos\n";
 
 }

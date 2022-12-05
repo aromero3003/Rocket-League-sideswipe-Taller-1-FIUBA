@@ -22,6 +22,7 @@ class ProtocolSend : public Thread {
   Socket& skt;
   BlockingQueue<std::shared_ptr<SnapShot>>& snapEventQueue;
   bool was_closed;
+  size_t id;
   void sendResponse(std::vector<uint8_t>& response);
   void sendInfo(std::size_t id);
  public:

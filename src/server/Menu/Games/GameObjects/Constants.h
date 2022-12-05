@@ -24,4 +24,7 @@
 // Car
 #define CAR_BITS 0x1
 
+// Largo de Replay
+#define LREPLAY 1200
+
 #endif

@@ -18,16 +18,7 @@ GameLogic::GameLogic(size_t cant_players)
   // WORLD
 
   b2Vec2 scenario_borders[SCENARIO_BORDERS];
-  /*
-  scenario_borders[0] = scenario_borders[11]  = b2Vec2(SCENARIO_HALF_WIDTH,
-  0.0f); scenario_borders[1] = scenario_borders[10]  =
-  b2Vec2(SCENARIO_HALF_WIDTH, 11.0f); scenario_borders[2] = scenario_borders[9]
-  = b2Vec2(SCENARIO_HALF_WIDTH + 6, 11.0f); scenario_borders[3] =
-  scenario_borders[8]  = b2Vec2(SCENARIO_HALF_WIDTH + 6, 19.0f);
-  scenario_borders[4] = scenario_borders[7] =
-  b2Vec2(SCENARIO_HALF_WIDTH, 19.0f); scenario_borders[5] = scenario_borders[6]
-  = b2Vec2(SCENARIO_HALF_WIDTH, SCENARIO_HEIGHT);
-  */
+
 
   scenario_borders[0] = b2Vec2(6.0f, 0.0f);
   scenario_borders[1] = b2Vec2(SCENARIO_WIDTH + 6.0f, 0.0f);
@@ -55,19 +46,6 @@ GameLogic::GameLogic(size_t cant_players)
   b2Body *scenario = world.CreateBody(&scn_bd);
   scenario->CreateFixture(&scn_fd);
 
-  //  PLAYERS
-  /*size_t mid = cant_players / 2;
-  float delta_x = (SCENARIO_WIDTH - 5.0f) / (cant_players + 1);
-  for (ssize_t i = -1; i > -mid; i--)
-      this->players.emplace_back(this->world, b2Vec2((float)i * delta_x, 1.0f));
-  for (size_t i = 0; i > -mid; i--)
-      this->players.emplace_back(this->world, b2Vec2((float)i * delta_x, 1.0f));
-      */
-  // creo solo dos jugadores
-  /*
-  this->players.emplace_back(this->world, b2Vec2(SCENARIO_HALF_WIDTH /2.0f
-  + 6.0f, -SCENARIO_HEIGHT + 2.0f)); this->players.emplace_back(this->world,
-  b2Vec2(SCENARIO_HALF_WIDTH * 3.0f / 2.0f, -SCENARIO_HEIGHT + 2.0f));*/
   float delta_x = (SCENARIO_WIDTH - 6.0f) / (float)cant_players;
   for (size_t i = 1; i <= cant_players; i++) {
     this->players.emplace_back(
@@ -75,7 +53,9 @@ GameLogic::GameLogic(size_t cant_players)
         i <= cant_players / 2);
   }
 }
-
+void GameLogic::setInitianPos(){
+  //for (auto car : this->players) car.setInitialPos();
+}
 void GameLogic::jump_player(size_t id) { this->players[id].jump(); }
 
 void GameLogic::move_player_left(size_t id) { this->players[id].moveLeft(); }
