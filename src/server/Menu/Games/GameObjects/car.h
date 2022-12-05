@@ -25,10 +25,13 @@ class Car {
   b2WheelJoint *damper1;
   b2WheelJoint *damper2;
 
+  b2Body *front_sensor;
+  b2Body *back_sensor;
+  b2Body *down_sensor;
+
   bool orientation;
   sensor_t active_sensor;
   uint16_t nitro_cant;
-  
 
   b2Vec2 initialPosition;
   bool onSurface(bool strictly_touching);

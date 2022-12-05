@@ -37,6 +37,64 @@ Car::Car(b2World &world, const b2Vec2 &position, bool orientation)
     this->chassis->CreateFixture(&chassis_fd);
   }
 
+    // Sensor
+  {
+      b2BodyDef sensordef;
+      sensordef.type = b2_dynamicBody;
+      sensordef.position.Set(position.x + 2.0f, position.y + 1.0f);
+      this->front_sensor = world.CreateBody(&sensordef);
+      sensordef.position.Set(position.x - 2.0f, position.y + 1.0f);
+      this->back_sensor = world.CreateBody(&sensordef);
+
+      sensordef.position.Set(position.x, position.y - 0.2f);
+      this->down_sensor = world.CreateBody(&sensordef);
+
+      b2PolygonShape square;
+      square.SetAsBox(0.2, 0.5f);
+
+      b2FixtureDef sensorfd;
+      sensorfd.shape = &square;
+      sensorfd.density = 0.001f;
+      sensorfd.isSensor = true;
+      sensorfd.filter.categoryBits = FRONT_SENSOR_BITS;
+      sensorfd.userData.pointer = reinterpret_cast<uintptr_t>(this);
+
+      this->front_sensor->CreateFixture(&sensorfd);
+
+      sensorfd.filter.categoryBits = BACK_SENSOR_BITS;
+      this->back_sensor->CreateFixture(&sensorfd);
+
+      square.SetAsBox(1.5, 0.2f);
+      sensorfd.filter.categoryBits = DOWN_SENSOR_BITS;
+      this->down_sensor->CreateFixture(&sensorfd);
+
+      b2PrismaticJointDef joint_def;
+      b2Vec2 axis(0.0f, 1.0f);
+      joint_def.Initialize(chassis, this->front_sensor, chassis->GetPosition(), b2Vec2(1.0f, 0.0f));
+      joint_def.motorSpeed = 0.0f;
+      joint_def.enableMotor = false;
+      joint_def.enableLimit = true;
+      joint_def.lowerTranslation = 0.0f;
+      joint_def.upperTranslation = 0.0f;
+      world.CreateJoint(&joint_def);
+
+      joint_def.Initialize(chassis, this->back_sensor, chassis->GetPosition(), b2Vec2(-1.0f, 0.0f));
+      joint_def.motorSpeed = 0.0f;
+      joint_def.enableMotor = false;
+      joint_def.enableLimit = true;
+      joint_def.lowerTranslation = 0.0f;
+      joint_def.upperTranslation = 0.0f;
+      world.CreateJoint(&joint_def);
+
+      joint_def.Initialize(chassis, this->down_sensor, chassis->GetPosition(), b2Vec2(0.0f, -0.5f));
+      joint_def.motorSpeed = 0.0f;
+      joint_def.enableMotor = false;
+      joint_def.enableLimit = true;
+      joint_def.lowerTranslation = 0.0f;
+      joint_def.upperTranslation = 0.0f;
+      world.CreateJoint(&joint_def);
+  }
+
   {
     b2CircleShape circle;
     circle.m_radius = 0.4f;
