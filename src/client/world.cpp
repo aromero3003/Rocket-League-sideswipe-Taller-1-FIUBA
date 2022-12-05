@@ -72,6 +72,7 @@ void World::update(std::vector<char>& data){
         std::cout << "nitroing: " << this->cars[i].nitro_flag << std::endl;
         std::cout << "nitro restante: " << this->cars[i].nitro_quantity << std::endl << std::endl;
 */
+std::cout << "nitro restante: " << (int)this->cars[i].nitro_quantity << std::endl << std::endl;
     }
 }
 
@@ -81,6 +82,9 @@ void World::draw(TextureManager& textureManager, SoundManager& soundManager){
 
     //Show court, always the same
     show_court(textureManager);
+
+    //nitro_bar
+    show_nitro_bar(textureManager);
 
     //Show scores and time
     show_scores_and_time(textureManager);
@@ -109,6 +113,24 @@ void World::show_court(TextureManager& textureManager){
             0,
             textureManager.renderer.GetOutputWidth(), 
             textureManager.renderer.GetOutputHeight()));
+}
+
+void World::show_nitro_bar(TextureManager& textureManager){
+    textureManager.renderer.Copy(
+        textureManager.nitro_bar,
+        NullOpt,
+        Rect(20*this->cars[my_id].x_position - 25,
+            (-20)*this->cars[my_id].y_position - 25,
+            50,
+            10));
+    
+    textureManager.renderer.Copy(
+        textureManager.remaining_nitro,
+        NullOpt,
+        Rect(20*this->cars[my_id].x_position - 25,
+            (-20)*this->cars[my_id].y_position - 25,
+            this->cars[my_id].nitro_quantity / 2,
+            10));
 }
 
 void World::show_cars(TextureManager& textureManager, SoundManager& soundManager){
