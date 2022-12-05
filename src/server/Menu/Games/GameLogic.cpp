@@ -7,8 +7,10 @@
 #include <cstdint>
 #include <iostream>
 #include <memory>
+#include <string>
 
 #include "GameObjects/Constants.h"
+#include "GameObjects/car.h"
 
 GameLogic::GameLogic(size_t cant_players)
     : world(b2Vec2(0.0f, -GRAVITY)),
@@ -51,7 +53,7 @@ GameLogic::GameLogic(size_t cant_players)
   float delta_x = (SCENARIO_WIDTH ) / (float)(cant_players+1);
   for (size_t i = 1; i <= cant_players; i++) {
     this->players.emplace_back(
-        this->world, b2Vec2(6.0f+delta_x * i, -SCENARIO_HEIGHT + 2.0f),
+        this->world, b2Vec2(6.0f+delta_x * i, -SCENARIO_HEIGHT),
         i <= cant_players / 2);
   }
 }
@@ -59,15 +61,14 @@ void GameLogic::reset(){
   for (auto car : this->players) car.reset();
   ball.reset();
 }
+
 void GameLogic::jump_player(size_t id) { this->players[id].jump(); }
 
 void GameLogic::move_player_left(size_t id) { this->players[id].moveLeft(); }
 
 void GameLogic::move_player_right(size_t id) { this->players[id].moveRight(); }
 
-void GameLogic::move_player_up(size_t id) {
-  //    this->players[id].moveRight();
-}
+void GameLogic::move_player_up(size_t id) {}
 
 void GameLogic::brake_player(size_t id) { this->players[id].brake(); }
 
@@ -95,10 +96,6 @@ void GameLogic::step() {
     } else {
       goal = false;
     }
-    // std::cout << std::cos(this->players[0].getAngle()) << "      " <<
-    // cos(this->players[1].getAngle()) << std::endl; std::cout <<
-    // this->players[0].getPosition().y << "      " <<
-    // this->players[1].getPosition().y  << '\n'<< std::endl;
     this->world.Step(TIME_STEP, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
     this->time_left -= TIME_STEP;
 }
