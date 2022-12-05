@@ -29,18 +29,16 @@ using namespace SDL2pp;
 class Client_interface{
 
     private:
-    World* world;
-    Socket* socket;
-    BlockingQueue<int>* pq;
+    World world;
+    Socket socket;
+    BlockingQueue<int> pq;
 
     public:
         Client_interface(const char *serv, const char *port);
 
         void run_client();
 
-        bool handle_events(BlockingQueue<int>* pq, bool& going_right, bool& going_left, bool& nitroing, bool& jumping);
-
-        //void render_screen_and_sounds(std::vector<Texture>& car_textures, Texture& ball, Texture& court, Texture& nitro, Chunk& nitro_sound, Chunk& ball_sound);
+        bool handle_events(BlockingQueue<int>& pq, bool& going_right, bool& going_left, bool& nitroing, bool& jumping);
 
         void render_screen_and_sounds(TextureManager& textureManager, SoundManager& soundManager);
 

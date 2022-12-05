@@ -2,18 +2,18 @@
 #include <cstdint>
 #include <string>
 
-SenderThread::SenderThread(Socket* s, BlockingQueue<int>* pq) {
- this->socket = s;
- this->pq = pq;
+SenderThread::SenderThread(Socket& s, BlockingQueue<int>& pq):
+                            socket(s),
+                            pq(pq) {
 }
 
 void SenderThread::run() {
     int8_t action = 0;
     bool closed = false;
     while (1){
-        action = pq->pop();
+        action = pq.pop();
         if (action == 99) break;
-        this->socket->sendall(&action,1, &closed);
+        this->socket.sendall(&action,1, &closed);
     }
 }
 

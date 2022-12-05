@@ -7,8 +7,8 @@
 
 class SenderThread : public Thread {
     private:
-    BlockingQueue<int>* pq;
-    Socket* socket;
+    BlockingQueue<int>& pq;
+    Socket& socket;
     std::thread t;
     bool alive;
 
@@ -16,7 +16,7 @@ class SenderThread : public Thread {
     void run() override;
 
     public:
-    SenderThread(Socket* s, BlockingQueue<int>* pq);
+    SenderThread(Socket& s, BlockingQueue<int>& pq);
 
     bool is_alive();
 

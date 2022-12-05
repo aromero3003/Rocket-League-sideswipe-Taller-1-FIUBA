@@ -14,8 +14,8 @@
 
 class ReceiverThread : public Thread {
     private:
-    Socket* socket;
-    World* world;
+    Socket& socket;
+    World& world;
     std::thread t;
     bool alive;
     int n_cars;
@@ -24,7 +24,7 @@ class ReceiverThread : public Thread {
     void run() override;
 
     public:
-    ReceiverThread(Socket* s, World* world, int n);
+    ReceiverThread(Socket& s, World& w, int n);
 
     bool is_alive();
 

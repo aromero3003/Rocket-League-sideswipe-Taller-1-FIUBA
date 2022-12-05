@@ -18,13 +18,13 @@
 class MenuProtocol
 {
 private:
-    Socket* skt;
+    Socket& skt;
     bool was_closed;
 
     std::stringstream reciveResponse();
     void sendCommand(std::string&& response);
 public:
-    MenuProtocol(Socket* s);
+    MenuProtocol(Socket& s);
     void run();
 
 };

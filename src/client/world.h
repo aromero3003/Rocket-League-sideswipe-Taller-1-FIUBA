@@ -21,6 +21,14 @@ class World{
         bool ball_collision;
         bool car_collision;
 
+        void show_court(TextureManager& textureManager);
+
+        void show_cars(TextureManager& textureManager, SoundManager& soundManager);
+
+        void show_ball(TextureManager& textureManager);
+
+        void sounds(SoundManager& soundManager);
+
         World();
 
         //float bytesToInt(std::vector<char>& data, int pos);

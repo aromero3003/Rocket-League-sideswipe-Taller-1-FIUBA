@@ -21,7 +21,7 @@ class Menu : public QMainWindow
     Q_OBJECT
 
 public:
-    Menu(Socket* s, QWidget *parent = nullptr);
+    Menu(Socket& s, QWidget *parent = nullptr);
     ~Menu();
 
 private slots:
@@ -33,6 +33,6 @@ private slots:
 
 private:
     Ui::Menu *ui;
-    Socket* socket;
+    Socket& socket;
 };
 #endif // MENU_H

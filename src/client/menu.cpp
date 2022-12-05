@@ -2,12 +2,13 @@
 #include "./ui_menu.h"
 
 
-Menu::Menu(Socket* s, QWidget *parent)
+Menu::Menu(Socket& s, QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::Menu)
+    , socket(s)
+
 {
     ui->setupUi(this);
-    this->socket = s;
 }
 
 Menu::~Menu()
@@ -26,16 +27,16 @@ void Menu::on_joinMatchButton_clicked(){
     bool was_closed = false;
     std::string command = "UNIR " + match;
     int8_t length = command.size();
-    this->socket->sendall(&length,1, &was_closed);
-    this->socket->sendall(&(command[0]),length, &was_closed);
+    this->socket.sendall(&length,1, &was_closed);
+    this->socket.sendall(&(command[0]),length, &was_closed);
 
 
     //receive error code
     length = 0;
-    this->socket->recvall(&length, sizeof(length), &was_closed);
+    this->socket.recvall(&length, sizeof(length), &was_closed);
     std::vector<char> buff;
     buff.resize(length);
-    this->socket->recvall(buff.data(), length, &was_closed);
+    this->socket.recvall(buff.data(), length, &was_closed);
     std::string sresp(buff.data(), buff.size());
     if(sresp == "OK"){
          QApplication::exit();
@@ -53,16 +54,16 @@ void Menu::on_createButton_clicked()
     
     //SEND "CREAR ", MATCH NAME AND N PLAYERS
     int8_t length = name.size();
-    this->socket->sendall(&length,1, &was_closed);
+    this->socket.sendall(&length,1, &was_closed);
     std::cout << name.toStdString() << std::endl;
-    this->socket->sendall(&(name.toStdString()[0]),length, &was_closed);
+    this->socket.sendall(&(name.toStdString()[0]),length, &was_closed);
 
     //RECEIVE ERROR CODE
     length = 0;
-    this->socket->recvall(&length, sizeof(length), &was_closed);
+    this->socket.recvall(&length, sizeof(length), &was_closed);
     std::vector<char> buff;
     buff.resize(length);
-    this->socket->recvall(buff.data(), length, &was_closed);
+    this->socket.recvall(buff.data(), length, &was_closed);
     std::string sresp(buff.data(), buff.size());
     if(sresp == "OK"){
          QApplication::exit();
@@ -76,15 +77,15 @@ void Menu::on_refreshButton_clicked(){
     bool was_closed = false;
     std::string listar_command = "LISTAR";
     int8_t length = listar_command.size();
-    this->socket->sendall(&length,1, &was_closed);
-    this->socket->sendall(&(listar_command[0]),length, &was_closed);
+    this->socket.sendall(&length,1, &was_closed);
+    this->socket.sendall(&(listar_command[0]),length, &was_closed);
     
     //RECEIVE ALL MATCHES IN STRING
     length = 0;
-    this->socket->recvall(&length, sizeof(length), &was_closed);
+    this->socket.recvall(&length, sizeof(length), &was_closed);
     std::vector<char> buff;
     buff.resize(length);
-    this->socket->recvall(buff.data(), length, &was_closed);
+    this->socket.recvall(buff.data(), length, &was_closed);
     std::string sresp(buff.data(), buff.size());
 
     //CLEAR LIST OF MATCHES

@@ -6,11 +6,9 @@
 #include <chrono>
 #include <string>
 
-Client_interface::Client_interface(const char *serv, const char *port){
+Client_interface::Client_interface(const char *serv, const char *port):
+									socket(serv,port){
 
-	this->world = new World();
-	this->socket = new Socket(serv, port);
-	this->pq = new BlockingQueue<int>();
 }
 
 void Client_interface::run_client(){
@@ -20,9 +18,9 @@ void Client_interface::run_client(){
 
 	uint8_t n_cars;
 	bool closed = false;
-	this->socket->recvall(&n_cars, 1, &closed);
+	this->socket.recvall(&n_cars, 1, &closed);
 	//create N cars and car_textures
-	this->world->create_cars(n_cars);
+	this->world.create_cars(n_cars);
 
 	//initialize SDL
 	SDL sdl(SDL_INIT_VIDEO);
@@ -70,56 +68,55 @@ void Client_interface::run_client(){
 
 void Client_interface::render_screen_and_sounds(TextureManager& textureManager, SoundManager& soundManager){
 		textureManager.renderer.Clear();
-		this->world->draw(textureManager, soundManager);
+		this->world.draw(textureManager, soundManager);
 		textureManager.renderer.Present();
 }
 
-bool Client_interface::handle_events(BlockingQueue<int>* pq, bool& going_right, bool& going_left, bool& nitroing, bool& jumping) {
+bool Client_interface::handle_events(BlockingQueue<int>& pq, bool& going_right, bool& going_left, bool& nitroing, bool& jumping) {
 		SDL_Event event;
 		while (SDL_PollEvent(&event)) {
 			if (event.type == SDL_QUIT) { 
-				delete this->socket;
 				return false;
 				} else if (event.type == SDL_KEYDOWN) {
 					switch (event.key.keysym.sym) {
 						case SDLK_ESCAPE: case SDLK_q:
-								pq->push(QUIT);
-								this->socket->shutdown(2);
-								this->socket->close();
+								pq.push(QUIT);
+								this->socket.shutdown(2);
+								this->socket.close();
 								return false;
 						case SDLK_RIGHT:
-                            if(!going_right) pq->push(PRESS_RIGHT);
+                            if(!going_right) pq.push(PRESS_RIGHT);
                             going_right = true;
 							break;
 						case SDLK_LEFT: 
-							if(!going_left) pq->push(PRESS_LEFT);
+							if(!going_left) pq.push(PRESS_LEFT);
                             going_left = true;
 							break;
                         case SDLK_LSHIFT: 
-							if(!nitroing) pq->push(PRESS_SHIFT);
+							if(!nitroing) pq.push(PRESS_SHIFT);
                             nitroing = true;
 							break;
 						case SDLK_SPACE:
-							if(!jumping) pq->push(PRESS_SPACE);
+							if(!jumping) pq.push(PRESS_SPACE);
                             jumping = true;
 							break;
 						}
 			} else if (event.type == SDL_KEYUP) {
 				switch (event.key.keysym.sym) {
 					case SDLK_RIGHT: 
-						pq->push(RELEASE_RIGHT);
+						pq.push(RELEASE_RIGHT);
                         going_right = false;
 						break;
 					case SDLK_LEFT: 
-						pq->push(RELEASE_LEFT);
+						pq.push(RELEASE_LEFT);
                         going_left = false;
 						break;
 					case SDLK_SPACE:
-						pq->push(RELEASE_SPACE);
+						pq.push(RELEASE_SPACE);
                         jumping = false;
 						break;
 					case SDLK_LSHIFT:
-						pq->push(RELEASE_SHIFT);
+						pq.push(RELEASE_SHIFT);
 						nitroing = false;
 						break;
 				}
@@ -130,6 +127,4 @@ bool Client_interface::handle_events(BlockingQueue<int>* pq, bool& going_right, 
 
 
 Client_interface::~Client_interface(){
-	delete this->pq;
-	delete this->socket;
 }

@@ -71,15 +71,18 @@ void World::update(std::vector<char>& data){
     }
 }
 
-void World::draw(TextureManager& textureManager, SoundManager& soundManager){
+void World::show_court(TextureManager& textureManager){
+    textureManager.renderer.Copy(
+        textureManager.court, 
+        NullOpt, 
+        Rect(0,0,textureManager.renderer.GetOutputWidth(), textureManager.renderer.GetOutputHeight()));
+}
 
-    std::lock_guard<std::mutex> lock(mutex);
+void World::show_cars(TextureManager& textureManager, SoundManager& soundManager){
+
     int flip;
     int nitro_phase = (SDL_GetTicks()/100)%5;
-    //Show court, always the same
-    textureManager.renderer.Copy(textureManager.court, NullOpt, Rect(0,0,textureManager.renderer.GetOutputWidth(), textureManager.renderer.GetOutputHeight()));
 
-    //Show all cars
     for(size_t i = 0; i < this->cars.size(); i++){
         textureManager.renderer.Copy(textureManager.car_texture,
                     Rect(0,(1000/12)*i,250,1000/12),
@@ -104,17 +107,39 @@ void World::draw(TextureManager& textureManager, SoundManager& soundManager){
         }
         } else {soundManager.mixer.HaltChannel(i);}
     }
-    //Show ball
-    textureManager.renderer.Copy(textureManager.ball, NullOpt, Rect(20*this->ball.x_position -20,(-20)*this->ball.y_position-20, 40, 40),this->ball.angle);
+}
 
+void World::show_ball(TextureManager& textureManager){
+    textureManager.renderer.Copy(
+        textureManager.ball, 
+        NullOpt, 
+        Rect(20*this->ball.x_position -20,(-20)*this->ball.y_position-20, 40, 40),
+        this->ball.angle); 
+}
+
+void World::sounds(SoundManager& soundManager){
     if(this->ball_collision && !soundManager.mixer.IsChannelPlaying(7)){
         soundManager.mixer.PlayChannel(7, soundManager.ball_sound,0);
         this->ball_collision = false;
     }
+}
 
-    if(this->goal){
-        this->goal = false;
-    }
+void World::draw(TextureManager& textureManager, SoundManager& soundManager){
+
+    std::lock_guard<std::mutex> lock(mutex);
+    
+    //Show court, always the same
+    show_court(textureManager);
+
+    //Show all cars
+    show_cars(textureManager, soundManager);
+    
+    //Show ball
+    show_ball(textureManager);
+
+    //sounds
+    sounds(soundManager);
+
 }
 
 void World::print(char *data){
