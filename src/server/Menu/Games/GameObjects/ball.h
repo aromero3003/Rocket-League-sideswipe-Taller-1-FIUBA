@@ -16,6 +16,8 @@ class Ball {
   shot_t current_shot_state;
   float shot_state_counter;
 
+  void applyShot(Car &hitter, shot_t shot);
+
  public:
   Ball(b2World &world, float x, float y);
   const b2Vec2 getPosition();
@@ -26,9 +28,9 @@ class Ball {
   std::queue<Car*> redTeamHitters;
   std::queue<Car*> blueTeamHitters;
 
-  void applyRedShot(b2Vec2 hitDirection);
-  void applyGoldShot(b2Vec2 hitDirection);
-  void applyPurpleShot(b2Vec2 hitDirection);
+  void applyRedShot(Car &hitter);
+  void applyGoldShot(Car &hitter);
+  void applyPurpleShot(Car &hitter);
 
   shot_t getCurrentShot();
   void transform(b2Vec2 position, float angle);

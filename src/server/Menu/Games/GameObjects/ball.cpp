@@ -24,6 +24,7 @@ Ball::Ball(b2World& world, float x, float y) {
   ball_fd.restitutionThreshold = 1.0f;
   ball_fd.filter.categoryBits = BALL_BITS;
   ball_fd.filter.maskBits = SCENARIO_BITS | CAR_BITS | BACK_SENSOR_BITS | FRONT_SENSOR_BITS | DOWN_SENSOR_BITS; 
+  ball_fd.userData.pointer = reinterpret_cast<uintptr_t>(this);
   ball_fd.shape = &circle;
 
   this->ball = world.CreateBody(&ball_def);
@@ -51,21 +52,29 @@ const bool Ball::isColliding() {
   return this->current_collisions > prev_collitions;
 }
 
-void Ball::applyRedShot(b2Vec2 hitDirection) {
+void Ball::applyShot(Car &hitter, shot_t shot) {
+    b2Vec2 hitDirection = this->getPosition() - hitter.getPosition();
+    hitDirection.Normalize();
+    hitDirection *= shot == PURPLE_SHOT ? 20.0f : 40.0f;
+
     this->ball->ApplyLinearImpulseToCenter(hitDirection, true);
-    this->current_shot_state = RED_SHOT;
+    this->current_shot_state = shot;
+
+    //this->registerHit(&hitter);
+}
+
+void Ball::applyRedShot(Car &hitter) {
+    this->applyShot(hitter, RED_SHOT);
     std::cout << "REDSHOT" << std::endl;
 }
 
-void Ball::applyPurpleShot(b2Vec2 hitDirection) {
-    this->ball->ApplyLinearImpulseToCenter(hitDirection, true);
-    this->current_shot_state = PURPLE_SHOT;
+void Ball::applyPurpleShot(Car &hitter) {
+    this->applyShot(hitter, PURPLE_SHOT);
     std::cout << "purple" << std::endl;
 }
 
-void Ball::applyGoldShot(b2Vec2 hitDirection) {
-    this->ball->ApplyLinearImpulseToCenter(hitDirection, true);
-    this->current_shot_state = GOLD_SHOT;
+void Ball::applyGoldShot(Car &hitter) {
+    this->applyShot(hitter, GOLD_SHOT);
     std::cout << "gold" << std::endl;
 }
 
@@ -74,13 +83,15 @@ shot_t Ball::getCurrentShot() { return this->current_shot_state; }
 void Ball::registerHit(Car *hitter) {
     this->last_hitter = hitter;
     if (hitter->isTeamRed()) {
-        if (this->redTeamHitters.back() == hitter)
+        if (not this->redTeamHitters.empty() and
+                this->redTeamHitters.back() == hitter)
             return;
         this->redTeamHitters.push(hitter);
         if (this->redTeamHitters.size() == 3)
             this->redTeamHitters.pop();
     } else {
-        if (this->blueTeamHitters.back() == hitter)
+        if (not this->blueTeamHitters.empty() and
+                this->blueTeamHitters.back() == hitter)
             return;
         this->blueTeamHitters.push(hitter);
         if (this->blueTeamHitters.size() == 3)
@@ -89,6 +100,6 @@ void Ball::registerHit(Car *hitter) {
 }
 
 void Ball::update() {
-    if (this->ball->GetLinearVelocity().Length() < 10.0f)
-        this->current_shot_state = NO_SHOT;
+    //if (this->ball->GetLinearVelocity().Length() < 10.0f)
+    //    this->current_shot_state = NO_SHOT;
 }

@@ -79,6 +79,17 @@ void GameLogic::deactivate_nitro_player(size_t id) {
   this->players[id].deactivate_nitro();
 }
 
+void GameLogic::registerIfGoal() {
+    if (ball.getPosition().x < 6.0f - BALL_RADIUS) {
+        this->goal = true;
+        red_score++;
+    } else if (ball.getPosition().x > SCENARIO_WIDTH + 6.0f + BALL_RADIUS) {
+        this->goal = true;
+        blue_score++;
+    } else {
+      goal = false;
+    }
+}
 void GameLogic::step() {
 
     this->world.Step(TIME_STEP, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
@@ -86,29 +97,19 @@ void GameLogic::step() {
         if (player.nitro == true) player.boost();
         sensor_t active_sensor = player.getActiveSensor();
         jump_t second_jump = player.getSecondJumpMade();
-        b2Vec2 hitDirection = ball.getPosition() - player.getPosition();
-        hitDirection.Normalize();
+        //b2Vec2 hitDirection = ball.getPosition() - player.getPosition();
+        //hitDirection.Normalize();
         if (second_jump == DOUBLE_JUMP and active_sensor == DOWN_SENSOR) {
-            hitDirection *= 20.0f;
-            ball.applyPurpleShot(hitDirection);
+            //hitDirection *= 20.0f;
+            ball.applyPurpleShot(player);
         } else if (second_jump == FLIP) {
-            hitDirection *= 40.0f;
+            //hitDirection *= 40.0f;
             if (active_sensor == BACK_SENSOR)
-                ball.applyGoldShot(hitDirection);
+                ball.applyGoldShot(player);
             else if (active_sensor == FRONT_SENSOR)
-                ball.applyRedShot(hitDirection);
+                ball.applyRedShot(player);
         }
         player.update();
-    }
-
-    if (ball.getPosition().x < 6.0f - BALL_RADIUS) {
-        goal = true;
-        red_score++;
-    } else if (ball.getPosition().x > SCENARIO_WIDTH + 6.0f + BALL_RADIUS) {
-        goal = true;
-        blue_score++;
-    } else {
-      goal = false;
     }
     this->time_left -= TIME_STEP;
     ball.update();

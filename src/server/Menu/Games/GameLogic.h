@@ -38,6 +38,7 @@ class GameLogic {
   void setGoal();
   void setSnap();
   */
+  void registerIfGoal();
  public:
   GameLogic(size_t cant_players);
 
