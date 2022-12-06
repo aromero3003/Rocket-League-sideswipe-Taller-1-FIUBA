@@ -9,7 +9,18 @@
 #include "Constants.h"
 
 Car::Car(b2World &world, const b2Vec2 &position, bool orientation, size_t id)
-    : initialPosition(position), orientation(orientation),jump_ammount(0),current_jump(NO_FLIP), nitro_cant(MAXNITRO), id(id), isRedTeam(orientation) {
+    : initialPosition(position),
+    orientation(orientation),
+    direction_pressed(NO_PRESSED),
+    active_sensor(NO_SENSOR),
+    jump_ammount(0),
+    current_jump(NO_FLIP),
+    nitro_cant(MAXNITRO),
+    id(id),
+    isRedTeam(orientation),
+    goals(0),
+    assistances(0),
+    tackles(0) {
   float x = position.x, y = position.y;
   {
     b2BodyDef chassis_def;
@@ -162,6 +173,14 @@ Car::Car(b2World &world, const b2Vec2 &position, bool orientation, size_t id)
 
   this->nitro = false;
 }
+/*
+void Car::buildChassis() {
+    
+}
+void Car::buildWheels();
+void Car::buildMotor();
+void Car::buildSensors();
+*/
 
 void Car::jump() {
     if (this->jump_ammount > 1)
@@ -246,9 +265,10 @@ bool Car::onSurface(bool strictly_touching) {
   b2ContactEdge *ce1 = this->wheel1->GetContactList();
   b2ContactEdge *ce2 = this->wheel2->GetContactList();
   bool is_near = ce1 != nullptr and ce2 != nullptr;
-  return is_near and (strictly_touching ? ce1->contact->IsTouching() and
-                                              ce2->contact->IsTouching()
-                                        : true);
+  return is_near and
+      (strictly_touching ?
+       ce1->contact->IsTouching() and ce2->contact->IsTouching() :
+       true);
 }
 
 void Car::boost() {
@@ -300,7 +320,10 @@ void Car::update() {
 void Car::reset(){
   this->chassis->SetTransform(initialPosition,0);
   this->chassis->SetAngularVelocity(0);
-  this->chassis->SetLinearVelocity(b2Vec2(0,0));
+  this->chassis->SetLinearVelocity(b2Vec2_zero);
+
+  this->wheel1->SetLinearVelocity(b2Vec2_zero);
+  this->wheel2->SetLinearVelocity(b2Vec2_zero);
 
   this->direction_pressed = NO_PRESSED;
   this->damper1->SetMotorSpeed(0.0f);

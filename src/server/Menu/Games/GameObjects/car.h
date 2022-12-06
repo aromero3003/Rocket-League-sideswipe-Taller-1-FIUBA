@@ -52,6 +52,12 @@ class Car {
 
   bool onSurface(bool strictly_touching);
 
+  /*
+  void buildChassis();
+  void buildWheels();
+  void buildMotor();
+  void buildSensors();
+  */
 
  public:
   Car(b2World &world, const b2Vec2 &position, bool orientation, size_t id);
