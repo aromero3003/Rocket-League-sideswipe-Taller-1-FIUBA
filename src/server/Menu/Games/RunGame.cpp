@@ -43,12 +43,14 @@ void RunGame::run() {
       //simulo
       this->gameLogic.step();
 
-      //obtengo y envio  snapshot de juego a los jugadores
       std::shared_ptr<SnapShot> snap = this->gameLogic.getSnap();
+      //obtengo y envio  snapshot de juego a los jugadores
       for (auto&& player : players) {
         player->addSnap(snap);
       }
 
+      if (snap->isTimeZero()) this->endGame();
+      
       //guardo sanp para la replay
       replayQueue.push(snap);
       //si es muy largo lo acorto
@@ -59,7 +61,6 @@ void RunGame::run() {
       //si lo fue  mando la repe
       if(snap->isGoal()) this->sendReplay();
 
-      if (snap->isTimeZero()) this->endGame();
       usleep(1000000 / 120);
     }
   } catch (const QueueEx &e) {
@@ -98,8 +99,15 @@ void RunGame::endGame(){
   std::shared_ptr<SnapShot> snapFinish=gameLogic.getFinishSnap() ;
   
   for (auto&& player : players) {
+    //std::shared_ptr<SnapShot> snapFinish=gameLogic.getFinishSnap() ;
     player->addSnap(snapFinish);
   }
+   std::shared_ptr<SnapShot> snapEx(new SnapShot);
+  for (auto&& player : players) {
+    player->addSnap( snapEx );
+  }
+
+  usleep(1000000 / 120);
   this->isClosed=true;
   this->close();
 }
