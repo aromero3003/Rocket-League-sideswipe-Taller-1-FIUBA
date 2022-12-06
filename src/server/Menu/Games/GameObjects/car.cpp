@@ -9,7 +9,7 @@
 #include "Constants.h"
 
 Car::Car(b2World &world, const b2Vec2 &position, bool orientation)
-    : initialPosition(position), orientation(orientation),nitro_cant(MAXNITRO){
+    : initialPosition(position), orientation(orientation),jump_ammount(0),current_jump(NO_FLIP) ,nitro_cant(MAXNITRO){
   float x = position.x, y = position.y;
   {
     b2BodyDef chassis_def;
