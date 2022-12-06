@@ -179,6 +179,7 @@ void Car::setInitialPos(){
   this->chassis->SetAngularVelocity(0);
   b2Vec2 aux(0,0);
   this->chassis->SetLinearVelocity(aux); 
+  this->nitro=MAXNITRO;
 }
 
 const uint8_t Car::getOrientation() { return this->orientation; }
