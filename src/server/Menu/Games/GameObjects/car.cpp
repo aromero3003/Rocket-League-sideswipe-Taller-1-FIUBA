@@ -33,6 +33,7 @@ Car::Car(b2World &world, const b2Vec2 &position, bool orientation, size_t id)
     chassis_fd.shape = &chassis_shape;
     chassis_fd.filter.categoryBits = CAR_BITS;
     chassis_fd.filter.maskBits = SCENARIO_BITS | BALL_BITS;
+    chassis_fd.userData.pointer = reinterpret_cast<uintptr_t>(this);
 
     this->chassis = world.CreateBody(&chassis_def);
     this->chassis->CreateFixture(&chassis_fd);
@@ -107,6 +108,7 @@ Car::Car(b2World &world, const b2Vec2 &position, bool orientation, size_t id)
     wheel_fd.filter.categoryBits = CAR_BITS;
     wheel_fd.filter.maskBits = BALL_BITS | SCENARIO_BITS;
     wheel_fd.restitution = 0.0f;
+    wheel_fd.userData.pointer = reinterpret_cast<uintptr_t>(this);
 
     b2BodyDef wheel_def;
     wheel_def.type = b2_dynamicBody;
