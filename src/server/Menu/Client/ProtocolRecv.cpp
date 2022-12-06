@@ -16,7 +16,7 @@ void ProtocolRecv::run() {
     GameCommandHandler gameCommandHandler(id);
     while (!skt.isClosed()) {
       std::shared_ptr<GameCommand>  command=gameCommandHandler.createCommand(reciveCommand());
-     eventQueueRef.push(command);
+      if(!skt.isClosed())eventQueueRef.push(command);
     }
   } catch (const LibError& err) {
       std::cerr<< "recv closed"<<this->id<<"\n";
