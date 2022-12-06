@@ -290,7 +290,7 @@ void Car::update() {
       this->jump_ammount = 0;
   }
 
-  this->current_jump = NO_FLIP;
+  //this->current_jump = NO_FLIP;
 }
 void Car::reset(){
   this->chassis->SetTransform(initialPosition,0);
