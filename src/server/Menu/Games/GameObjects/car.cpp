@@ -291,6 +291,8 @@ void Car::update() {
   if (this->onSurface(true)) {
       this->jump_ammount = 0;
   }
+
+  this->current_jump = NO_FLIP;
 }
 void Car::reset(){
   this->chassis->SetTransform(initialPosition,0);
