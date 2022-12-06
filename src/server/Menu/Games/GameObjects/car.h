@@ -43,11 +43,14 @@ class Car {
 
   uint16_t nitro_cant;
 
+  size_t id;
+  bool isRedTeam;
+
   bool onSurface(bool strictly_touching);
 
 
  public:
-  Car(b2World &world, const b2Vec2 &position, bool orientation);
+  Car(b2World &world, const b2Vec2 &position, bool orientation, size_t id);
   void moveLeft();
   void moveRight();
   void brake();
@@ -60,6 +63,7 @@ class Car {
   const float getAngle();
   const uint8_t getOrientation();
   const uint16_t getNitroAmmount();
+  const bool isTeamRed();
   void setActiveSensor(sensor_t active);
   sensor_t getActiveSensor();
   jump_t getSecondJumpMade();

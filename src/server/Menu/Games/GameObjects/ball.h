@@ -2,11 +2,9 @@
 #define __BALL_H__
 
 #include "Constants.h"
-#include "box2d/b2_body.h"
-#include "box2d/b2_circle_shape.h"
-#include "box2d/b2_fixture.h"
-#include "box2d/b2_math.h"
-#include "box2d/b2_world.h"
+#include <box2d/box2d.h>
+#include <queue>
+#include "car.h"
 
 typedef enum {NO_SHOT, GOLD_SHOT, RED_SHOT, PURPLE_SHOT} shot_t;
 
@@ -24,7 +22,9 @@ class Ball {
   const float getAngle();
   const bool isColliding();
   void reset();
-  // getSnapshotData
+  Car *last_hitter;
+  std::queue<Car*> redTeamHitters;
+  std::queue<Car*> blueTeamHitters;
 
   void applyRedShot(b2Vec2 hitDirection);
   void applyGoldShot(b2Vec2 hitDirection);
@@ -33,6 +33,8 @@ class Ball {
   shot_t getCurrentShot();
   void transform(b2Vec2 position, float angle);
   void update();
+
+  void registerHit(Car *hitter);
 };
 
 #endif

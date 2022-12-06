@@ -53,7 +53,7 @@ GameLogic::GameLogic(size_t cant_players)
   for (size_t i = 1; i <= cant_players; i++) {
     this->players.emplace_back(
         this->world, b2Vec2(6.0f+delta_x * i, -SCENARIO_HEIGHT),
-        i <= cant_players / 2);
+        i <= cant_players / 2, i);
   }
 }
 void GameLogic::reset(){
@@ -81,6 +81,7 @@ void GameLogic::deactivate_nitro_player(size_t id) {
 
 void GameLogic::step() {
 
+    this->world.Step(TIME_STEP, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
     for (Car &player : this->players) {
         if (player.nitro == true) player.boost();
         sensor_t active_sensor = player.getActiveSensor();
@@ -109,7 +110,6 @@ void GameLogic::step() {
     } else {
       goal = false;
     }
-    this->world.Step(TIME_STEP, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
     this->time_left -= TIME_STEP;
     ball.update();
 }

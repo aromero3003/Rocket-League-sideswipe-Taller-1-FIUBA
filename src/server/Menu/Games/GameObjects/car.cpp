@@ -8,8 +8,8 @@
 
 #include "Constants.h"
 
-Car::Car(b2World &world, const b2Vec2 &position, bool orientation)
-    : initialPosition(position), orientation(orientation),jump_ammount(0),current_jump(NO_FLIP) ,nitro_cant(MAXNITRO){
+Car::Car(b2World &world, const b2Vec2 &position, bool orientation, size_t id)
+    : initialPosition(position), orientation(orientation),jump_ammount(0),current_jump(NO_FLIP), nitro_cant(MAXNITRO), id(id), isRedTeam(orientation) {
   float x = position.x, y = position.y;
   {
     b2BodyDef chassis_def;
@@ -316,3 +316,5 @@ void Car::setActiveSensor(sensor_t active) { this->active_sensor = active; }
 sensor_t Car::getActiveSensor() { return this->active_sensor; }
 
 jump_t Car::getSecondJumpMade() { return this->current_jump; }
+
+const bool Car::isTeamRed() { return this->isRedTeam; }

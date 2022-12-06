@@ -4,7 +4,6 @@
 
 #include <box2d/b2_math.h>
 #include <iostream>
-#include <new>
 
 #include "Constants.h"
 
@@ -71,6 +70,23 @@ void Ball::applyGoldShot(b2Vec2 hitDirection) {
 }
 
 shot_t Ball::getCurrentShot() { return this->current_shot_state; }
+
+void Ball::registerHit(Car *hitter) {
+    this->last_hitter = hitter;
+    if (hitter->isTeamRed()) {
+        if (this->redTeamHitters.back() == hitter)
+            return;
+        this->redTeamHitters.push(hitter);
+        if (this->redTeamHitters.size() == 3)
+            this->redTeamHitters.pop();
+    } else {
+        if (this->blueTeamHitters.back() == hitter)
+            return;
+        this->blueTeamHitters.push(hitter);
+        if (this->blueTeamHitters.size() == 3)
+            this->blueTeamHitters.pop();
+    }
+}
 
 void Ball::update() {
     if (this->ball->GetLinearVelocity().Length() < 10.0f)

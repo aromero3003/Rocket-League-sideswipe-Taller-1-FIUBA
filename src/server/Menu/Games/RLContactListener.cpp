@@ -1,7 +1,10 @@
 #include "RLContactListener.h"
 #include <iostream>
 #include <box2d/box2d.h>
+#include "GameObjects/Constants.h"
 #include "GameObjects/car.h"
+#include "GameObjects/ball.h"
+
 void RLContactListener::BeginContact(b2Contact *c) {
     uint16_t mask_A = c->GetFixtureA()->GetFilterData().categoryBits;
 
@@ -19,6 +22,10 @@ void RLContactListener::BeginContact(b2Contact *c) {
         s = "DOWN_SENSOR";
     }
     //std::cout << s << std::endl;
+    if (mask_A == BALL_BITS and other_mask == CAR_BITS) {
+        Car *hitter = (Car *)(other_fixture->GetUserData().pointer);
+        ((Ball *)(c->GetFixtureA()->GetUserData().pointer))->registerHit(hitter);
+    }
 }
 
 void RLContactListener::EndContact(b2Contact *c) {
