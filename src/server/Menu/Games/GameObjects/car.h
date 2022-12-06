@@ -46,6 +46,10 @@ class Car {
   size_t id;
   bool isRedTeam;
 
+  uint8_t goals;
+  uint8_t assistances;
+  uint8_t tackles;
+
   bool onSurface(bool strictly_touching);
 
 
@@ -68,6 +72,15 @@ class Car {
   sensor_t getActiveSensor();
   jump_t getSecondJumpMade();
   void reset();
+
+  void registerGoal();
+  void registerAssistance();
+  void registerTackle();
+  uint8_t getGoals();
+  uint8_t getAssistances();
+  uint8_t getTackles();
+
+
   bool has_jumped;
   double time_elapsed;
   bool nitro;

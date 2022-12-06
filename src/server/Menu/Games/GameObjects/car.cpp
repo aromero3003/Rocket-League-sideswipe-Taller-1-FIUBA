@@ -320,3 +320,28 @@ sensor_t Car::getActiveSensor() { return this->active_sensor; }
 jump_t Car::getSecondJumpMade() { return this->current_jump; }
 
 const bool Car::isTeamRed() { return this->isRedTeam; }
+
+void Car::registerGoal() {
+    std::cout << "gol de " <<   (int)id << std::endl;
+    (this->goals)++;
+}
+
+void Car::registerAssistance() {
+    (this->assistances)++;
+}
+
+void Car::registerTackle() {
+    (this->tackles)++;
+}
+
+uint8_t Car::getGoals() {
+    return this->goals;
+}
+
+uint8_t Car::getAssistances() {
+    return this->assistances;
+}
+
+uint8_t Car::getTackles() {
+    return this->tackles;
+}
