@@ -280,6 +280,14 @@ void Car::update() {
       }
   }
 
+  b2Filter new_filter;
+  new_filter.categoryBits = this->orientation == RIGHT ? FRONT_SENSOR_BITS : BACK_SENSOR_BITS;
+  this->front_sensor->GetFixtureList()->SetFilterData(new_filter);
+
+  new_filter.categoryBits = this->orientation == RIGHT ? BACK_SENSOR_BITS : FRONT_SENSOR_BITS;
+  this->back_sensor->GetFixtureList()->SetFilterData(new_filter);
+
+
   if (this->onSurface(true)) {
       this->jump_ammount = 0;
   }
