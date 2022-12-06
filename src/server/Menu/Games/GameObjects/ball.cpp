@@ -7,7 +7,14 @@
 
 #include "Constants.h"
 
-Ball::Ball(b2World& world, b2Vec2 position):rest_current_time_effect(MAXSHOTTIME) {
+Ball::Ball(b2World& world, b2Vec2 position) :
+    current_collisions(0),
+    initialPosition(position),
+    current_shot_state(NO_SHOT),
+    rest_current_time_effect(MAXSHOTTIME),
+    last_hitter(nullptr),
+    blue_assistance(nullptr),
+    red_assistance(nullptr) {
   b2CircleShape circle;
   circle.m_radius = BALL_RADIUS;
 
@@ -39,7 +46,6 @@ void Ball::reset(){
   this->ball->SetAngularVelocity(0);
   b2Vec2 aux(0,0);
   this->ball->SetLinearVelocity(aux);
-  this->shot_state_counter = 0;
   this->current_shot_state = NO_SHOT;
 }
 
@@ -90,17 +96,17 @@ void Ball::registerHit(Car *new_hitter) {
 
     bool isNewHitterRed = new_hitter->isTeamRed();
     bool iAmRed = this->last_hitter->isTeamRed();
-    
+
     if (iAmRed != isNewHitterRed) {
         this->blue_assistance = nullptr;
         this->red_assistance = nullptr;
     } else {
         if (iAmRed && (last_hitter != this->red_assistance)) {
             this->red_assistance=this->last_hitter;
-        } else 
+        } else
         if (!iAmRed && (last_hitter != this->blue_assistance)) {
             this->blue_assistance=this->last_hitter;
-        } 
+        }
     }
     this->last_hitter = new_hitter;
 }

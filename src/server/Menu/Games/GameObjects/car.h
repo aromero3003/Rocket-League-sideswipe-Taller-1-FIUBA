@@ -52,6 +52,12 @@ class Car {
 
   bool onSurface(bool strictly_touching);
 
+  /*
+  void buildChassis();
+  void buildWheels();
+  void buildMotor();
+  void buildSensors();
+  */
 
  public:
   Car(b2World &world, const b2Vec2 &position, bool orientation, size_t id);
@@ -80,8 +86,6 @@ class Car {
   uint8_t getAssistances();
   uint8_t getTackles();
 
-
-  bool has_jumped;
   double time_elapsed;
   bool nitro;
   bool go_up;

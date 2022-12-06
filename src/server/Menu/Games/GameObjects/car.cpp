@@ -1,4 +1,5 @@
 #include "car.h"
+#include <cstdint>
 #include <iostream>
 
 #include <box2d/b2_common.h>
@@ -8,8 +9,19 @@
 
 #include "Constants.h"
 
-Car::Car(b2World &world, const b2Vec2 &position, bool orientation, size_t id)
-    : initialPosition(position), orientation(orientation),jump_ammount(0),current_jump(NO_FLIP), nitro_cant(MAXNITRO), id(id), isRedTeam(orientation) {
+Car::Car(b2World &world, const b2Vec2 &position, bool orientation, size_t id) :
+    initialPosition(position),
+    orientation(orientation),
+    direction_pressed(NO_PRESSED),
+    active_sensor(NO_SENSOR),
+    jump_ammount(0),
+    current_jump(NO_FLIP),
+    nitro_cant(MAXNITRO),
+    id(id),
+    isRedTeam(orientation),
+    goals(0),
+    assistances(0),
+    tackles(0) {
   float x = position.x, y = position.y;
   {
     b2BodyDef chassis_def;
@@ -64,9 +76,11 @@ Car::Car(b2World &world, const b2Vec2 &position, bool orientation, size_t id)
       this->front_sensor->CreateFixture(&sensorfd);
 
       sensorfd.filter.categoryBits = BACK_SENSOR_BITS;
+      sensorfd.userData.pointer = reinterpret_cast<uintptr_t>(this);
       this->back_sensor->CreateFixture(&sensorfd);
 
       square.SetAsBox(1.5, 0.2f);
+      sensorfd.userData.pointer = reinterpret_cast<uintptr_t>(this);
       sensorfd.filter.categoryBits = DOWN_SENSOR_BITS;
       this->down_sensor->CreateFixture(&sensorfd);
 
@@ -146,6 +160,7 @@ Car::Car(b2World &world, const b2Vec2 &position, bool orientation, size_t id)
     joint_def.upperTranslation = TRANSLATION;
     joint_def.enableLimit = true;
     this->damper1 = (b2WheelJoint *)world.CreateJoint(&joint_def);
+    joint_def.userData.pointer = reinterpret_cast<uintptr_t>(this);
 
     joint_def.Initialize(this->chassis, this->wheel2,
                          this->wheel2->GetPosition(), axis);
@@ -158,10 +173,19 @@ Car::Car(b2World &world, const b2Vec2 &position, bool orientation, size_t id)
     joint_def.upperTranslation = TRANSLATION;
     joint_def.enableLimit = true;
     this->damper2 = (b2WheelJoint *)world.CreateJoint(&joint_def);
+    joint_def.userData.pointer = reinterpret_cast<uintptr_t>(this);
   }
 
   this->nitro = false;
 }
+/*
+void Car::buildChassis() {
+    
+}
+void Car::buildWheels();
+void Car::buildMotor();
+void Car::buildSensors();
+*/
 
 void Car::jump() {
     if (this->jump_ammount > 1)
@@ -227,7 +251,7 @@ void Car::brake() {
   this->direction_pressed = NO_PRESSED;
   this->damper1->SetMotorSpeed(0.0f);
   this->damper2->SetMotorSpeed(0.0f);
-  if (this->has_jumped) return;
+  if (not this->onSurface(false)) return;
   b2Vec2 opossite_vector = this->chassis->GetLinearVelocity();
   opossite_vector.y = 0;
   opossite_vector.x *= -4.0f;
@@ -246,9 +270,10 @@ bool Car::onSurface(bool strictly_touching) {
   b2ContactEdge *ce1 = this->wheel1->GetContactList();
   b2ContactEdge *ce2 = this->wheel2->GetContactList();
   bool is_near = ce1 != nullptr and ce2 != nullptr;
-  return is_near and (strictly_touching ? ce1->contact->IsTouching() and
-                                              ce2->contact->IsTouching()
-                                        : true);
+  return is_near and
+      (strictly_touching ?
+       ce1->contact->IsTouching() and ce2->contact->IsTouching() :
+       true);
 }
 
 void Car::boost() {
@@ -300,7 +325,10 @@ void Car::update() {
 void Car::reset(){
   this->chassis->SetTransform(initialPosition,0);
   this->chassis->SetAngularVelocity(0);
-  this->chassis->SetLinearVelocity(b2Vec2(0,0));
+  this->chassis->SetLinearVelocity(b2Vec2_zero);
+
+  this->wheel1->SetLinearVelocity(b2Vec2_zero);
+  this->wheel2->SetLinearVelocity(b2Vec2_zero);
 
   this->direction_pressed = NO_PRESSED;
   this->damper1->SetMotorSpeed(0.0f);
