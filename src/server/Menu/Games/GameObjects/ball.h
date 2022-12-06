@@ -19,7 +19,7 @@ class Ball {
   void applyShot(Car &hitter, shot_t shot);
 
  public:
-  Ball(b2World &world, float x, float y);
+  Ball(b2World &world, b2Vec2 position);
   const b2Vec2 getPosition();
   const float getAngle();
   const bool isColliding();
