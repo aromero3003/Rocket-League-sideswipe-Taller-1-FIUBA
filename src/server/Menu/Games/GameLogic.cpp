@@ -88,13 +88,13 @@ void GameLogic::registerIfGoal() {
             last_hitter->registerGoal();
         }
         this->goal = true;
-        red_score++;
+        blue_score++;
     } else if (ball.getPosition().x > SCENARIO_WIDTH + 6.0f + BALL_RADIUS) {
         if (last_hitter != nullptr and last_hitter->isTeamRed()) {
             last_hitter->registerGoal();
         }
         this->goal = true;
-        blue_score++;
+        red_score++;
     } else {
       goal = false;
       return;
@@ -134,13 +134,14 @@ std::shared_ptr<SnapShot> GameLogic::getSnap() {
 
     std::shared_ptr<SnapShot> snap(new SnapShot);
 
-    std::cerr<< "tieme :"<<(int) ((uint8_t)this->time_left)<<"\n";
+    //std::cerr<< "tieme :"<<(int) ((uint8_t)this->time_left)<<"\n";
     snap->add((uint8_t)this->time_left);                      // 1 byte
     snap->add(this->red_score);                               // 2 byte
     snap->add(this->blue_score);                              // 3 byte
     snap->add(this->goal);
     snap->add((uint8_t)this->ball.isColliding());
     snap->add((uint8_t)false);
+    
 
     snap->add(this->ball.getPosition().x);
     snap->add(this->ball.getPosition().y);
@@ -171,7 +172,7 @@ std::shared_ptr<SnapShot> GameLogic::getFinishSnap() {
     }
 
     std::shared_ptr<SnapShot> snap(new SnapShot);
-    std::cerr<< "win team :"<<(int) a<<"\n";
+    std::cerr<< "win team :"<<(int) 15<<"\n";
     snap->add((uint8_t)a);                     
 
     for (uint8_t id = 0; id < this->players.size(); id++) {

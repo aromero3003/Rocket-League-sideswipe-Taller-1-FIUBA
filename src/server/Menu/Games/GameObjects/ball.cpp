@@ -89,15 +89,18 @@ void Ball::registerHit(Car *new_hitter) {
 
     bool isNewHitterRed = new_hitter->isTeamRed();
     bool iAmRed = this->last_hitter->isTeamRed();
-
-    if ((iAmRed and isNewHitterRed) or (not iAmRed and not isNewHitterRed)) {
-        this->blue_assistance = iAmRed ? this->blue_assistance : this->last_hitter;
-        this->red_assistance = iAmRed ? this->last_hitter : this->red_assistance;
-    } else {
+    
+    if (iAmRed != isNewHitterRed) {
         this->blue_assistance = nullptr;
         this->red_assistance = nullptr;
+    } else {
+        if (iAmRed && (last_hitter != this->red_assistance)) {
+            this->red_assistance=this->last_hitter;
+        } else 
+        if (!iAmRed && (last_hitter != this->blue_assistance)) {
+            this->blue_assistance=this->last_hitter;
+        } 
     }
-
     this->last_hitter = new_hitter;
 }
 

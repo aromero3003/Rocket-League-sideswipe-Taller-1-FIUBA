@@ -19,6 +19,6 @@ void SnapShot::add(float f) {
 void SnapShot::add(uint8_t x) { this->data.push_back(x); }
 bool SnapShot::isGoal() { return data[3]; }
 bool SnapShot::isTimeZero() {
-  return data[0] == 0; }
+  return data[0] == (uint8_t) 0; }
 void SnapShot::setGoalTrue() { data[3]= true; }
 std::vector<uint8_t> &SnapShot::getMsg() { return data; }

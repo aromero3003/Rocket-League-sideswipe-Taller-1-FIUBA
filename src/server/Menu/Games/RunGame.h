@@ -22,6 +22,7 @@ class RunGame : public Thread {
   ProtectedQueue<std::shared_ptr<GameCommand> > gammingEventQueue;
   std::vector<std::unique_ptr<GamingClient>> players;
   std::queue<std::shared_ptr<SnapShot> > replayQueue;
+  bool isClosed;
   void sendReplay();
 
  public:

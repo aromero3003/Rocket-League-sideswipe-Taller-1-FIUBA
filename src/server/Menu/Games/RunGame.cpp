@@ -5,7 +5,7 @@
 #include <memory>
 
 RunGame::RunGame(std::size_t cant_players)
-    : gameLogic(cant_players), gammingEventQueue(), players() {}
+    : gameLogic(cant_players), gammingEventQueue(), players(),isClosed(false) {}
 
 void RunGame::addPlayer(std::unique_ptr<GamingClient>&& player) {
   this->players.push_back(std::move(player));
@@ -20,6 +20,8 @@ RunGame::~RunGame() {
 void RunGame::close() { 
   this->gammingEventQueue.close(); 
   for (auto&& player : players) player->disconect();
+  this->isClosed= true;
+
 }
 ProtectedQueue<std::shared_ptr<GameCommand> >& RunGame::getRefGamingQueue() {
   return gammingEventQueue;
@@ -29,18 +31,13 @@ ProtectedQueue<std::shared_ptr<GameCommand> >& RunGame::getRefGamingQueue() {
 void RunGame::run() {
   try {
     for (auto&& player : players) player->start();
-    while (1) {
+    while (!this->isClosed) {
       //salgo de bucle si esta cerrada la queue
       if (gammingEventQueue.isClose()) throw QueueEx();
 
       //popeo y ejecuto eventos de jugadores
       while (!gammingEventQueue.is_empty()) {
          gammingEventQueue.pop()->run(gameLogic);
-#ifdef ALAN_DEBUG
-        uint8_t debug_data = command->num;
-        bool was_closed = false;
-        alan.sendall(&debug_data, 1, &was_closed);
-#endif  // ALAN_DEBUG
       }
 
       //simulo
@@ -81,7 +78,8 @@ void RunGame::run() {
 }
 void RunGame::sendReplay(){
     while (this->replayQueue.size()>0)
-    {
+    { 
+
       std::shared_ptr<SnapShot> snap=replayQueue.front();
       snap->setGoalTrue();
       for (auto&& player : players) {
@@ -97,13 +95,12 @@ void RunGame::sendReplay(){
 }
 void RunGame::endGame(){
 
-  std::cerr << "\nTime Out\n";
   std::shared_ptr<SnapShot> snapFinish=gameLogic.getFinishSnap() ;
   
   for (auto&& player : players) {
     player->addSnap(snapFinish);
   }
-
+  this->isClosed=true;
   this->close();
 }
 
