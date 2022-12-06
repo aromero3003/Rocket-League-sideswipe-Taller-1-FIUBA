@@ -16,20 +16,20 @@ void Client_interface::run_client(){
 	MenuProtocol menuProtocol(this->socket);
 	menuProtocol.run();
 
-	//this->socket.recvall(&n_cars, 1, &closed);
-	//create N cars and car_textures
-	//this->world.create_cars(n_cars);
 
 	//initialize SDL
 	SDL sdl(SDL_INIT_VIDEO);
     Window window("Rocket League 2D",SDL_WINDOWPOS_UNDEFINED,SDL_WINDOWPOS_UNDEFINED,1040, 600,0);
 	SDLTTF ttf;
 
+
 	TextureManager textureManager(window);
 	SoundManager soundManager;
 
+
 	Chunk ingition_sound("../data/car_ignition.wav");
 	soundManager.mixer.PlayChannel(-1,ingition_sound,0);
+
 
 	//launch threads
 	ReceiverThread receiver(this->socket,this->world);
@@ -37,11 +37,10 @@ void Client_interface::run_client(){
 	receiver.start();
 	sender.start();
 
-	// Main loop
 
+	// Main loop
     bool running = true;
     bool going_right, going_left, jumping, nitroing = false;
-	//bool goal = true;
     uint32_t t1 = SDL_GetTicks();
 	while (running) {
 

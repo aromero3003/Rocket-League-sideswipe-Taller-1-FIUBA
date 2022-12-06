@@ -33,6 +33,8 @@ class World{
 
         void show_ball(TextureManager& textureManager);
 
+        void show_shots(TextureManager& textureManager);
+
         void sounds(SoundManager& soundManager);
 
         void replay(TextureManager& textureManager, SoundManager& soundManager);

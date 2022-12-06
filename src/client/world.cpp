@@ -72,7 +72,6 @@ void World::update(std::vector<char>& data){
         std::cout << "nitroing: " << this->cars[i].nitro_flag << std::endl;
         std::cout << "nitro restante: " << this->cars[i].nitro_quantity << std::endl << std::endl;
 */
-std::cout << "nitro restante: " << (int)this->cars[i].nitro_quantity << std::endl << std::endl;
     }
 }
 
@@ -98,6 +97,9 @@ void World::draw(TextureManager& textureManager, SoundManager& soundManager){
     
     //Show ball
     show_ball(textureManager);
+
+    //shots
+    show_shots(textureManager);
 
     //sounds
     sounds(soundManager);
@@ -195,6 +197,39 @@ void World::show_ball(TextureManager& textureManager){
         NullOpt, 
         Rect(20*this->ball.x_position -20,(-20)*this->ball.y_position-20, 40, 40),
         this->ball.angle); 
+}
+
+void World::show_shots(TextureManager& textureManager){
+    bool gold = false;
+    bool purple = false;
+    bool red = false;
+
+    int shot_phase = SDL_GetTicks() % 360;
+
+    if(gold){
+    textureManager.renderer.Copy(
+        textureManager.gold_shot,
+        NullOpt,
+        Rect(20*this->ball.x_position -33,(-20)*this->ball.y_position - 33, 66, 66),
+        shot_phase,
+        NullOpt);
+    }
+    if(purple){
+        textureManager.renderer.Copy(
+            textureManager.purple_shot,
+            NullOpt,
+            Rect(20*this->ball.x_position -30,(-20)*this->ball.y_position - 30, 60, 60),
+            shot_phase,
+            NullOpt);
+    }
+    if(red){
+        textureManager.renderer.Copy(
+            textureManager.red_shot,
+            NullOpt,
+            Rect(20*this->ball.x_position -30,(-20)*this->ball.y_position - 30, 60, 60),
+            shot_phase,
+            NullOpt);
+    }
 }
 
 void World::sounds(SoundManager& soundManager){

@@ -13,6 +13,9 @@ TextureManager::TextureManager(Window& window):renderer(window, -1, SDL_RENDERER
                                 red_triangle(renderer,SDL2pp::Surface("../data/triangle.png").SetColorMod(255,0,0)),
                                 nitro_bar(renderer,SDL2pp::Surface("../data/nitro_bar.png").SetColorMod(255,0,0)),
                                 remaining_nitro(renderer,SDL2pp::Surface("../data/nitro_bar.png").SetColorMod(0,255,0)),
+                                red_shot(renderer,"../data/red_shot.png"),
+                                purple_shot(renderer,"../data/purple_shot.png"),
+                                gold_shot(renderer,"../data/gold_shot.png"),
                                 time_font("../data/Vera.ttf", 30),
                                 score_font("../data/Vera.ttf",80){
 

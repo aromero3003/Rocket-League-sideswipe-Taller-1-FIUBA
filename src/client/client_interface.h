@@ -38,6 +38,8 @@ class Client_interface{
 
         void run_client();
 
+        void lobby_waiting(TextureManager& textureManager);
+
         bool handle_events(BlockingQueue<int>& pq, bool& going_right, bool& going_left, bool& nitroing, bool& jumping);
 
         void render_screen_and_sounds(TextureManager& textureManager, SoundManager& soundManager);
