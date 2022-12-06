@@ -19,6 +19,7 @@ GameLogic::GameLogic(size_t cant_players)
       time_left(GAMETIME),
       red_score(0),
       blue_score(0){
+
   // WORLD
   this->world.SetContactListener(&(this->contact_listener));
   b2Vec2 scenario_borders[SCENARIO_BORDERS];
