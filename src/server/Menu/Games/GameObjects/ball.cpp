@@ -35,7 +35,7 @@ const b2Vec2 Ball::getPosition() { return this->ball->GetPosition(); }
 
 const float Ball::getAngle() { return this->ball->GetAngle(); }
 
-void Ball::reset(){ 
+void Ball::reset(){
   this->ball->SetTransform(initialPosition,0); 
   this->ball->SetAngularVelocity(0);
   b2Vec2 aux(0,0);
@@ -80,26 +80,36 @@ void Ball::applyGoldShot(Car &hitter) {
 
 shot_t Ball::getCurrentShot() { return this->current_shot_state; }
 
-void Ball::registerHit(Car *hitter) {
-    this->last_hitter = hitter;
-    if (hitter->isTeamRed()) {
-        if (not this->redTeamHitters.empty() and
-                this->redTeamHitters.back() == hitter)
-            return;
-        this->redTeamHitters.push(hitter);
-        if (this->redTeamHitters.size() == 3)
-            this->redTeamHitters.pop();
+void Ball::registerHit(Car *new_hitter) {
+    if (this->last_hitter == nullptr)
+        this->last_hitter = new_hitter;
+
+    if (this->last_hitter == new_hitter)
+        return;
+
+    bool isNewHitterRed = new_hitter->isTeamRed();
+    bool iAmRed = this->last_hitter->isTeamRed();
+
+    if ((iAmRed and isNewHitterRed) or (not iAmRed and not isNewHitterRed)) {
+        this->blue_assistance = iAmRed ? this->blue_assistance : this->last_hitter;
+        this->red_assistance = iAmRed ? this->last_hitter : this->red_assistance;
     } else {
-        if (not this->blueTeamHitters.empty() and
-                this->blueTeamHitters.back() == hitter)
-            return;
-        this->blueTeamHitters.push(hitter);
-        if (this->blueTeamHitters.size() == 3)
-            this->blueTeamHitters.pop();
+        this->blue_assistance = nullptr;
+        this->red_assistance = nullptr;
     }
+
+    this->last_hitter = new_hitter;
 }
 
 void Ball::update() {
     //if (this->ball->GetLinearVelocity().Length() < 10.0f)
     //    this->current_shot_state = NO_SHOT;
+}
+
+void Ball::getGoalAndAssistant(Car **goaler, Car **assistant) {
+    *goaler = this->last_hitter;
+    if (this->last_hitter == nullptr)
+        *assistant = nullptr;
+    else
+     *assistant = this->last_hitter->isTeamRed() ? this->red_assistance : this->blue_assistance;
 }

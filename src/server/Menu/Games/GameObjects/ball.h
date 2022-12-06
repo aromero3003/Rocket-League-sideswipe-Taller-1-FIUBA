@@ -25,8 +25,8 @@ class Ball {
   const bool isColliding();
   void reset();
   Car *last_hitter;
-  std::queue<Car*> redTeamHitters;
-  std::queue<Car*> blueTeamHitters;
+  Car *blue_assistance;
+  Car *red_assistance;
 
   void applyRedShot(Car &hitter);
   void applyGoldShot(Car &hitter);
@@ -37,6 +37,7 @@ class Ball {
   void update();
 
   void registerHit(Car *hitter);
+  void getGoalAndAssistant(Car **goaler, Car **assistant);
 };
 
 #endif
