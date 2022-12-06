@@ -20,6 +20,14 @@ void World::set_id(uint8_t id){
     this->my_id = id;
 }
 
+void World::finish_match(std::vector<char>& data){
+    this->winner = data[0];
+    for(size_t i=0; i < this->cars.size(); i++){
+        this->cars[i].goals = data[i*2 + 1];
+        this->cars[i].assists = data[i*2 + 2];
+    }
+}
+
 void World::update(std::vector<char>& data){
     std::lock_guard<std::mutex> lock(mutex);
     
@@ -81,6 +89,10 @@ void World::draw(TextureManager& textureManager, SoundManager& soundManager){
 
     //sounds
     sounds(soundManager);
+
+    if(remaining_time == 0){
+        show_statistics(textureManager, soundManager);
+    }
 
 }
 
@@ -158,8 +170,7 @@ void World::show_scores_and_time(TextureManager& textureManager){
     std::string red_score, blue_score, time;
     red_score = std::to_string(this->red_team_score);
     blue_score = std::to_string(this->blue_team_score);
-    time = std::to_string(this->remaining_time);
-
+    time = convert_time();
 
     Texture red_text_sprite(
             textureManager.renderer,
@@ -198,10 +209,38 @@ void World::show_scores_and_time(TextureManager& textureManager){
         time_text_sprite, 
         NullOpt, 
         Rect(
-            475, 
+            462, 
             150, 
             time_text_sprite.GetWidth(), 
             time_text_sprite.GetHeight()));
+}
+
+std::string World::convert_time(){
+    std::string time;
+    if(this->remaining_time / 60 < 10){
+        time = "0";
+    }
+    time += std::to_string(this->remaining_time / 60);
+    time += ":";
+    if(this->remaining_time % 60 < 10){
+        time += "0";
+        time += std::to_string(this->remaining_time % 60);
+    } else {
+        time += std::to_string(this->remaining_time % 60);
+    }
+    return time;
+}
+
+void World::show_statistics(TextureManager& textureManager, SoundManager& soundManager){
+    std::cout << "ya terminamos" << std::endl;
+
+    std::cout << "winner: " << (int)this->winner << std::endl;
+    for(size_t i=0; i < this->cars.size(); i++){
+        std::cout << "\t car " << (int)i << std::endl;
+        std::cout << "\t\t goals:" << cars[i].goals;
+        std::cout << "\t\t assists:" << cars[i].assists;
+    }
+
 }
 
 World::~World(){}

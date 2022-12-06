@@ -19,6 +19,8 @@ class World{
         uint8_t remaining_time;
         uint8_t red_team_score;
         uint8_t blue_team_score;
+        uint8_t winner;
+
         bool goal;
         bool ball_collision;
         bool car_collision;
@@ -39,6 +41,11 @@ class World{
 
         void replay(TextureManager& textureManager, SoundManager& soundManager);
 
+        void show_statistics(TextureManager& textureManager, SoundManager& soundManager);
+
+        std::string convert_time();
+
+
     public:
         World();
 
@@ -46,6 +53,8 @@ class World{
 
         //thread-safe
         void update(std::vector<char>& data);
+
+        void finish_match(std::vector<char>& data);
 
         void create_cars(int n_cars);
 

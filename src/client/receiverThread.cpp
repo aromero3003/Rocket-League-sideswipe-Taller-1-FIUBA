@@ -22,6 +22,11 @@ void ReceiverThread::run(){
     while(!closed) {
         this->socket.recvall(&(buff[0]), vec_size, &closed);
         this->world.update(buff);
+        if(buff[0] == 0){
+            vec_size = 1 + n_cars * 2;
+            this->socket.recvall(&(buff[0]), vec_size, &closed);
+            this->world.finish_match(buff);
+        }
     }
 }
 
@@ -30,5 +35,7 @@ bool ReceiverThread::is_alive(){
 }
 
 ReceiverThread::~ReceiverThread(){
+    std::cout << "cerrando receiver" << std::endl;
     this->join();
+    std::cout << "receiver CERRADO" << std::endl;
 }

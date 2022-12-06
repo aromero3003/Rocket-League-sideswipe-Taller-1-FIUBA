@@ -17,6 +17,9 @@ class Car{
         bool nitro_flag;
         uint8_t nitro_quantity;
 
+        uint8_t goals;
+        uint8_t assists;
+
         friend class World;
     public:  
         Car();
