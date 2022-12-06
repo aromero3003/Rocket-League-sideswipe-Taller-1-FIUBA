@@ -23,6 +23,7 @@ Car::Car(b2World &world, const b2Vec2 &position, bool orientation, size_t id) :
     assistances(0),
     tackles(0) {
   float x = position.x, y = position.y;
+  initialPosition.y += 1.0f;
   {
     b2BodyDef chassis_def;
     chassis_def.type = b2_dynamicBody;
@@ -324,6 +325,7 @@ void Car::update() {
 }
 void Car::reset(){
   this->chassis->SetTransform(initialPosition,0);
+  this->chassis->SetSleepingAllowed(false);
   this->chassis->SetAngularVelocity(0);
   this->chassis->SetLinearVelocity(b2Vec2_zero);
 
