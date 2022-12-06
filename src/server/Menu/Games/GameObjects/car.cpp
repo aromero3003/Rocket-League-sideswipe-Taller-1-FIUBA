@@ -196,6 +196,7 @@ void Car::jump() {
 }
 
 void Car::moveLeft() {
+  this->direction_pressed = LEFT_PRESSED;
   this->damper1->SetMotorSpeed(50000.0f);
   this->damper2->SetMotorSpeed(50000.0f);
   if (this->onSurface(true)) {
@@ -204,12 +205,11 @@ void Car::moveLeft() {
       this->active_sensor = FRONT_SENSOR;
     else if (this->active_sensor == FRONT_SENSOR)
       this->active_sensor = BACK_SENSOR;
-  } else {
-    this->direction_pressed = LEFT_PRESSED;
   }
 }
 
 void Car::moveRight() {
+  this->direction_pressed = RIGHT_PRESSED;
   this->damper1->SetMotorSpeed(-50000.0f);
   this->damper2->SetMotorSpeed(-50000.0f);
   if (this->onSurface(true)) {
@@ -218,8 +218,6 @@ void Car::moveRight() {
       this->active_sensor = FRONT_SENSOR;
     else if (this->active_sensor == FRONT_SENSOR)
       this->active_sensor = BACK_SENSOR;
-  } else {
-      this->direction_pressed = RIGHT_PRESSED;
   }
 }
 
