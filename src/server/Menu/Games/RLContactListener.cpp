@@ -18,7 +18,7 @@ void RLContactListener::BeginContact(b2Contact *c) {
         ((Car *)other_fixture->GetUserData().pointer)->setActiveSensor(DOWN_SENSOR);
         s = "DOWN_SENSOR";
     }
-    std::cout << s << std::endl;
+    //std::cout << s << std::endl;
 }
 
 void RLContactListener::EndContact(b2Contact *c) {

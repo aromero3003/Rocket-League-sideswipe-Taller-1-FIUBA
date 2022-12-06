@@ -1,4 +1,5 @@
 #include "car.h"
+#include <iostream>
 
 #include <box2d/b2_common.h>
 #include <box2d/b2_math.h>
@@ -8,7 +9,7 @@
 #include "Constants.h"
 
 Car::Car(b2World &world, const b2Vec2 &position, bool orientation)
-    : orientation(orientation),nitro_cant(MAXNITRO) ,initialPosition(position){
+    : initialPosition(position), orientation(orientation),nitro_cant(MAXNITRO){
   float x = position.x, y = position.y;
   {
     b2BodyDef chassis_def;
@@ -161,8 +162,37 @@ Car::Car(b2World &world, const b2Vec2 &position, bool orientation)
 }
 
 void Car::jump() {
-  this->wheel1->ApplyLinearImpulseToCenter(b2Vec2(0.0f, 100.0f), true);
-  this->wheel2->ApplyLinearImpulseToCenter(b2Vec2(0.0f, 100.0f), true);
+    if (this->jump_ammount > 1)
+        return;
+
+    else if (this->jump_ammount == 0) {
+        this->chassis->ApplyLinearImpulseToCenter(b2Vec2(0.0f,100.0f), true);
+        this->wheel1->ApplyLinearImpulseToCenter(b2Vec2(0.0f,75.0f), true);
+        this->wheel2->ApplyLinearImpulseToCenter(b2Vec2(0.0f,75.0f), true);
+        (this->jump_ammount)++;
+    } else if (this->jump_ammount == 1) {
+        if (this->direction_pressed == LEFT_PRESSED) std::cout << "LEFT FLIP" << std::endl;
+        else if (this->direction_pressed == NO_PRESSED) std::cout << "DOUBLE JUMP" << std::endl;
+        else std::cout << "RIGHT FLIP" << std::endl;
+        (this->jump_ammount)++;
+
+        float angle = this->chassis->GetAngle();
+        b2Vec2 jump_direction(200.0f, 0.0f);
+        if (this->direction_pressed == 0) {
+            jump_direction.x = 200.0f * std::cos(angle + b2_pi * 0.5f);
+            jump_direction.y = 200.0f * std::sin(angle + b2_pi * 0.5f);
+            this->chassis->ApplyLinearImpulseToCenter(jump_direction,true);
+            jump_direction *= 0.5f;
+            this->wheel1->ApplyLinearImpulseToCenter(jump_direction,true);
+            this->wheel2->ApplyLinearImpulseToCenter(jump_direction,true);
+            this->current_jump = DOUBLE_JUMP;
+        } else {
+            this->wheel2->ApplyLinearImpulseToCenter(jump_direction,true);
+            this->chassis->ApplyAngularImpulse(this->direction_pressed == LEFT_PRESSED ? 500.0f : -500.0f, true);
+            this->current_jump = FLIP;
+        }
+    }
+    std::cout << (int)this->jump_ammount << std::endl;
 }
 
 void Car::moveLeft() {
@@ -221,15 +251,20 @@ void Car::update() {
   if (!nitro && nitro_cant<MAXNITRO)
     nitro_cant++;
   if (nitro_cant==0) nitro=false;
+
   b2Vec2 position(this->chassis->GetPosition());
   float angle = this->chassis->GetAngle();
+  bool is_near_surface = this->onSurface(false);
   if (position.y < -SCENARIO_HEIGHT + 1.4f) {
-    if (not this->onSurface(false) and
-        this->chassis->GetLinearVelocity().y < 0.0f)
+    if (not is_near_surface and this->chassis->GetLinearVelocity().y < 0.0f)
       if (std::cos(angle) < 0.0f) {
         this->orientation = not this->orientation;
         this->chassis->SetTransform(position, angle - b2_pi);
       }
+  }
+
+  if (this->onSurface(true)) {
+      this->jump_ammount = 0;
   }
 }
 void Car::reset(){
