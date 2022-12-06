@@ -80,15 +80,29 @@ void GameLogic::deactivate_nitro_player(size_t id) {
 }
 
 void GameLogic::registerIfGoal() {
+    Car *last_hitter, *assistant;
+    this->ball.getGoalAndAssistant(&last_hitter, &assistant);
+
     if (ball.getPosition().x < 6.0f - BALL_RADIUS) {
+        if (last_hitter != nullptr and not last_hitter->isTeamRed()) {
+            last_hitter->registerGoal();
+        }
         this->goal = true;
         red_score++;
     } else if (ball.getPosition().x > SCENARIO_WIDTH + 6.0f + BALL_RADIUS) {
+        if (last_hitter != nullptr and last_hitter->isTeamRed()) {
+            last_hitter->registerGoal();
+        }
         this->goal = true;
         blue_score++;
     } else {
       goal = false;
+      return;
     }
+    //for (size_t i = 0 ; i < this->players.size() ; i++) {
+    //    std::cout << "id"<< i << ": " << (int)this->players[i].getGoals() << "  ";
+    //}
+    std::cout << std::endl;
 }
 void GameLogic::step() {
 
@@ -111,6 +125,7 @@ void GameLogic::step() {
         }
         player.update();
     }
+    this->registerIfGoal();
     this->time_left -= TIME_STEP;
     ball.update();
 }
@@ -131,12 +146,10 @@ std::shared_ptr<SnapShot> GameLogic::getSnap() {
     snap->add(this->ball.getPosition().y);
     snap->add(this->ball.getAngle());
     snap->add((uint8_t)(this->ball.getCurrentShot()));
-    if (this->ball.getCurrentShot() != 0)
-        std::cout << (int)this->ball.getCurrentShot() << std::endl;
 
     //std::vector<uint8_t> &values = snap->getMsg();
     //for (Car &player : this->players) {
-    for (uint8_t id = 0; id < this->players.size(); id++) {
+    for (size_t id = 0; id < this->players.size(); id++) {
         Car &player = this->players[id];
         snap->add((uint8_t)id);
         snap->add(player.getPosition().x);
