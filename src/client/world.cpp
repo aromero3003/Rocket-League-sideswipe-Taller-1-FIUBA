@@ -16,12 +16,13 @@ void World::create_cars(int n_cars){
     }
 }
 
-void World::set_id(uint8_t id){
+void World::set_id(uint8_t id) {
     this->my_id = id;
 }
 
 void World::finish_match(std::vector<char>& data){
     std::lock_guard<std::mutex> lock(mutex);
+
     this->winner = data[0];
     for(size_t i=0; i < this->cars.size(); i++){
         this->cars[i].goals = data[i*2 + 1];
@@ -60,11 +61,15 @@ void World::update(std::vector<char>& data){
         this->cars[i].nitro_flag = (uint8_t) data[i*16 + 33];
         this->cars[i].nitro_quantity = data[i*16 + 34];
     }
+
+    std::cout << "time: " << (int)remaining_time << std::endl;
 }
 
 void World::draw(TextureManager& textureManager, SoundManager& soundManager){
 
     std::lock_guard<std::mutex> lock(mutex);
+
+    if(remaining_time > 0){
 
     //Show court, always the same
     show_court(textureManager);
@@ -90,7 +95,8 @@ void World::draw(TextureManager& textureManager, SoundManager& soundManager){
 
     //sounds
     sounds(soundManager);
-
+    }
+    
     if(remaining_time == 0){
         show_statistics(textureManager, soundManager);
     }

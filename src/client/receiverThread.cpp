@@ -28,6 +28,7 @@ void ReceiverThread::run(){
             this->socket.recvall(&(buff[0]), vec_size, &closed);
             this->world.finish_match(buff);
             std::cout << "SI" << std::endl;
+            break;
         }
     }
 }
