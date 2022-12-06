@@ -59,6 +59,7 @@ class GameLogic {
   void reset();
   void step();
   std::shared_ptr<SnapShot> getSnap();
+  std::shared_ptr<SnapShot> getFinishSnap();
 };
 
 #endif  // __GAME_LOGIC__

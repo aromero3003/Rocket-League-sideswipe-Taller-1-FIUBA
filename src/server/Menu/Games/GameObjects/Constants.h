@@ -28,7 +28,8 @@
 #define DOWN_SENSOR_BITS 0x20
 #define BACK_SENSOR_BITS 0x40
 
+
 // Largo de Replay
 #define LREPLAY 1200
-
+#define GAMETIME 20.0f
 #endif

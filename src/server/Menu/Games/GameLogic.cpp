@@ -16,7 +16,7 @@ GameLogic::GameLogic(size_t cant_players)
     : world(b2Vec2(0.0f, -GRAVITY)),
       ball(this->world, SCENARIO_HALF_WIDTH + 6.0f, -SCENARIO_HEIGHT / 2.0f),
       goal(false),
-      time_left(180.0f),
+      time_left(GAMETIME),
       red_score(0),
       blue_score(0){
   // WORLD
@@ -118,6 +118,7 @@ std::shared_ptr<SnapShot> GameLogic::getSnap() {
 
     std::shared_ptr<SnapShot> snap(new SnapShot);
 
+    std::cerr<< "tieme :"<<(int) ((uint8_t)this->time_left)<<"\n";
     snap->add((uint8_t)this->time_left);                      // 1 byte
     snap->add(this->red_score);                               // 2 byte
     snap->add(this->blue_score);                              // 3 byte
@@ -144,6 +145,27 @@ std::shared_ptr<SnapShot> GameLogic::getSnap() {
         snap->add((uint8_t)(player.nitro));// isNitroOn());
         //std::cerr<< "nitro :"<<(int) ((uint8)(player.getNitroAmmount()*100/MAXNITRO))<<"\n";
         snap->add( (uint8)( (player.getNitroAmmount()*100)/MAXNITRO));
+    }
+    return snap;
+}
+std::shared_ptr<SnapShot> GameLogic::getFinishSnap() {
+
+    uint8_t a=1;//Gano Blue
+    if(this->red_score == this->blue_score){ a=3; //empate
+    }else if (this->red_score > this->blue_score){
+        a=0;//gano Rojo
+    }
+
+    std::shared_ptr<SnapShot> snap(new SnapShot);
+    std::cerr<< "win team :"<<(int) a<<"\n";
+    snap->add((uint8_t)a);                     
+
+    for (uint8_t id = 0; id < this->players.size(); id++) {
+        //Car &player = this->players[id];
+        std::cerr<< "player data :"<<(int) ((uint8)(10))<<"\n";
+        snap->add((uint8_t)10);// goles Jugador
+        std::cerr<< "player data :" <<(int) ((uint8)(5))<<"\n";
+        snap->add( (uint8) 5 );// assits Jugador
     }
     return snap;
 }

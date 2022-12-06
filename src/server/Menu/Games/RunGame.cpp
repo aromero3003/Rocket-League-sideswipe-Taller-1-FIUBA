@@ -96,8 +96,14 @@ void RunGame::sendReplay(){
     }
 }
 void RunGame::endGame(){
-    //send info()
-    std::cerr << "Time Out";
-    this->close();
+
+  std::cerr << "\nTime Out\n";
+  std::shared_ptr<SnapShot> snapFinish=gameLogic.getFinishSnap() ;
+  
+  for (auto&& player : players) {
+    player->addSnap(snapFinish);
+  }
+
+  this->close();
 }
 
