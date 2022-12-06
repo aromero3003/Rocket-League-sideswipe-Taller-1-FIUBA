@@ -7,8 +7,10 @@
 #include <cstdint>
 #include <iostream>
 #include <memory>
+#include <string>
 
 #include "GameObjects/Constants.h"
+#include "GameObjects/car.h"
 
 GameLogic::GameLogic(size_t cant_players)
     : world(b2Vec2(0.0f, -GRAVITY)),
@@ -18,9 +20,8 @@ GameLogic::GameLogic(size_t cant_players)
       red_score(0),
       blue_score(0){
   // WORLD
-
+  this->world.SetContactListener(&(this->contact_listener));
   b2Vec2 scenario_borders[SCENARIO_BORDERS];
-
 
   scenario_borders[0] = b2Vec2(6.0f, 0.0f);
   scenario_borders[1] = b2Vec2(SCENARIO_WIDTH + 6.0f, 0.0f);
@@ -51,23 +52,22 @@ GameLogic::GameLogic(size_t cant_players)
   float delta_x = (SCENARIO_WIDTH ) / (float)(cant_players+1);
   for (size_t i = 1; i <= cant_players; i++) {
     this->players.emplace_back(
-        this->world, b2Vec2(6.0f+delta_x * i, -SCENARIO_HEIGHT + 2.0f),
+        this->world, b2Vec2(6.0f+delta_x * i, -SCENARIO_HEIGHT),
         i <= cant_players / 2);
   }
 }
-void GameLogic::setInitianPos(){
-  for (auto car : this->players) car.setInitialPos();
-  ball.setInitialPos();
+void GameLogic::reset(){
+  for (auto car : this->players) car.reset();
+  ball.reset();
 }
+
 void GameLogic::jump_player(size_t id) { this->players[id].jump(); }
 
 void GameLogic::move_player_left(size_t id) { this->players[id].moveLeft(); }
 
 void GameLogic::move_player_right(size_t id) { this->players[id].moveRight(); }
 
-void GameLogic::move_player_up(size_t id) {
-  //    this->players[id].moveRight();
-}
+void GameLogic::move_player_up(size_t id) {}
 
 void GameLogic::brake_player(size_t id) { this->players[id].brake(); }
 
@@ -83,6 +83,20 @@ void GameLogic::step() {
 
     for (Car &player : this->players) {
         if (player.nitro == true) player.boost();
+        sensor_t active_sensor = player.getActiveSensor();
+        jump_t second_jump = player.getSecondJumpMade();
+        b2Vec2 hitDirection = ball.getPosition() - player.getPosition();
+        hitDirection.Normalize();
+        if (second_jump == DOUBLE_JUMP and active_sensor == DOWN_SENSOR) {
+            hitDirection *= 20.0f;
+            ball.applyPurpleShot(hitDirection);
+        } else if (second_jump == FLIP) {
+            hitDirection *= 40.0f;
+            if (active_sensor == BACK_SENSOR)
+                ball.applyGoldShot(hitDirection);
+            else if (active_sensor == FRONT_SENSOR)
+                ball.applyRedShot(hitDirection);
+        }
         player.update();
     }
 
@@ -95,12 +109,9 @@ void GameLogic::step() {
     } else {
       goal = false;
     }
-    // std::cout << std::cos(this->players[0].getAngle()) << "      " <<
-    // cos(this->players[1].getAngle()) << std::endl; std::cout <<
-    // this->players[0].getPosition().y << "      " <<
-    // this->players[1].getPosition().y  << '\n'<< std::endl;
     this->world.Step(TIME_STEP, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
     this->time_left -= TIME_STEP;
+    ball.update();
 }
 
 std::shared_ptr<SnapShot> GameLogic::getSnap() {
@@ -110,14 +121,17 @@ std::shared_ptr<SnapShot> GameLogic::getSnap() {
     snap->add((uint8_t)this->time_left);                      // 1 byte
     snap->add(this->red_score);                               // 2 byte
     snap->add(this->blue_score);                              // 3 byte
-    snap->add(this->goal);
+    //snap->add(this->goal);
+    snap->add((uint8_t)0);
     snap->add((uint8_t)this->ball.isColliding());
     snap->add((uint8_t)false);
 
     snap->add(this->ball.getPosition().x);
     snap->add(this->ball.getPosition().y);
     snap->add(this->ball.getAngle());
-    snap->add((uint8_t)0);
+    snap->add((uint8_t)(this->ball.getCurrentShot()));
+    if (this->ball.getCurrentShot() != 0)
+        std::cout << (int)this->ball.getCurrentShot() << std::endl;
 
     //std::vector<uint8_t> &values = snap->getMsg();
     //for (Car &player : this->players) {

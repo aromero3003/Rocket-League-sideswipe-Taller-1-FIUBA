@@ -16,21 +16,23 @@ class Ball {
   uint8_t current_collisions;
   b2Vec2 initialPosition;
   shot_t current_shot_state;
+  float shot_state_counter;
 
  public:
   Ball(b2World &world, float x, float y);
   const b2Vec2 getPosition();
   const float getAngle();
   const bool isColliding();
-  void setInitialPos();
+  void reset();
   // getSnapshotData
 
   void applyRedShot(b2Vec2 hitDirection);
   void applyGoldShot(b2Vec2 hitDirection);
   void applyPurpleShot(b2Vec2 hitDirection);
 
-  uint8_t getCurrentShot();
+  shot_t getCurrentShot();
   void transform(b2Vec2 position, float angle);
+  void update();
 };
 
 #endif

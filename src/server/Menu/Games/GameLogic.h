@@ -8,9 +8,11 @@
 #include <vector>
 
 #include "../Client/Snap.h"
+#include "RLContactListener.h"
 #include "GameObjects/Constants.h"
 #include "GameObjects/ball.h"
 #include "GameObjects/car.h"
+#include <box2d/box2d.h>
 #include "box2d/b2_body.h"
 #include "box2d/b2_chain_shape.h"
 #include "box2d/b2_collision.h"
@@ -18,9 +20,11 @@
 #include "box2d/b2_math.h"
 #include "box2d/b2_polygon_shape.h"
 #include "box2d/b2_world.h"
+
 class GameLogic {
  private:
   b2World world;
+  RLContactListener contact_listener;
   Ball ball;
   std::vector<Car> players;
   uint8_t goal;
@@ -52,7 +56,7 @@ class GameLogic {
   // void move_release_player_down (size_t id);
   // void move_release_player_left (size_t id);
   // void move_release_player_right (size_t id);
-  void setInitianPos();
+  void reset();
   void step();
   std::shared_ptr<SnapShot> getSnap();
 };

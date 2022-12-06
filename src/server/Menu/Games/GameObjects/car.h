@@ -14,18 +14,37 @@
 #include "box2d/box2d.h"
 
 enum { LEFT, RIGHT };
+typedef enum {NO_SENSOR, BACK_SENSOR, DOWN_SENSOR, FRONT_SENSOR} sensor_t;
+typedef enum {NO_FLIP, DOUBLE_JUMP, FLIP} jump_t;
+typedef enum {NO_PRESSED, LEFT_PRESSED, RIGHT_PRESSED} direction_t;
+
 
 class Car {
  private:
+  b2Vec2 initialPosition;
+
   b2Body *chassis;
   b2Body *wheel1;
   b2Body *wheel2;
   b2WheelJoint *damper1;
   b2WheelJoint *damper2;
+
+  b2Body *front_sensor;
+  b2Body *back_sensor;
+  b2Body *down_sensor;
+
   bool orientation;
+  direction_t direction_pressed;
+
+  sensor_t active_sensor;
+
+  uint8_t jump_ammount;
+  jump_t current_jump;
+
   uint16_t nitro_cant;
-  b2Vec2 initialPosition;
+
   bool onSurface(bool strictly_touching);
+
 
  public:
   Car(b2World &world, const b2Vec2 &position, bool orientation);
@@ -41,7 +60,10 @@ class Car {
   const float getAngle();
   const uint8_t getOrientation();
   const uint16_t getNitroAmmount();
-  void setInitialPos();
+  void setActiveSensor(sensor_t active);
+  sensor_t getActiveSensor();
+  jump_t getSecondJumpMade();
+  void reset();
   bool has_jumped;
   double time_elapsed;
   bool nitro;

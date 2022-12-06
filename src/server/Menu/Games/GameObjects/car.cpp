@@ -1,4 +1,5 @@
 #include "car.h"
+#include <iostream>
 
 #include <box2d/b2_common.h>
 #include <box2d/b2_math.h>
@@ -8,7 +9,7 @@
 #include "Constants.h"
 
 Car::Car(b2World &world, const b2Vec2 &position, bool orientation)
-    : orientation(orientation),nitro_cant(MAXNITRO) ,initialPosition(position){
+    : initialPosition(position), orientation(orientation),nitro_cant(MAXNITRO){
   float x = position.x, y = position.y;
   {
     b2BodyDef chassis_def;
@@ -35,6 +36,64 @@ Car::Car(b2World &world, const b2Vec2 &position, bool orientation)
 
     this->chassis = world.CreateBody(&chassis_def);
     this->chassis->CreateFixture(&chassis_fd);
+  }
+
+    // Sensor
+  {
+      b2BodyDef sensordef;
+      sensordef.type = b2_dynamicBody;
+      sensordef.position.Set(position.x + 2.0f, position.y + 1.0f);
+      this->front_sensor = world.CreateBody(&sensordef);
+      sensordef.position.Set(position.x - 2.0f, position.y + 1.0f);
+      this->back_sensor = world.CreateBody(&sensordef);
+
+      sensordef.position.Set(position.x, position.y - 0.2f);
+      this->down_sensor = world.CreateBody(&sensordef);
+
+      b2PolygonShape square;
+      square.SetAsBox(0.2, 0.5f);
+
+      b2FixtureDef sensorfd;
+      sensorfd.shape = &square;
+      sensorfd.density = 0.001f;
+      sensorfd.isSensor = true;
+      sensorfd.filter.categoryBits = FRONT_SENSOR_BITS;
+      sensorfd.userData.pointer = reinterpret_cast<uintptr_t>(this);
+
+      this->front_sensor->CreateFixture(&sensorfd);
+
+      sensorfd.filter.categoryBits = BACK_SENSOR_BITS;
+      this->back_sensor->CreateFixture(&sensorfd);
+
+      square.SetAsBox(1.5, 0.2f);
+      sensorfd.filter.categoryBits = DOWN_SENSOR_BITS;
+      this->down_sensor->CreateFixture(&sensorfd);
+
+      b2PrismaticJointDef joint_def;
+      b2Vec2 axis(0.0f, 1.0f);
+      joint_def.Initialize(chassis, this->front_sensor, chassis->GetPosition(), b2Vec2(1.0f, 0.0f));
+      joint_def.motorSpeed = 0.0f;
+      joint_def.enableMotor = false;
+      joint_def.enableLimit = true;
+      joint_def.lowerTranslation = 0.0f;
+      joint_def.upperTranslation = 0.0f;
+      world.CreateJoint(&joint_def);
+
+      joint_def.Initialize(chassis, this->back_sensor, chassis->GetPosition(), b2Vec2(-1.0f, 0.0f));
+      joint_def.motorSpeed = 0.0f;
+      joint_def.enableMotor = false;
+      joint_def.enableLimit = true;
+      joint_def.lowerTranslation = 0.0f;
+      joint_def.upperTranslation = 0.0f;
+      world.CreateJoint(&joint_def);
+
+      joint_def.Initialize(chassis, this->down_sensor, chassis->GetPosition(), b2Vec2(0.0f, -0.5f));
+      joint_def.motorSpeed = 0.0f;
+      joint_def.enableMotor = false;
+      joint_def.enableLimit = true;
+      joint_def.lowerTranslation = 0.0f;
+      joint_def.upperTranslation = 0.0f;
+      world.CreateJoint(&joint_def);
   }
 
   {
@@ -103,23 +162,67 @@ Car::Car(b2World &world, const b2Vec2 &position, bool orientation)
 }
 
 void Car::jump() {
-  this->wheel1->ApplyLinearImpulseToCenter(b2Vec2(0.0f, 100.0f), true);
-  this->wheel2->ApplyLinearImpulseToCenter(b2Vec2(0.0f, 100.0f), true);
+    if (this->jump_ammount > 1)
+        return;
+
+    else if (this->jump_ammount == 0) {
+        this->chassis->ApplyLinearImpulseToCenter(b2Vec2(0.0f,100.0f), true);
+        this->wheel1->ApplyLinearImpulseToCenter(b2Vec2(0.0f,75.0f), true);
+        this->wheel2->ApplyLinearImpulseToCenter(b2Vec2(0.0f,75.0f), true);
+        (this->jump_ammount)++;
+    } else if (this->jump_ammount == 1) {
+        if (this->direction_pressed == LEFT_PRESSED) std::cout << "LEFT FLIP" << std::endl;
+        else if (this->direction_pressed == NO_PRESSED) std::cout << "DOUBLE JUMP" << std::endl;
+        else std::cout << "RIGHT FLIP" << std::endl;
+        (this->jump_ammount)++;
+
+        float angle = this->chassis->GetAngle();
+        b2Vec2 jump_direction(this->direction_pressed == LEFT_PRESSED ? -300.0f : 300.0f, 0.0f);
+        if (this->direction_pressed == NO_PRESSED) {
+            jump_direction.x = 200.0f * std::cos(angle + b2_pi * 0.5f);
+            jump_direction.y = 200.0f * std::sin(angle + b2_pi * 0.5f);
+            this->chassis->ApplyLinearImpulseToCenter(jump_direction,true);
+            jump_direction *= 0.5f;
+            this->wheel1->ApplyLinearImpulseToCenter(jump_direction,true);
+            this->wheel2->ApplyLinearImpulseToCenter(jump_direction,true);
+            this->current_jump = DOUBLE_JUMP;
+        } else {
+            this->wheel2->ApplyLinearImpulseToCenter(jump_direction,true);
+            this->chassis->ApplyAngularImpulse(this->direction_pressed == LEFT_PRESSED ? 500.0f : -500.0f, true);
+            this->current_jump = FLIP;
+        }
+    }
+    std::cout << (int)this->jump_ammount << std::endl;
 }
 
 void Car::moveLeft() {
+  this->direction_pressed = LEFT_PRESSED;
   this->damper1->SetMotorSpeed(50000.0f);
   this->damper2->SetMotorSpeed(50000.0f);
-  if (this->onSurface(true)) this->orientation = LEFT;
+  if (this->onSurface(true)) {
+    this->orientation = LEFT;
+    if (this->active_sensor == BACK_SENSOR)
+      this->active_sensor = FRONT_SENSOR;
+    else if (this->active_sensor == FRONT_SENSOR)
+      this->active_sensor = BACK_SENSOR;
+  }
 }
 
 void Car::moveRight() {
+  this->direction_pressed = RIGHT_PRESSED;
   this->damper1->SetMotorSpeed(-50000.0f);
   this->damper2->SetMotorSpeed(-50000.0f);
-  if (this->onSurface(true)) this->orientation = RIGHT;
+  if (this->onSurface(true)) {
+    this->orientation = RIGHT;
+    if (this->active_sensor == BACK_SENSOR)
+      this->active_sensor = FRONT_SENSOR;
+    else if (this->active_sensor == FRONT_SENSOR)
+      this->active_sensor = BACK_SENSOR;
+  }
 }
 
 void Car::brake() {
+  this->direction_pressed = NO_PRESSED;
   this->damper1->SetMotorSpeed(0.0f);
   this->damper2->SetMotorSpeed(0.0f);
   if (this->has_jumped) return;
@@ -157,28 +260,44 @@ void Car::boost() {
 }
 
 void Car::update() {
-  if (nitro && nitro_cant>0) 
+  if (nitro && nitro_cant>0)
     nitro_cant--;
- 
+
   if (!nitro && nitro_cant<MAXNITRO)
     nitro_cant++;
   if (nitro_cant==0) nitro=false;
+
   b2Vec2 position(this->chassis->GetPosition());
   float angle = this->chassis->GetAngle();
+  bool is_near_surface = this->onSurface(false);
   if (position.y < -SCENARIO_HEIGHT + 1.4f) {
-    if (not this->onSurface(false) and
-        this->chassis->GetLinearVelocity().y < 0.0f)
+    if (not is_near_surface and this->chassis->GetLinearVelocity().y < 0.0f)
       if (std::cos(angle) < 0.0f) {
         this->orientation = not this->orientation;
         this->chassis->SetTransform(position, angle - b2_pi);
       }
   }
+
+  b2Filter new_filter;
+  new_filter.categoryBits = this->orientation == RIGHT ? FRONT_SENSOR_BITS : BACK_SENSOR_BITS;
+  this->front_sensor->GetFixtureList()->SetFilterData(new_filter);
+
+  new_filter.categoryBits = this->orientation == RIGHT ? BACK_SENSOR_BITS : FRONT_SENSOR_BITS;
+  this->back_sensor->GetFixtureList()->SetFilterData(new_filter);
+
+
+  if (this->onSurface(true)) {
+      this->jump_ammount = 0;
+  }
+
+  //this->current_jump = NO_FLIP;
 }
-void Car::setInitialPos(){ 
+void Car::reset(){
   this->chassis->SetTransform(initialPosition,0);
   this->chassis->SetAngularVelocity(0);
-  b2Vec2 aux(0,0);
-  this->chassis->SetLinearVelocity(aux); 
+  this->chassis->SetLinearVelocity(b2Vec2(0,0));
+  this->nitro_cant = 0xff;
+  this->nitro = false;
 }
 
 const uint8_t Car::getOrientation() { return this->orientation; }
@@ -188,3 +307,9 @@ const b2Vec2 Car::getPosition() { return chassis->GetPosition(); }
 const float Car::getAngle() { return chassis->GetAngle(); }
 
 const uint16_t Car::getNitroAmmount() { return this->nitro_cant; }
+
+void Car::setActiveSensor(sensor_t active) { this->active_sensor = active; }
+
+sensor_t Car::getActiveSensor() { return this->active_sensor; }
+
+jump_t Car::getSecondJumpMade() { return this->current_jump; }

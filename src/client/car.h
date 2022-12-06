@@ -2,6 +2,10 @@
 #define CAR_H
 
 #include <cstdint>
+#include <SDL2pp/SDL2pp.hh>
+
+#include "texture_manager.h"
+#include "sound_manager.h"
 
 class Car{
     private:
@@ -16,6 +20,13 @@ class Car{
         friend class World;
     public:  
         Car();
+
+        void draw(TextureManager& textureManager, SoundManager& SoundManager);
+
+        void show_indicators(TextureManager& textureManager);
+
+        void show_nitro(TextureManager& textureManager, SoundManager& soundManager);
+        
         ~Car();
 };
 

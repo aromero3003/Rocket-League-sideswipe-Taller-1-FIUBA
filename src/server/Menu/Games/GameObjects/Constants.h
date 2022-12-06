@@ -22,8 +22,11 @@
 #define BALL_BITS 0x04
 
 // Car
-#define CAR_BITS 0x1
+#define CAR_BITS 0x01
 #define MAXNITRO 1000
+#define FRONT_SENSOR_BITS 0x10
+#define DOWN_SENSOR_BITS 0x20
+#define BACK_SENSOR_BITS 0x40
 
 // Largo de Replay
 #define LREPLAY 1200

@@ -4,6 +4,7 @@
 
 #include <box2d/b2_math.h>
 #include <iostream>
+#include <new>
 
 #include "Constants.h"
 
@@ -23,7 +24,7 @@ Ball::Ball(b2World& world, float x, float y) {
   ball_fd.restitution = 0.9f;
   ball_fd.restitutionThreshold = 1.0f;
   ball_fd.filter.categoryBits = BALL_BITS;
-  ball_fd.filter.maskBits = SCENARIO_BITS | CAR_BITS;
+  ball_fd.filter.maskBits = SCENARIO_BITS | CAR_BITS | BACK_SENSOR_BITS | FRONT_SENSOR_BITS | DOWN_SENSOR_BITS; 
   ball_fd.shape = &circle;
 
   this->ball = world.CreateBody(&ball_def);
@@ -34,12 +35,11 @@ const b2Vec2 Ball::getPosition() { return this->ball->GetPosition(); }
 
 const float Ball::getAngle() { return this->ball->GetAngle(); }
 
-void Ball::setInitialPos(){ 
+void Ball::reset(){ 
   this->ball->SetTransform(initialPosition,0); 
   this->ball->SetAngularVelocity(0);
   b2Vec2 aux(0,0);
   this->ball->SetLinearVelocity(aux);
-  
 }
 
 const bool Ball::isColliding() {
@@ -54,16 +54,25 @@ const bool Ball::isColliding() {
 
 void Ball::applyRedShot(b2Vec2 hitDirection) {
     this->ball->ApplyLinearImpulseToCenter(hitDirection, true);
+    this->current_shot_state = RED_SHOT;
+    std::cout << "REDSHOT" << std::endl;
 }
 
 void Ball::applyPurpleShot(b2Vec2 hitDirection) {
     this->ball->ApplyLinearImpulseToCenter(hitDirection, true);
+    this->current_shot_state = PURPLE_SHOT;
+    std::cout << "purple" << std::endl;
 }
 
 void Ball::applyGoldShot(b2Vec2 hitDirection) {
     this->ball->ApplyLinearImpulseToCenter(hitDirection, true);
+    this->current_shot_state = GOLD_SHOT;
+    std::cout << "gold" << std::endl;
 }
 
-void Ball::transform(b2Vec2 position, float angle) {
-    this->ball->SetTransform(position, angle);
+shot_t Ball::getCurrentShot() { return this->current_shot_state; }
+
+void Ball::update() {
+    if (this->ball->GetLinearVelocity().Length() < 10.0f)
+        this->current_shot_state = NO_SHOT;
 }
