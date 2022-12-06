@@ -21,6 +21,7 @@ void World::set_id(uint8_t id){
 }
 
 void World::finish_match(std::vector<char>& data){
+    std::lock_guard<std::mutex> lock(mutex);
     this->winner = data[0];
     for(size_t i=0; i < this->cars.size(); i++){
         this->cars[i].goals = data[i*2 + 1];
@@ -47,7 +48,7 @@ void World::update(std::vector<char>& data){
     this->ball.angle = (-180/PI)*FC(buf+14);
     this->ball.color = data[18];
 
-    std::cout << (int)this->ball.color << std::endl;
+    if (this->ball.color != 0) std::cout << (int)this->ball.color << std::endl;
 
     //UPDATE ALL CARS
     for(size_t i=0; i < this->cars.size(); i++){
@@ -237,10 +238,9 @@ void World::show_statistics(TextureManager& textureManager, SoundManager& soundM
     std::cout << "winner: " << (int)this->winner << std::endl;
     for(size_t i=0; i < this->cars.size(); i++){
         std::cout << "\t car " << (int)i << std::endl;
-        std::cout << "\t\t goals:" << cars[i].goals;
-        std::cout << "\t\t assists:" << cars[i].assists;
+        std::cout << "\t\t goals:" << (int)cars[i].goals;
+        std::cout << "\t\t assists:" << (int)cars[i].assists << std::endl;
     }
-
 }
 
 World::~World(){}

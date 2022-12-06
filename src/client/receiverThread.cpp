@@ -22,10 +22,12 @@ void ReceiverThread::run(){
     while(!closed) {
         this->socket.recvall(&(buff[0]), vec_size, &closed);
         this->world.update(buff);
-        if(buff[0] == 0){
+        if(buff[0] == 0) {
             vec_size = 1 + n_cars * 2;
+            std::cout << "entro aca?" << std::endl;
             this->socket.recvall(&(buff[0]), vec_size, &closed);
             this->world.finish_match(buff);
+            std::cout << "SI" << std::endl;
         }
     }
 }
