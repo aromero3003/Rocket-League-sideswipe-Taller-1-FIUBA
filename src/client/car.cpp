@@ -31,7 +31,7 @@ void Car::draw(TextureManager& textureManager, SoundManager& soundManager,size_t
 }
 
 void Car::show_indicators(TextureManager& textureManager,size_t cant_cars){
-    if(id <= cant_cars / 2){
+    if(id < cant_cars / 2){
         textureManager.renderer.Copy(
             textureManager.red_triangle,
             NullOpt,
