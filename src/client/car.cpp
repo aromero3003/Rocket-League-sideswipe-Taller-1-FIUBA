@@ -7,7 +7,7 @@ Car::Car(){
     nitro_flag = false;
 }
 
-void Car::draw(TextureManager& textureManager, SoundManager& soundManager){
+void Car::draw(TextureManager& textureManager, SoundManager& soundManager,size_t cant_cars){
     int flip;
     textureManager.renderer.Copy(
             textureManager.car_texture,
@@ -24,14 +24,14 @@ void Car::draw(TextureManager& textureManager, SoundManager& soundManager){
             NullOpt,
             flip = (pointing_right == true) ? SDL_FLIP_NONE : SDL_FLIP_HORIZONTAL);
 
-    show_indicators(textureManager);
+    show_indicators(textureManager,cant_cars);
 
     show_nitro(textureManager, soundManager);    
 
 }
 
-void Car::show_indicators(TextureManager& textureManager){
-    if(id % 2 == 0){
+void Car::show_indicators(TextureManager& textureManager,size_t cant_cars){
+    if(id <= cant_cars / 2){
         textureManager.renderer.Copy(
             textureManager.red_triangle,
             NullOpt,

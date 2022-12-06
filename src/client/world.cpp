@@ -135,7 +135,7 @@ void World::show_nitro_bar(TextureManager& textureManager){
 void World::show_cars(TextureManager& textureManager, SoundManager& soundManager){
     
     for(size_t i = 0; i < this->cars.size(); i++){
-        cars[i].draw(textureManager, soundManager);
+        cars[i].draw(textureManager, soundManager,this->cars.size());
     }
 }
 
@@ -314,7 +314,7 @@ void World::show_statistics(TextureManager& textureManager, SoundManager& soundM
             textureManager.time_font.RenderText_Blended(car_assists, SDL_Color{255, 255, 255, 255})
         );
         textureManager.renderer.Copy(
-        goals_text_sprite, 
+        assists_text_sprite, 
         NullOpt, 
         Rect(
             500, 

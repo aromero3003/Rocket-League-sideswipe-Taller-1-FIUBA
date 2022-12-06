@@ -24,9 +24,9 @@ class Car{
     public:  
         Car();
 
-        void draw(TextureManager& textureManager, SoundManager& SoundManager);
+        void draw(TextureManager& textureManager, SoundManager& SoundManager,size_t cant_cars);
 
-        void show_indicators(TextureManager& textureManager);
+        void show_indicators(TextureManager& textureManager,size_t cant_cars);
 
         void show_nitro(TextureManager& textureManager, SoundManager& soundManager);
         
