@@ -25,6 +25,9 @@ void RLContactListener::BeginContact(b2Contact *c) {
     if (mask_A == BALL_BITS and other_mask == CAR_BITS) {
         Car *hitter = (Car *)(other_fixture->GetUserData().pointer);
         ((Ball *)(c->GetFixtureA()->GetUserData().pointer))->registerHit(hitter);
+    } else if (mask_A == CAR_BITS and other_mask == BALL_BITS) {
+        Car *hitter = (Car *)(c->GetFixtureA()->GetUserData().pointer);
+        ((Ball *)(other_fixture->GetUserData().pointer))->registerHit(hitter);
     }
 }
 
