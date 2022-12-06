@@ -27,7 +27,7 @@
 #define FRONT_SENSOR_BITS 0x10
 #define DOWN_SENSOR_BITS 0x20
 #define BACK_SENSOR_BITS 0x40
-#define MAXSHOTTIME 30.0f
+#define MAXSHOTTIME 120.0f
 
 // Largo de Replay
 #define LREPLAY 1200
