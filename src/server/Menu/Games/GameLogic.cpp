@@ -88,13 +88,13 @@ void GameLogic::registerIfGoal() {
             last_hitter->registerGoal();
         }
         this->goal = true;
-        blue_score++;
+        red_score++;
     } else if (ball.getPosition().x > SCENARIO_WIDTH + 6.0f + BALL_RADIUS) {
         if (last_hitter != nullptr and last_hitter->isTeamRed()) {
             last_hitter->registerGoal();
         }
         this->goal = true;
-        red_score++;
+        blue_score++;
     } else {
       goal = false;
       return;
