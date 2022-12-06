@@ -173,15 +173,13 @@ std::shared_ptr<SnapShot> GameLogic::getFinishSnap() {
     }
 
     std::shared_ptr<SnapShot> snap(new SnapShot);
-    std::cerr<< "win team :"<<(int) 15<<"\n";
-    snap->add((uint8_t)a);                     
+    snap->add((uint8_t)a);
 
     for (uint8_t id = 0; id < this->players.size(); id++) {
-        //Car &player = this->players[id];
-        std::cerr<< "player data :"<<(int) ((uint8)(10))<<"\n";
-        snap->add((uint8_t)10);// goles Jugador
-        std::cerr<< "player data :" <<(int) ((uint8)(5))<<"\n";
-        snap->add( (uint8) 5 );// assits Jugador
+        Car &player = this->players[id];
+        snap->add(player.getGoals());// goles Jugador
+        snap->add(player.getAssistances());// assits Jugador
+        // snap->add(player.getTackles()); atajadas Jugador
     }
     return snap;
 }
