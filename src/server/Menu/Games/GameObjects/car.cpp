@@ -177,8 +177,8 @@ void Car::jump() {
         (this->jump_ammount)++;
 
         float angle = this->chassis->GetAngle();
-        b2Vec2 jump_direction(200.0f, 0.0f);
-        if (this->direction_pressed == 0) {
+        b2Vec2 jump_direction(this->direction_pressed == LEFT_PRESSED ? -300.0f : 300.0f, 0.0f);
+        if (this->direction_pressed == NO_PRESSED) {
             jump_direction.x = 200.0f * std::cos(angle + b2_pi * 0.5f);
             jump_direction.y = 200.0f * std::sin(angle + b2_pi * 0.5f);
             this->chassis->ApplyLinearImpulseToCenter(jump_direction,true);
@@ -198,16 +198,33 @@ void Car::jump() {
 void Car::moveLeft() {
   this->damper1->SetMotorSpeed(50000.0f);
   this->damper2->SetMotorSpeed(50000.0f);
-  if (this->onSurface(true)) this->orientation = LEFT;
+  if (this->onSurface(true)) {
+    this->orientation = LEFT;
+    if (this->active_sensor == BACK_SENSOR)
+      this->active_sensor = FRONT_SENSOR;
+    else if (this->active_sensor == FRONT_SENSOR)
+      this->active_sensor = BACK_SENSOR;
+  } else {
+    this->direction_pressed = LEFT_PRESSED;
+  }
 }
 
 void Car::moveRight() {
   this->damper1->SetMotorSpeed(-50000.0f);
   this->damper2->SetMotorSpeed(-50000.0f);
-  if (this->onSurface(true)) this->orientation = RIGHT;
+  if (this->onSurface(true)) {
+    this->orientation = RIGHT;
+    if (this->active_sensor == BACK_SENSOR)
+      this->active_sensor = FRONT_SENSOR;
+    else if (this->active_sensor == FRONT_SENSOR)
+      this->active_sensor = BACK_SENSOR;
+  } else {
+      this->direction_pressed = RIGHT_PRESSED;
+  }
 }
 
 void Car::brake() {
+  this->direction_pressed = NO_PRESSED;
   this->damper1->SetMotorSpeed(0.0f);
   this->damper2->SetMotorSpeed(0.0f);
   if (this->has_jumped) return;
