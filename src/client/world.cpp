@@ -96,7 +96,7 @@ void World::draw(TextureManager& textureManager, SoundManager& soundManager){
     //sounds
     sounds(soundManager);
     }
-    
+
     if(remaining_time == 0){
         show_statistics(textureManager, soundManager);
     }
@@ -240,6 +240,92 @@ std::string World::convert_time(){
 
 void World::show_statistics(TextureManager& textureManager, SoundManager& soundManager){
     std::cout << "ya terminamos" << std::endl;
+
+    std::string winner_team;
+    if(winner == 0) winner_team = "ROJO";
+    if(winner == 1) winner_team = "AZUL";
+    if(winner == 3) winner_team = "empate..";
+
+    Texture winner_text_sprite(
+            textureManager.renderer,
+            textureManager.score_font.RenderText_Blended("Winner: ", SDL_Color{255, 255, 255, 255})
+        );
+    textureManager.renderer.Copy(
+        winner_text_sprite, 
+        NullOpt, 
+        Rect(
+            50, 
+            50, 
+            winner_text_sprite.GetWidth(), 
+            winner_text_sprite.GetHeight()));
+
+
+
+     Texture winner_team_text_sprite(
+            textureManager.renderer,
+            textureManager.score_font.RenderText_Blended(winner_team, SDL_Color{255, 255, 255, 255})
+        );
+    
+    textureManager.renderer.Copy(
+        winner_team_text_sprite, 
+        NullOpt, 
+        Rect(
+            500, 
+            50, 
+            winner_text_sprite.GetWidth(), 
+            winner_text_sprite.GetHeight()));
+
+    for(size_t i=0; i < this->cars.size(); i++){
+
+        std::string car_number = "Player " + std::to_string(i);
+
+        Texture car_text_sprite(
+            textureManager.renderer,
+            textureManager.time_font.RenderText_Blended(car_number, SDL_Color{255, 255, 255, 255})
+        );
+        textureManager.renderer.Copy(
+        car_text_sprite, 
+        NullOpt, 
+        Rect(
+            200, 
+            100 + 100 * (i+1), 
+            car_text_sprite.GetWidth(), 
+            car_text_sprite.GetHeight()));
+
+        std::string car_goals = "Goals: " + std::to_string(cars[i].goals);
+
+        Texture goals_text_sprite(
+            textureManager.renderer,
+            textureManager.time_font.RenderText_Blended(car_goals, SDL_Color{255, 255, 255, 255})
+        );
+        textureManager.renderer.Copy(
+        goals_text_sprite, 
+        NullOpt, 
+        Rect(
+            300, 
+            100 + 50 + 100 * (i+1), 
+            car_text_sprite.GetWidth(), 
+            car_text_sprite.GetHeight()));
+
+        std::string car_assists = "Assists: " + std::to_string(cars[i].assists);
+
+        Texture assists_text_sprite(
+            textureManager.renderer,
+            textureManager.time_font.RenderText_Blended(car_assists, SDL_Color{255, 255, 255, 255})
+        );
+        textureManager.renderer.Copy(
+        goals_text_sprite, 
+        NullOpt, 
+        Rect(
+            500, 
+            100 + 50 + 100 * (i+1),
+            car_text_sprite.GetWidth(), 
+            car_text_sprite.GetHeight()));
+
+    }
+
+
+
 
     std::cout << "winner: " << (int)this->winner << std::endl;
     for(size_t i=0; i < this->cars.size(); i++){

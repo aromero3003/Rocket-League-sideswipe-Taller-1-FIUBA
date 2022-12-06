@@ -31,5 +31,5 @@
 
 // Largo de Replay
 #define LREPLAY 1200
-#define GAMETIME 5.0f
+#define GAMETIME 2.0f
 #endif

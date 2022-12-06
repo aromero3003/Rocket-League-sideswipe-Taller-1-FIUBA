@@ -17,7 +17,8 @@ TextureManager::TextureManager(Window& window):renderer(window, -1, SDL_RENDERER
                                 purple_shot(renderer,"../data/purple_shot.png"),
                                 gold_shot(renderer,"../data/gold_shot.png"),
                                 time_font("../data/Vera.ttf", 30),
-                                score_font("../data/Vera.ttf",80){
+                                score_font("../data/Vera.ttf",80),
+                                statistics_score("../data/Vera.ttf", 120){
 
 }
 
