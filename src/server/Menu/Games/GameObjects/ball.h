@@ -29,7 +29,7 @@ class Ball {
   void applyGoldShot(b2Vec2 hitDirection);
   void applyPurpleShot(b2Vec2 hitDirection);
 
-  uint8_t getCurrentShot();
+  shot_t getCurrentShot();
   void transform(b2Vec2 position, float angle);
 };
 

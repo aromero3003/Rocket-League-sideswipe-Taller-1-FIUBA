@@ -53,13 +53,20 @@ const bool Ball::isColliding() {
 
 void Ball::applyRedShot(b2Vec2 hitDirection) {
     this->ball->ApplyLinearImpulseToCenter(hitDirection, true);
+    this->current_shot_state = RED_SHOT;
+    std::cout << "REDSHOT" << std::endl;
 }
 
 void Ball::applyPurpleShot(b2Vec2 hitDirection) {
     this->ball->ApplyLinearImpulseToCenter(hitDirection, true);
+    this->current_shot_state = PURPLE_SHOT;
+    std::cout << "purple" << std::endl;
 }
 
 void Ball::applyGoldShot(b2Vec2 hitDirection) {
     this->ball->ApplyLinearImpulseToCenter(hitDirection, true);
+    this->current_shot_state = GOLD_SHOT;
+    std::cout << "gold" << std::endl;
 }
 
+shot_t Ball::getCurrentShot() { return this->current_shot_state; }
