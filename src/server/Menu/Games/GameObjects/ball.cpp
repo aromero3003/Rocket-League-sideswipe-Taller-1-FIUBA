@@ -4,6 +4,7 @@
 
 #include <box2d/b2_math.h>
 #include <iostream>
+#include <new>
 
 #include "Constants.h"
 
@@ -70,3 +71,8 @@ void Ball::applyGoldShot(b2Vec2 hitDirection) {
 }
 
 shot_t Ball::getCurrentShot() { return this->current_shot_state; }
+
+void Ball::update() {
+    //if (this->ball->GetLinearVelocity().Length() < 10.0f)
+        //this->current_shot_state = NO_SHOT;
+}

@@ -16,6 +16,7 @@ class Ball {
   uint8_t current_collisions;
   b2Vec2 initialPosition;
   shot_t current_shot_state;
+  float shot_state_counter;
 
  public:
   Ball(b2World &world, float x, float y);
@@ -31,6 +32,7 @@ class Ball {
 
   shot_t getCurrentShot();
   void transform(b2Vec2 position, float angle);
+  void update();
 };
 
 #endif

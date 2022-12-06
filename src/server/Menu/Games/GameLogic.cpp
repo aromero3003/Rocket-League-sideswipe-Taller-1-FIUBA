@@ -129,6 +129,8 @@ std::shared_ptr<SnapShot> GameLogic::getSnap() {
     snap->add(this->ball.getPosition().y);
     snap->add(this->ball.getAngle());
     snap->add((uint8_t)(this->ball.getCurrentShot()));
+    if (this->ball.getCurrentShot() != 0)
+        std::cout << "Special Shot" << std::endl;
 
     //std::vector<uint8_t> &values = snap->getMsg();
     //for (Car &player : this->players) {
