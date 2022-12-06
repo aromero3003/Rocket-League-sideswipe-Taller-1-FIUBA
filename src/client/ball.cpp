@@ -29,19 +29,8 @@ void Ball::draw_shots(TextureManager& textureManager){
             66),
         shot_phase,
         NullOpt);
-    }
+    }    
     if(color == 2){
-        textureManager.renderer.Copy(
-            textureManager.purple_shot,
-            NullOpt,
-            Rect(20 * x_position -30,
-                (-20) * y_position - 30, 
-                60, 
-                60),
-            shot_phase,
-            NullOpt);
-    }
-    if(color == 3){
         textureManager.renderer.Copy(
             textureManager.red_shot,
             NullOpt,
@@ -52,6 +41,18 @@ void Ball::draw_shots(TextureManager& textureManager){
             shot_phase,
             NullOpt);
     }
+    if(color == 3){
+        textureManager.renderer.Copy(
+            textureManager.purple_shot,
+            NullOpt,
+            Rect(20 * x_position -30,
+                (-20) * y_position - 30, 
+                60, 
+                60),
+            shot_phase,
+            NullOpt);
+    }
+
 }
 
 Ball::~Ball(){}
