@@ -14,8 +14,11 @@ class Ball {
   uint8_t current_collisions;
   b2Vec2 initialPosition;
   shot_t current_shot_state;
-  float shot_state_counter;
   float rest_current_time_effect;
+
+  Car *last_hitter;
+  Car *blue_assistance;
+  Car *red_assistance;
 
   void applyShot(Car &hitter, shot_t shot);
 
@@ -25,9 +28,6 @@ class Ball {
   const float getAngle();
   const bool isColliding();
   void reset();
-  Car *last_hitter;
-  Car *blue_assistance;
-  Car *red_assistance;
 
   void applyRedShot(Car &hitter);
   void applyGoldShot(Car &hitter);

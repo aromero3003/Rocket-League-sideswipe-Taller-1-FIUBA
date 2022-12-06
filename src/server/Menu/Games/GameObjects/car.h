@@ -86,8 +86,6 @@ class Car {
   uint8_t getAssistances();
   uint8_t getTackles();
 
-
-  bool has_jumped;
   double time_elapsed;
   bool nitro;
   bool go_up;
