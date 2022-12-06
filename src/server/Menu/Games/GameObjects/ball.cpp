@@ -7,15 +7,14 @@
 
 #include "Constants.h"
 
-Ball::Ball(b2World& world, float x, float y):rest_current_time_effect(MAXSHOTTIME) {
+Ball::Ball(b2World& world, b2Vec2 position):rest_current_time_effect(MAXSHOTTIME) {
   b2CircleShape circle;
   circle.m_radius = BALL_RADIUS;
 
   b2BodyDef ball_def;
   ball_def.type = b2_dynamicBody;
-  ball_def.position.Set(x, y);
-  initialPosition.x=x;
-  initialPosition.y=y;
+  ball_def.position = position;
+  this->initialPosition = position;
 
   b2FixtureDef ball_fd;
   ball_fd.density = 1.0f;
@@ -40,6 +39,8 @@ void Ball::reset(){
   this->ball->SetAngularVelocity(0);
   b2Vec2 aux(0,0);
   this->ball->SetLinearVelocity(aux);
+  this->shot_state_counter = 0;
+  this->current_shot_state = NO_SHOT;
 }
 
 const bool Ball::isColliding() {

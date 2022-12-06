@@ -14,11 +14,12 @@
 
 GameLogic::GameLogic(size_t cant_players)
     : world(b2Vec2(0.0f, -GRAVITY)),
-      ball(this->world, SCENARIO_HALF_WIDTH + 6.0f, -SCENARIO_HEIGHT / 2.0f),
+      ball(this->world, b2Vec2(SCENARIO_HALF_WIDTH + 6.0f, -SCENARIO_HEIGHT / 2.0f)),
       goal(false),
       time_left(GAMETIME),
       red_score(0),
       blue_score(0){
+
   // WORLD
   this->world.SetContactListener(&(this->contact_listener));
   b2Vec2 scenario_borders[SCENARIO_BORDERS];

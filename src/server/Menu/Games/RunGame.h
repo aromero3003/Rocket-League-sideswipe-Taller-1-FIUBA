@@ -12,6 +12,7 @@
 #include "ProtectedQueue.h"
 #include "QueueEx.h"
 #include <queue>
+#include <atomic>
 #include "liberror.h"
 #include "thread.h"
 #include "GameObjects/Constants.h"
@@ -22,7 +23,7 @@ class RunGame : public Thread {
   ProtectedQueue<std::shared_ptr<GameCommand> > gammingEventQueue;
   std::vector<std::unique_ptr<GamingClient>> players;
   std::queue<std::shared_ptr<SnapShot> > replayQueue;
-  bool isClosed;
+  std::atomic<bool>  isClosed;
   void sendReplay();
 
  public:

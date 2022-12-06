@@ -85,6 +85,7 @@ class Car {
   double time_elapsed;
   bool nitro;
   bool go_up;
+  int get_id() {return id;}
 };
 
 #endif  // __CAR_H__

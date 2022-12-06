@@ -13,14 +13,13 @@ void RunGame::addPlayer(std::unique_ptr<GamingClient>&& player) {
 
 RunGame::~RunGame() {
   this->gammingEventQueue.clean();
-  while(replayQueue.size()>0)replayQueue.pop();
   std::cerr<<"evetQueue clean";
   players.erase(players.begin(),players.end());
+  while(replayQueue.size()>0)replayQueue.pop();
 }
 void RunGame::close() { 
   this->gammingEventQueue.close(); 
   for (auto&& player : players) player->disconect();
-  this->isClosed= true;
 
 }
 ProtectedQueue<std::shared_ptr<GameCommand> >& RunGame::getRefGamingQueue() {
@@ -31,7 +30,7 @@ ProtectedQueue<std::shared_ptr<GameCommand> >& RunGame::getRefGamingQueue() {
 void RunGame::run() {
   try {
     for (auto&& player : players) player->start();
-    while (!this->isClosed) {
+    while (1) {
       //salgo de bucle si esta cerrada la queue
       if (gammingEventQueue.isClose()) throw QueueEx();
 
@@ -99,7 +98,6 @@ void RunGame::endGame(){
   std::shared_ptr<SnapShot> snapFinish=gameLogic.getFinishSnap() ;
   
   for (auto&& player : players) {
-    //std::shared_ptr<SnapShot> snapFinish=gameLogic.getFinishSnap() ;
     player->addSnap(snapFinish);
   }
    std::shared_ptr<SnapShot> snapEx(new SnapShot);
@@ -108,7 +106,6 @@ void RunGame::endGame(){
   }
 
   usleep(1000000 / 120);
-  this->isClosed=true;
   this->close();
 }
 

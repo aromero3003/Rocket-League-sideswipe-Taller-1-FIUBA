@@ -23,6 +23,7 @@ class TextureManager {
 
     SDL2pp::Font time_font;
     SDL2pp::Font score_font;
+    SDL2pp::Font statistics_score;
 
     TextureManager(SDL2pp::Window& window);
 

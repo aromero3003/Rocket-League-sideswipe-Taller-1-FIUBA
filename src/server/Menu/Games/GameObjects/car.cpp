@@ -230,13 +230,13 @@ void Car::brake() {
   if (this->has_jumped) return;
   b2Vec2 opossite_vector = this->chassis->GetLinearVelocity();
   opossite_vector.y = 0;
-  opossite_vector.x *= -1.0f * 4;
+  opossite_vector.x *= -4.0f;
   this->chassis->ApplyLinearImpulseToCenter(opossite_vector, true);
 }
 
-void Car::activate_nitro() { 
+void Car::activate_nitro() {
   if (nitro_cant>0){
-    this->nitro = true; 
+    this->nitro = true;
   }
 }
 
@@ -301,6 +301,11 @@ void Car::reset(){
   this->chassis->SetTransform(initialPosition,0);
   this->chassis->SetAngularVelocity(0);
   this->chassis->SetLinearVelocity(b2Vec2(0,0));
+
+  this->direction_pressed = NO_PRESSED;
+  this->damper1->SetMotorSpeed(0.0f);
+  this->damper2->SetMotorSpeed(0.0f);
+
   this->nitro_cant = 0xff;
   this->nitro = false;
 }
