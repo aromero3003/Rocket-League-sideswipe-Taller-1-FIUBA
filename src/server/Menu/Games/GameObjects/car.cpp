@@ -303,3 +303,5 @@ const uint16_t Car::getNitroAmmount() { return this->nitro_cant; }
 void Car::setActiveSensor(sensor_t active) { this->active_sensor = active; }
 
 sensor_t Car::getActiveSensor() { return this->active_sensor; }
+
+jump_t Car::getSecondJumpMade() { return this->current_jump; }
