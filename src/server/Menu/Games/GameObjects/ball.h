@@ -15,6 +15,7 @@ class Ball {
   b2Vec2 initialPosition;
   shot_t current_shot_state;
   float shot_state_counter;
+  float rest_current_time_effect;
 
   void applyShot(Car &hitter, shot_t shot);
 

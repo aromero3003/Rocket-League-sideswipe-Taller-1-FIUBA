@@ -7,7 +7,7 @@
 
 #include "Constants.h"
 
-Ball::Ball(b2World& world, float x, float y) {
+Ball::Ball(b2World& world, float x, float y):rest_current_time_effect(MAXSHOTTIME) {
   b2CircleShape circle;
   circle.m_radius = BALL_RADIUS;
 
@@ -105,8 +105,15 @@ void Ball::registerHit(Car *new_hitter) {
 }
 
 void Ball::update() {
-    //if (this->ball->GetLinearVelocity().Length() < 10.0f)
-    //    this->current_shot_state = NO_SHOT;
+    if (this->current_shot_state !=NO_SHOT){
+        this->rest_current_time_effect--;
+    } else {
+        this->rest_current_time_effect=MAXSHOTTIME;
+    }
+    if (this->rest_current_time_effect==0){
+        this->current_shot_state=NO_SHOT;
+    }
+
 }
 
 void Ball::getGoalAndAssistant(Car **goaler, Car **assistant) {
