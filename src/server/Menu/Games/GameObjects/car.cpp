@@ -290,7 +290,10 @@ void Car::update() {
       this->jump_ammount = 0;
   }
 
-  //this->current_jump = NO_FLIP;
+  this->current_jump = NO_FLIP; // Esta línea desactiva el reseteo del FLIP
+                                // Comentarla para probar los shots sin saltar de nuevo
+                                // Luego del segundo salto cualquier acercamiento
+                                // activa visualmente el shot de la pelota
 }
 void Car::reset(){
   this->chassis->SetTransform(initialPosition,0);
