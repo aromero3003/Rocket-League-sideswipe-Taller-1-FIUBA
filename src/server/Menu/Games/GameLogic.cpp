@@ -23,7 +23,6 @@ GameLogic::GameLogic(size_t cant_players)
   this->world.SetContactListener(&(this->contact_listener));
   b2Vec2 scenario_borders[SCENARIO_BORDERS];
 
-
   scenario_borders[0] = b2Vec2(6.0f, 0.0f);
   scenario_borders[1] = b2Vec2(SCENARIO_WIDTH + 6.0f, 0.0f);
   scenario_borders[2] = b2Vec2(SCENARIO_WIDTH + 6.0f, -22.0f);
@@ -84,6 +83,20 @@ void GameLogic::step() {
 
     for (Car &player : this->players) {
         if (player.nitro == true) player.boost();
+        sensor_t active_sensor = player.getActiveSensor();
+        jump_t second_jump = player.getSecondJumpMade();
+        b2Vec2 hitDirection = ball.getPosition() - player.getPosition();
+        hitDirection.Normalize();
+        if (second_jump == DOUBLE_JUMP and active_sensor == DOWN_SENSOR) {
+            hitDirection *= 20.0f;
+            ball.applyPurpleShot(hitDirection);
+        } else if (second_jump == FLIP) {
+            hitDirection *= 40.0f;
+            if (active_sensor == BACK_SENSOR)
+                ball.applyGoldShot(hitDirection);
+            else if (active_sensor == FRONT_SENSOR)
+                ball.applyRedShot(hitDirection);
+        }
         player.update();
     }
 
@@ -115,7 +128,7 @@ std::shared_ptr<SnapShot> GameLogic::getSnap() {
     snap->add(this->ball.getPosition().x);
     snap->add(this->ball.getPosition().y);
     snap->add(this->ball.getAngle());
-    snap->add((uint8_t)0);
+    snap->add((uint8_t)(this->ball.getCurrentShot()));
 
     //std::vector<uint8_t> &values = snap->getMsg();
     //for (Car &player : this->players) {
