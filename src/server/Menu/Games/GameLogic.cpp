@@ -121,8 +121,7 @@ std::shared_ptr<SnapShot> GameLogic::getSnap() {
     snap->add((uint8_t)this->time_left);                      // 1 byte
     snap->add(this->red_score);                               // 2 byte
     snap->add(this->blue_score);                              // 3 byte
-    //snap->add(this->goal);
-    snap->add((uint8_t)0);
+    snap->add(this->goal);
     snap->add((uint8_t)this->ball.isColliding());
     snap->add((uint8_t)false);
 
