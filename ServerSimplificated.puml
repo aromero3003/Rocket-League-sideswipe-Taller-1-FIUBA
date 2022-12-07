@@ -1,53 +1,81 @@
 @startuml
-'https://plantuml.com/class-diagram
+'https://plantuml.com/class-diagram class Server {
+class Server {
+  -std::atomic<bool> serverStatus;
+  +explicit Server(Socket& skt);
 
-Server "1"*--"1" AcceptThread
-AcceptThread "1"*--"1" Menu
+}
+class AcceptThread {
+  - std::atomic<bool>& serverIsOpen;
+  - Socket soktRef;
+
+}
+ class Menu {
+  - GameHandler gameHandler;
+}
+class ClientsHandler {
+  - std::vector<std::unique_ptr<MenuClient>> menuclients;
+
+}
+class MenuClient {
+  - Socket& skt;
+
+}
+class MenuProtocol {
+  - Socket skt;
+  - bool was_closed;
+  - GameHandler& games;
+}
+class GameHandler {
+  - std::mutex mutexgames;
+}
+
+class Games {
+  - std::map<std::string, Game> allGames;
+  - std::vector<std::unique_ptr<RunGame>> allRunGames;
+}
+class Game{
+   -int capacity;
+   -int occupation;
+   -std::vector<std::unique_ptr<StandbyClient>> clients}
+class Games {
+  -std::map<std::string, Game> allGames;
+ - std::vector<std::unique_ptr<RunGame>> allRunGames;
+}
+class StandbyClient {
+ private:
+  Socket skt;
+}
+class RunGame{
+ -GameLogic gameLogic;
+ -ProtectedQueue<std::shared_ptr<GameCommand> > gammingEventQueue;
+ -std::vector<std::unique_ptr<GamingClient>> players;
+ -std::queue<std::shared_ptr<SnapShot> > replayQueue;
+ -std::atomic<bool>  isClosed;
+ }
+
+class CommandHandler {
+}
+Server-- AcceptThread
+AcceptThread-- Menu
+Menu -- ClientsHandler
+ClientsHandler -- MenuClient
+MenuClient-right- MenuProtocol
+Menu-right- GameHandler
+GameHandler -right- Games
+Games -- Game
+StandbyClient -right- Game
+Games -up- RunGame
+RunGame -up- GameLogic
+
+MenuProtocol -right- CommandHandler
+CommandHandler -right- MenuCommand
 
 
-Menu "1"*--"1" GameHandler
-GameHandler *-- "0..*" RunGames
-
-GameHandler "1" *-- "1" GamesNoStartedMonitor
-GamesNoStartedMonitor "1" *-- "0..*" GamesNoStarted
-
-
-Menu"1"*--"1"ClientsMonitor
-ClientsMonitor"1"*--"1"ClientsHandler
-ClientsHandler"1"*--"0..*"ClientHandler
-ClientHandler "1"*--"1"ClientThread
-ClientThread "1"*--"1" ComandHandler
-ClientThread "1"*--"1" ServerMenuProtocol
-ServerMenuProtocol "1"*--"1"  Socket
-
-RunGames "1"*--"0..*" GameThread
-
-ProtocolSend "1"*--"1" SnapEventQueue
-GameThread "1" *-- "0..*" ActionEventQueue
-ActionEventQueue "1" *-- "0..*" RunGame
-RunGame "1" *-- "1" SnapHandler
-RunGame "1" *-- "0..*" Car
-RunGame "1" *-- "0..*" Ball
-
-GameThread "1" *-- "2..*" GamingClients
-GamingClients "1"*--"1" ProtocolSend
-GamingClients "1"*--"1" ProtocolRecv
-ProtocolRecv "1"--"1" GamingComandHandler
-GamingComandHandler "1"--"1" GamingComand
-GamingComand <|-- GamingComandJump
-GamingComand <|-- GamingComandTurbo
-GamingComand <|-- GamingComandRight
-GamingComand <|-- GamingComandLeft
-
-
-ComandHandler "1"--"1" Comand
-Comand <|-- ComandWithParameters
-Comand <|-- ComandList
-ComandWithParameters <|-- ComandAdd
-ComandWithParameters <|-- ComandQuit
-ComandWithParameters <|-- ComandCreate
 
 
 
 
-@enduml
+
+
+    @enduml

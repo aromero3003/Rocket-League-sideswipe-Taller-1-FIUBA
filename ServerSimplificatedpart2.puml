@@ -1,0 +1,64 @@
+@startuml
+'https://plantuml.com/class-diagram class Server {
+class RunGame{
+ -GameLogic gameLogic;
+ -ProtectedQueue<std::shared_ptr<GameCommand> > gammingEventQueue;
+ -std::vector<std::unique_ptr<GamingClient>> players;
+ -std::queue<std::shared_ptr<SnapShot> > replayQueue;
+ -std::atomic<bool>  isClosed;
+ }
+
+class GameLogic {
+  -b2World world;
+  -RLContactListener contact_listener;
+  -Ball ball;
+  -std::vector<Car> players;
+  -uint8_t goal;
+  -float time_left;
+  -uint8_t red_score;
+  -uint8_t blue_score;
+  }
+  class GamingClient {
+ -  private:
+   - size_t id;
+   - Socket skt;
+  -  BlockingQueue<std::shared_ptr<SnapShot>> snapEventQueue;
+}
+
+class ProtocolRecv {
+-  Socket& skt;
+-  bool was_closed;
+-  ProtectedQueue<std::shared_ptr<GameCommand> >& eventQueueRef;
+-  size_t id;
+  }
+class ProtocolSend {
+    -Socket& skt;
+    -BlockingQueue<std::shared_ptr<SnapShot>>& snapEventQueue;
+    -bool was_closed;
+    -size_t id;
+    }
+    class SnapShot {
+      -std::vector<uint8_t> data;
+      }
+class GameCommandHandler {
+-  bool isEndGame;
+-  size_t id;
+-  std::shared_ptr<GameCommand> command;
+}
+
+RunGame -up- GameLogic
+RunGame -right GamingClient
+GamingClient -up- ProtocolRecv
+GamingClient -right- ProtocolSend
+ProtocolRecv -up- GameCommandHandler
+GameCommandHandler -left- GameCommand
+GamingClient -up- SnapShot
+
+
+
+
+
+
+
+
+    @enduml
