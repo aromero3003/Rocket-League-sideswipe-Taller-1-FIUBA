@@ -90,7 +90,7 @@ add_executable(client ${client_SRC})
 #file(GLOB_RECURSE TEST_CLIENT_HEADERS ./test/client/*.h)
 #file(GLOB_RECURSE TEST_SERVER_HEADERS ./test/server/*.h)
 #file(GLOB_RECURSE TEST_COMMON_HEADERS ./test/common/*.h)
-file(GLOB_RECURSE TEST_FOO_HEADERS ./test/server/snapshottest.h)
+file(GLOB_RECURSE TEST_FOO_HEADERS ./test/server/snapshottest.h )
 
 find_package(CxxTest)
 if(CXXTEST_FOUND)
@@ -98,7 +98,7 @@ if(CXXTEST_FOUND)
     enable_testing()
     #CXXTEST_ADD_TEST(unittest-client runner-client.cpp ${client_SRC} ${TEST_CLIENT_HEADERS})
     #CXXTEST_ADD_TEST(unittest-server runner-server.cpp ${server_SRC} ${TEST_SERVER_HEADERS} )
-    CXXTEST_ADD_TEST(unittest-foo runner-snap.cpp ${TEST_FOO_HEADERS})
+    CXXTEST_ADD_TEST(unittest-snap runner-snap.cpp ./src/server/Menu/Client/Snap.cpp ${TEST_FOO_HEADERS})
 endif()
 
 add_executable(client_debug test_client.cpp
