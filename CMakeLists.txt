@@ -85,6 +85,22 @@ file(GLOB client_SRC
 
 add_executable(client ${client_SRC})
 
+
+# Including CxxTest
+#file(GLOB_RECURSE TEST_CLIENT_HEADERS ./test/client/*.h)
+#file(GLOB_RECURSE TEST_SERVER_HEADERS ./test/server/*.h)
+#file(GLOB_RECURSE TEST_COMMON_HEADERS ./test/common/*.h)
+file(GLOB_RECURSE TEST_FOO_HEADERS ./test/server/snapshottest.h)
+
+find_package(CxxTest)
+if(CXXTEST_FOUND)
+    include_directories(${CXXTEST_INCLUDE_DIR})
+    enable_testing()
+    #CXXTEST_ADD_TEST(unittest-client runner-client.cpp ${client_SRC} ${TEST_CLIENT_HEADERS})
+    #CXXTEST_ADD_TEST(unittest-server runner-server.cpp ${server_SRC} ${TEST_SERVER_HEADERS} )
+    CXXTEST_ADD_TEST(unittest-foo runner-snap.cpp ${TEST_FOO_HEADERS})
+endif()
+
 add_executable(client_debug test_client.cpp
     src/common/liberror.cpp
     src/common/resolver.cpp
