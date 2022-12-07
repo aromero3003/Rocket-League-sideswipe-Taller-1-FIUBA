@@ -1,10 +1,12 @@
 #include "world.h"
+#include "protocolDeserializer.h"
 #include <cstdint>
 #include <iostream>
 #include <string>
 
 #define FC *(float*)
 #define PI 3.14159265
+#define METERS_TO_PIXELS 20
 using namespace SDL2pp;
 
 World::World(){}
@@ -31,43 +33,28 @@ void World::finish_match(std::vector<char>& data){
 }
 
 void World::update(std::vector<char>& data){
+    
     std::lock_guard<std::mutex> lock(mutex);
     
-    char* buf = reinterpret_cast<char*>(data.data());
-
     //UPDATE FLAGS
-    this->remaining_time = data[0];
-    this->blue_team_score = data[1];
-    this->red_team_score = data[2];
-    this->goal = data[3];
-    this->ball_collision = data[4];
-    this->car_collision = data[5];
+    update_flags(data);
 
     //UPDATE BALL
-    this->ball.x_position = FC(buf+6);
-    this->ball.y_position = FC(buf+10);
-    this->ball.angle = (-180/PI)*FC(buf+14);
-    this->ball.color = data[18];
-
-    if (this->ball.color != 0) std::cout << (int)this->ball.color << std::endl;
+    update_ball(data);
 
     //UPDATE ALL CARS
-    for(size_t i=0; i < this->cars.size(); i++){
-        this->cars[i].id = (uint8_t) data[((i) * 16 + 19)];
-        this->cars[i].x_position = FC(buf + (i*16 + 20));
-        this->cars[i].y_position = FC(buf + (i*16 + 24));
-        this->cars[i].angle = (-180/PI)*FC(buf + (i*16 + 28));
-        this->cars[i].pointing_right = (uint8_t) data[i*16 + 32];
-        this->cars[i].nitro_flag = (uint8_t) data[i*16 + 33];
-        this->cars[i].nitro_quantity = data[i*16 + 34];
-    }
+    update_cars(data);
 
-    std::cout << "time: " << (int)remaining_time << std::endl;
 }
 
 void World::draw(TextureManager& textureManager, SoundManager& soundManager){
 
     std::lock_guard<std::mutex> lock(mutex);
+
+    /*
+    CUANDO EL TIEMPO LLEGA A 0, SE CAMBIA EL PROTOCOLO PARA RECIBIR (VER RECEIVER_THREAD),
+    Y SE DEJA DE DIBUJAR TODO
+    */
 
     if(remaining_time > 0){
 
@@ -95,13 +82,46 @@ void World::draw(TextureManager& textureManager, SoundManager& soundManager){
 
     //sounds
     sounds(soundManager);
+
     }
+
+    /*
+    AHORA SE DIBUJAN SOLO ESTADISTICAS DE LA PARTIDA
+    */
 
     if(remaining_time == 0){
         show_statistics(textureManager, soundManager);
     }
 
 }
+
+void World::update_flags(std::vector<char>& data){
+    char* buf = reinterpret_cast<char*>(data.data());
+
+    this->remaining_time = ProtocolDeserializer::deserialize_time(buf);
+    this->blue_team_score = ProtocolDeserializer::deserialize_blue_team_score(buf);
+    this->red_team_score = ProtocolDeserializer::deserialize_red_team_score(buf);
+    this->goal = ProtocolDeserializer::deserialize_goal_flag(buf);
+    this->ball_collision = ProtocolDeserializer::deserialize_ball_collision_flag(buf);
+    this->car_collision = ProtocolDeserializer::deserialize_car_collision_flag(buf);
+}
+
+void World::update_ball(std::vector<char>& data){
+
+    char* buf = reinterpret_cast<char*>(data.data());
+    
+    ProtocolDeserializer::deserialize_ball(this->ball, buf);
+
+}
+
+void World::update_cars(std::vector<char>& data){
+
+    char* buf = reinterpret_cast<char*>(data.data());
+    ProtocolDeserializer::deserialize_cars(this->cars, buf);
+
+}
+
+
 
 void World::show_court(TextureManager& textureManager){
     textureManager.renderer.Copy(
@@ -115,19 +135,31 @@ void World::show_court(TextureManager& textureManager){
 }
 
 void World::show_nitro_bar(TextureManager& textureManager){
+
+    /*
+    PARA LA BARRA DE NITRO SE USA UNA BARRA ROJA DE TAMANIO FIJO, Y SUPERPUESTA 
+    A ESA UNA BARRA VERDE QUE ES DIBUJADA CON DIFERENTES TAMANIOS DEPENDIENDO 
+    DE LA CANTIDAD DE NITRO RESTANTE, DANDO LA ILUSION A UNA BARRA QUE SE LLENA 
+    Y SE VACIA DINAMICAMENTE
+
+    SOLO SE DIBUJA LA BARRA DE NITRO DEL AUTO QUE ESTOY MANEJANDO EN MI CLIENTE
+    (TODOS LOS CLIENT SABEN LA CANTIDAD DE NITRO QUE TIENEN LOS OTROS JUGADORES,
+    PERO LOS USUARIOS NO PUEDEN VERLO)
+    */
+
     textureManager.renderer.Copy(
         textureManager.nitro_bar,
         NullOpt,
-        Rect(20*this->cars[my_id].x_position - 25,
-            (-20)*this->cars[my_id].y_position - 25,
+        Rect(METERS_TO_PIXELS*this->cars[my_id].x_position - 25,
+            (-METERS_TO_PIXELS)*this->cars[my_id].y_position - 25,
             50,
             10));
     
     textureManager.renderer.Copy(
         textureManager.remaining_nitro,
         NullOpt,
-        Rect(20*this->cars[my_id].x_position - 25,
-            (-20)*this->cars[my_id].y_position - 25,
+        Rect(METERS_TO_PIXELS*this->cars[my_id].x_position - 25,
+            (-METERS_TO_PIXELS)*this->cars[my_id].y_position - 25,
             this->cars[my_id].nitro_quantity / 2,
             10));
 }
@@ -156,6 +188,13 @@ void World::sounds(SoundManager& soundManager){
 }
 
 void World::replay(TextureManager& textureManager, SoundManager& soundManager){
+    
+    /*
+    AL REPLAY SE LE AGREGAN UN CARTEL DE "GOL!" Y UN LETRERO DE MADERA QUE DICE "REPLAY".
+
+    LUEGO SE DIBUJAN LOS SNAPS RECIBIDOS IGUAL QUE DURANTE LA PARTIDA
+    */
+    
     textureManager.renderer.Copy(
         textureManager.goal_sign,
         NullOpt,

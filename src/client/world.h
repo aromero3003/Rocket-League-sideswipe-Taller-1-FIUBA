@@ -45,6 +45,15 @@ class World{
 
         std::string convert_time();
 
+        void update_flags(std::vector<char>& data);
+
+        void update_ball(std::vector<char>& data);
+
+        void update_cars(std::vector<char>& data);
+
+        friend class Protocol_deserializer;
+
+
 
     public:
         World();

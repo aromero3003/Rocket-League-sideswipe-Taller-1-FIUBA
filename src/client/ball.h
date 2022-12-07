@@ -13,6 +13,7 @@ class Ball{
         uint8_t color;
 
         friend class World;
+        friend class ProtocolDeserializer;
     public:
         Ball();
 

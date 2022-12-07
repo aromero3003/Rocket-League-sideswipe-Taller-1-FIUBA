@@ -17,7 +17,7 @@ Menu::~Menu()
 }
 
 
-void Menu::on_joinMatchButton_clicked(){
+void Menu::on_joinMatchButton_clicked() {
     //GET MATCH NAME FROM LIST
     QString item = ui->listWidget->currentItem()->text();
     std::string aux = item.toStdString();
@@ -43,7 +43,6 @@ void Menu::on_joinMatchButton_clicked(){
     } else {
         ui->textBrowser->setText("LA PARTIDA YA ESTA LLENA");
     }
-
 }
 
 void Menu::on_createButton_clicked()

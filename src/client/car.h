@@ -1,6 +1,9 @@
 #ifndef CAR_H
 #define CAR_H
 
+
+
+
 #include <cstdint>
 #include <SDL2pp/SDL2pp.hh>
 
@@ -21,6 +24,7 @@ class Car{
         uint8_t assists;
 
         friend class World;
+        friend class ProtocolDeserializer;
     public:  
         Car();
 
