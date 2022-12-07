@@ -1,4 +1,6 @@
 # Rocket-League-sideswipe-Taller-1-FIUBA
+##Documentación 
+[Documentación Técnica](https://github.com/aromero3003/Rocket-League-sideswipe-Taller-1-FIUBA/blob/main/RocketDT.pdf)    
 
 ## Compilación
 
